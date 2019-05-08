@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buyticket.demo.dao.BuyTicketDao">
+    <resultMap id="trainMap" type="com.buyticket.demo.entity.Train">
+        <id property="id" column="id"/>
+        <result property="trainCard" column="train_card"/>
+        <result property="trainFrom" column="train_from"/>
+        <result property="trainFromTime" column="train_from_time"/>
+        <result property="trainArrive" column="train_arrive"/>
+        <result property="trainArriveTime" column="train_arrive_time"/>
+        <result property="trainAfter" column="train_after"/>
+        <result property="trainSeat" column="train_seat"/>
+        <result property="trainWait" column="train_wait"/>
+    </resultMap>
+    <resultMap id="trainSeatMap" type="com.buyticket.demo.entity.TrainSeat">
+        <id property="id" column="id"/>
+        <result property="trainId" column="train_id"/>
+
+        <result property="seatBestEnery" column="seat_best_enery"/>
+        <result property="seatBestNum" column="seat_best_num"/>
+        <result property="seatBestPrice" column="seat_best_price"/>
+        <result property="seatBestCarriage" column="seat_best_carriage"/>
+
+        <result property="seatFirstEnery" column="seat_first_enery"/>
+        <result property="seatFirstNum" column="seat_first_num"/>
+        <result property="seatFirstPrice" column="seat_first_price"/>
+        <result property="seatFirstCarriage" column="seat_first_carriage"/>
+
+        <result property="seatSecondEnery" column="seat_second_enery"/>
+        <result property="seatSecondNum" column="seat_second_num"/>
+        <result property="seatSecondPrice" column="seat_second_price"/>
+        <result property="seatSecondCarriage" column="seat_second_carriage"/>
+
+        <result property="sleeperFirstSoftEnery" column="sleeper_first_soft_enery"/>
+        <result property="sleeperFirstSoftNum" column="sleeper_first_soft_num"/>
+        <result property="sleeperFirstSoftPrice" column="sleeper_first_soft_price"/>
+        <result property="sleeperFirstSoftCarriage" column="sleeper_first_soft_carriage"/>
+
+        <result property="sleeperBestEnery" column="sleeper_best_enery"/>
+        <result property="sleeperBestNum" column="sleeper_best_num"/>
+        <result property="sleeperBestCarriage" column="sleeper_best_carriage"/>
+        <result property="sleeperBestPrice" column="sleeper_best_price"/>
+
+        <result property="sleeperSportEnery" column="sleeper_sport_enery"/>
+        <result property="sleeperSportNum" column="sleeper_sport_num"/>
+        <result property="sleeperSportPrice" column="sleeper_sport_price"/>
+        <result property="sleeperSportCarriage" column="sleeper_sport_carriage"/>
+
+        <result property="sleeperStiffEnery" column="sleeper_stiff_enery"/>
+        <result property="sleeperStiffNum" column="sleeper_stiff_num"/>
+        <result property="sleeperStiffPrice" column="sleeper_stiff_price"/>
+        <result property="sleeperStiffCarriage" column="sleeper_stiff_carriage"/>
+
+        <result property="seatSoftEnery" column="seat_soft_enery"/>
+        <result property="seatSoftNum" column="seat_soft_num"/>
+        <result property="seatSoftPrice" column="seat_soft_price"/>
+        <result property="seatSoftCarriage" column="seat_soft_carriage"/>
+
+        <result property="seatStiffEnery" column="seat_stiff_enery"/>
+        <result property="seatStiffNum" column="seat_stiff_num"/>
+        <result property="seatStiffPrice" column="seat_stiff_price"/>
+        <result property="seatStiffCarriage" column="seat_stiff_carriage"/>
+
+        <result property="seatNoEnery" column="seat_no_enery"/>
+        <result property="seatNoNum" column="seat_no_num"/>
+        <result property="seatNoPrice" column="seat_no_price"/>
+        <result property="seatNoCarriage" column="seat_no_carriage"/>
+
+        <result property="seatOtherEnery" column="seat_other_enery"/>
+        <result property="seatOtherNum" column="seat_other_num"/>
+        <result property="seatOtherPrice" column="seat_other_price"/>
+        <result property="seatOtherCarriage" column="seat_other_carriage"/>
+    </resultMap>
+
+    <resultMap id="trainArriveMap" type="com.buyticket.demo.entity.TrainArrive">
+        <id property="id" column="id"/>
+        <result property="trainId" column="train_id"/>
+        <result property="trainArrive" column="train_arrive"/>
+        <result property="trainArriveTime" column="train_arrive_time"/>
+        <result property="trainArriveWite" column="train_arrive_wait"/>
+        <result property="trainAfter" column="train_after"/>
+        <result property="trainArriveGrade" column="train_arrive_grade"/>
+    </resultMap>
+
+    <!--查火车的信息-->
+    <select id="allTrain" resultMap="trainMap" >
+        select * from train  where train.train_from = #{from} or #{from} in(select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id) and train.train_arrive = #{arrive} or #{arrive} in(select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id)
+        <if test=" end > 0">
+           limit #{start} , #{end}
+        </if>
+    </select>
+
+    <!--根据火车信息查询火车额的座位信息-->
+    <select id="selectTrainSeatById" resultMap="trainSeatMap" parameterType="java.lang.Long">
+        select  * from train_seat where train_id = #{trainId}
+    </select>
+
+    <!--买票-->
+    <insert id="buyTicket" parameterType="com.buyticket.demo.entity.UserTickerMessage">
+          insert into user_ticket_message (user_id,train_id,seat_message,is_payment,is_use_ticket,is_change_ticket,is_back_ticket)
+          value(#{userId},#{tarinId},#{seatMessage},#{isPayment},#{isUseTicket},#{isChageTicket},#{isBackTicket})
+    </insert>
+
+    <!--中间站点-->
+    <select id="getTrainArrives" resultMap="trainArriveMap" parameterType="java.lang.Long">
+        select * from train_arrive where train_id = #{trainId}
+        <if test="end > 0">
+             limit #{start} , #{end}
+        </if>
+    </select>
+</mapper>

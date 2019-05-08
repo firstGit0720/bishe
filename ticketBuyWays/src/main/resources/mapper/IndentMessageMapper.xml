@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buyticket.demo.dao.IndentMessageDao">
+
+    <resultMap id="messageMap" type="com.buyticket.demo.entity.IndentMessage">
+        <id property="id" column="id"/>
+        <result property="indentTime" column="indent_time"/>
+        <result property="indentFrom" column="indent_from"/>
+        <result property="indentArrive" column="indent_arrive"/>
+        <result property="seatType" column="seat_type"/>
+        <result property="isPayment" column="is_payment"/>
+        <result property="isStatus" column="is_status"/>
+        <result property="isSuccess" column="is_success"/>
+        <result property="trainStartTime" column="train_start_time"/>
+        <result property="userId" column="user_id"/>
+        <result property="trainId" column="train_id"/>
+        <result property="seatMessage" column="seat_message"/>
+    </resultMap>
+    <!--获取订单中车票数-->
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) from indent_message where train_id = #{trainId} and seat_type = #{seatType}
+        and indent_from= #{from} and indent_arrive = #{arrive} and train_start_time = #{date}
+    </select>
+
+    <!--添加信息-->
+    <insert id="addIndentMessage" keyProperty="id" useGeneratedKeys="true"  parameterType="com.buyticket.demo.entity.IndentMessage">
+        insert into indent_message(user_id,train_id,seat_message,indent_time,indent_from,indent_arrive,seat_type,is_payment,is_status,is_success,train_start_time)
+        value (#{indent.userId},#{indent.trainId},#{indent.seatMessage},#{indent.indentTime},#{indent.indentFrom},#{indent.indentArrive},#{indent.seatType},
+        #{indent.isPayment},#{indent.isStatus},#{indent.isSuccess},#{indent.trainStartTime})
+    </insert>
+</mapper>

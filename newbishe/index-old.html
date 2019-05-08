@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>购买火车票系统</title>
+		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/datatables.min.css" />
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="css/xcConfirm.css" />
+		<script type="text/javascript" src="js/jquery-3.3.1.js" ></script>
+		<script type="text/javascript" src="js/index.js" ></script>
+		<script type="text/javascript" src="js/datatables.min.js" ></script>
+		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<script type="text/javascript" src="js/xcConfirm.js" ></script>
+		<script type="text/javascript" src="js/cookie.js" ></script>
+	</head>
+	<body>
+	<!--head-->
+	   <div class="header">
+	   		<div class="inner">
+	   			<div class="logo">
+	  			 <a href="index.html" title="火车票"></a>
+	   			</div>
+	   			<div class="headlink">
+				  	<a href="index.html">首页</a>
+				  	 &nbsp;|&nbsp;
+	   				<a href="login.html">登录</a>
+	   				&nbsp;|&nbsp;
+	   				<a href="regiest.html">注册</a>
+	                &nbsp;|&nbsp;
+				  	<button id = "lgout">▶注销</button>
+				  	 &nbsp;|&nbsp;
+				  	<button id="goBack">进入后台</button>
+	   			</div>
+	   		</div>
+	   </div>
+		<div id="select" style="">
+			<div class="selectbox">
+				<!--<div class="head">
+	   				<a class="left"  href="###"><span id="left">出发地/目的地查询</span></a>
+	   				<a class="right"  href="###"><span id="right">火车车次查询</span></a>
+	   			</div>-->
+	   			<div class="ct">
+	   				<div id="leftitem" style="margin-top: 30px;">
+						<div class="center">
+							<label class="lable" for="from">*  出发地:</label>
+							<input class="myinput" type="text" id="from" name="from"  autocomplete="off" placeholder="出发地" />
+						</div>
+						<div class="center">
+							<label class="lable" for="arrive">*  目的地:</label>
+							<input class="myinput" type="text" id="arrive" name="arrive"  autocomplete="off" placeholder="目的地" />
+						</div>
+						<div class="center">
+							<label class="lable" for="fromTime">*  出发时间:</label>
+							<input class="myinput" style="width: 240px;" type="date" id="fromTime" name="fromTime"  autocomplete="off" />
+						</div>
+						<div class="submitBtn">
+							<input type="button" id="selectBySpace" value="查询" />
+						</div>
+		   			</div>
+		   			<!--<div id="rightitem" >
+		   				<div  style="margin-top: 80px;">
+							<div class="center" >
+								<label class="lable" for="trainCard">*  火车车次:</label>
+								<input class="myinput" type="text" style="width: 220px;" id="trainCard" name="trainCard" placeholder="火车车次" />
+							</div>
+							<div class="submitBtn" style="margin-top: 40px;">
+								<input type="button" id="selectByCard" style="width: 180px;" value="查询" />
+							</div>
+						</div>
+		   			</div>-->
+	   			</div>
+			</div>
+		<!--	<div class="img">
+				<img src="img/train.jpg" />
+			</div>-->
+		</div>
+		
+		<!--显示查询结果部分 -->
+		<div id="showMessage1" style="width: 90%;margin: auto;">
+			<table id="mytable" border="1px">
+				<thead>
+					<th>车次</th>
+					<th>出发地</th>
+					<th>出发时间</th>
+					<th>目的地</th>
+					<th>到达时间</th>
+					<th>停留时间</th>
+					<th>历时</th>
+					<th>特等座</th>
+					<th>一等座</th>
+					<th>二等座</th>
+					<th>软卧一等卧</th>
+					<th>高级软卧</th>
+					<th>动卧</th>
+					<th>硬卧</th>
+					<th>软座</th>
+					<th>硬座</th>
+					<th>无座</th>
+					<th>其他</th>
+					<th>操作</th>
+				</thead>
+				<tbody>
+					<td>车次</td>
+					<td>出发地</td>
+					<td>出发时间</td>
+					<td>目的地</td>
+					<td>到达时间</td>
+					<td>停留时间</td>
+					<td>历时</td>
+					<td>特等座</td>
+					<td>一等座</td>
+					<td>二等座</td>
+					<td>软卧一等卧</td>
+					<td>高级软卧</td>
+					<td>动卧</td>
+					<td>硬卧</td>
+					<td>软座</td>
+					<td>硬座</td>
+					<td>无座</td>
+					<td>其他</td>
+					<td><a class="buyTicket" onClick = "buyTicket(1)">购买</a></td>
+				</tbody>
+		</div>
+		
+		<!--买票的弹窗-->
+		<!--<div id="buy" title="买票的基本信息" style="display: none">
+			<p>这是一个默认的对话框</p>
+		</div>-->
+		
+	</body>
+</html>

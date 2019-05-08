@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ticketother.demo.dao.UserOtherDao">
+    <resultMap id="showMap" type="com.ticketother.demo.entity.IndentMessage">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="trainId" column="train_id"/>
+        <result property="seatMessage" column="seat_message" />
+        <result property="indentTime" column="indent_time" />
+        <result property="trainStartTime" column="train_start_time" />
+        <result property="indentFrom" column="indent_from" />
+        <result property="indentArrive" column="indent_arrive" />
+        <result property="seatType" column="seat_type" />
+        <result property="isPayment" column="is_payment" />
+        <result property="isStatus" column="is_status" />
+        <result property="isSuccess" column="is_success"/>
+    </resultMap>
+
+
+    <!--查用户的历史行程-->
+    <select id="showHistroy" resultMap="showMap">
+        select * from indent_message where user_id = #{userId} and is_success = #{status}
+    </select>
+
+    <!--查看未完成的行程-->
+    <select id="showFuture" resultMap="showMap">
+         select * from indent_message where user_id = #{userId} and is_success =  #{status}
+        <if test=" end > 0">
+            limit #{start} , #{end}
+        </if>
+    </select>
+
+    <select id="selectTrainById" resultType="com.ticketother.demo.entity.Train" parameterType="java.lang.Long">
+        select * from train where id = #{trainId}
+    </select>
+
+    <!-- 更具火车车次，查询id  -->
+    <select id="selectTrainIdByTrainCard" resultType="java.lang.Long" parameterType="java.lang.String">
+        select id from train where train_card = #{trainCard}
+    </select>
+
+    <insert id="addTrainSeatMessage" parameterType="com.ticketother.demo.entity.TrainSeatMessage">
+        insert into train_seat_message(train_id,back_change_message,train_from,train_arrive,train_time,seat_type)
+        value (#{seatMessage.trainId},#{seatMessage.backChangeMessage},#{seatMessage.trainFrom},#{seatMessage.trainArrive},#{seatMessage.trainTime},#{seatMessage.seatType})
+    </insert>
+
+
+</mapper>

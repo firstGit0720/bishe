@@ -1,0 +1,152 @@
+<!doctype html>
+<html  class="x-admin-sm">
+<head>
+	<meta charset="UTF-8">
+	<title>用户信息注册</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+	 <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="js/jquery-3.3.1.js" ></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/public_check.js" ></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/cookie.js"></script>
+    <script type="text/javascript" src="js/regiest.js" ></script>
+    
+    <script>
+        // 是否开启刷新记忆tab功能
+        // var is_remember = false;
+    </script>
+</head>
+<body>
+	<!-- 顶部开始 -->
+    <div class="container">
+        <div class="logo"><a href="./index.html">火车票管理系统</a></div>
+    	<ul class="layui-nav right" lay-filter="" style="margin-right: 50px;">
+		  <li class="layui-nav-item"><a href="index.html">首页</a></li>
+		  <li class="layui-nav-item"><a href="login.html">登录</a></li>
+		  <li class="layui-nav-item"><a href="regiest.html">注册</a></li>
+		  <li class="layui-nav-item"><a id="goBack">进入后台</a></li>
+          <li class="layui-nav-item">
+            <a href="javascript:;"><span id="show">菜单</span></a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+              <dd><a onclick="showUserMessage()">个人信息</a></dd>
+              <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
+              <dd><a onclick="lgout()">退出</a></dd>
+            </dl>
+          </li>
+        </ul>
+        
+    </div>
+    <div class="x-body">
+    	  <form  id="trainMessahe" name="trainMessahe" class="layui-form">
+          <div class="layui-form-item">
+              <label for="pname" class="layui-form-label">
+                 *  姓名:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="pname" name="pname" required="" lay-verify="required" placeholder="姓名（您的真实姓名）"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  * 用户名:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="username" name="username" required="" lay-verify="required" placeholder="用户名（用于登录的名称）"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+          	<label for="fromTime" class="layui-form-label">
+                  *  密码:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="password" id="password" name="password" required="" lay-verify="required" placeholder="密码"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+          	<label for="password2" class="layui-form-label">
+                  *  确定密码:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="password" id="password2" name="password2" required="" lay-verify="required" placeholder="确定密码"
+                  autocomplete="off" class="layui-input">
+              </div>
+              
+          </div>
+         <div class="layui-form-item">
+              <label class="layui-form-label"><span class="x-red">*</span>性别</label>
+              <div class="layui-input-block">
+                <input type="radio" name="userType" value="0" lay-skin="primary"  checked="checked" title="男">
+                <input type="radio" name="userType" value="1" lay-skin="primary" title="女">
+              </div>
+          </div>
+          <div class="layui-form-item">
+          	<label for="userPhone" class="layui-form-label">
+                  *  手机号:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="userPhone" name="userPhone" required="" lay-verify="required"  maxlength="11" placeholder="手机号"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+           <div class="layui-form-item">
+          	<label for="userBirthday" class="layui-form-label">
+                  *  出身日期:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="date" id="userBirthday" name="userBirthday" required="" lay-verify="required" placeholder="出身日期"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          
+          <div class="layui-form-item">
+          	<label for="userCard" class="layui-form-label">
+                  *  身份证号:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="userCard" name="userCard" required="" lay-verify="required" maxlength="16" placeholder="身份证号"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+           <div class="layui-form-item">
+          	<label for="userEmail" class="layui-form-label">
+                  *  电子邮箱:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="email" id="userEmail" name="userEmail" required="" lay-verify="required" placeholder="电子邮箱"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+          	<label for="userAddress" class="layui-form-label">
+                  *  居住地址:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="userAddress" name="userAddress" required="" lay-verify="required" placeholder="居住地址"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+           <div class="layui-form-item">
+              <label for="L_repass" class="layui-form-label">
+              </label>
+              <button  class="layui-btn" id="isok">
+                  	注册
+              </button>
+              <label for="L_repass" class="layui-form-label">
+              </label>
+              <button  class="layui-btn" id="exit" onclick="window.location.href = 'login.html'">
+                  	返回
+              </button>
+          </div>
+          
+      	</form>
+    
+    
+</body>
+</html>

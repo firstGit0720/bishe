@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>添加火车票信息</title>
+		<link rel="stylesheet" href="css/addTrain.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script type="text/javascript" src="js/jquery-3.3.1.js" ></script>
+		<script type="text/javascript" src="js/addTrain.js" ></script>
+	</head>
+	<body  >
+		<!--header-->
+		<!--<div class="header">
+	   		<div class="inner">
+	   			<div class="logo">
+	  			 <a href="index.html" title="火车票"></a>
+	   			</div>
+	   			<div class="headlink">
+				  	<a href="index.html">首页</a>
+				  	 &nbsp;|&nbsp;
+	   				<a href="login.html">登录</a>
+	   				&nbsp;|&nbsp;
+	   				<a href="regiest.html">注册</a>
+	                &nbsp;|&nbsp;
+				  	<a href="login.html">▶注销</a>
+				  	 &nbsp;|&nbsp;
+				  	<a href="addTrain.html">添加车票信息</a>
+	   			</div>
+	   		</div>
+	   </div>-->
+	   <!--内容-->
+	   <div>
+	   		<div class="message">
+	   			<form id="trainMessahe" name="trainMessahe">
+	   				<div class="center">
+						<label for="trainCard">*  车          次:</label>
+						<input class="myinput" type="text" id="trainCard" name="trainCard" placeholder="火车的车次" />
+						
+					</div>
+					<div class="center">
+						<label for="from">*  出   发   地:</label>
+						<input class="myinput" type="text" id="from" name="from" placeholder="出发地" />
+						<label for="fromTime">*  出发时间:</label>
+						<input class="myinput" type="text" id="fromTime" name="fromTime" placeholder="出发时间" />
+					</div>
+					<div class="center">
+						<label for="arrive">*  目   的   地:</label>
+						<input class="myinput" type="text" id="arrive" name="arrive" placeholder="目的地" />
+						<label for="arriveTime">*  到达时间:</label>
+						<input class="myinput" type="text" id="arriveTime" name="arriveTime" placeholder="到达时间" />
+					</div>
+				</form>
+				<form id="trainSeat" name="trainSeat">
+					<span class="span">* 火车座位信息</span>
+					<input class="Btn"  type="button" value="添加座位信息" onClick="addSeat(this.form)" />
+					<div class="center">
+						<label for="seatType">*  座位等级:</label>
+						<select id="seatType" name="seatType">
+							 <option value="0" >特等座</option>
+   							 <option value="1">一等座</option>
+   							 <option value="2">二等座</option>
+   							 <option value="3">软卧一等卧</option>
+   							 <option value="4">高级软卧</option>
+   							 <option value="5">动卧</option>
+   							 <option value="6">硬卧</option>
+   							 <option value="7">软座</option>
+   							 <option value="8">硬座</option>
+   							 <option value="9">无座</option>
+   							 <option value="10">其他</option>
+						</select>
+						<!--<input class="myinput" type="text" id="arrive" style="width: 150px;" name="arrive" placeholder="目的地" />-->
+						<label for="seatNum">*  座位数量:</label>
+						<input class="myinput" type="number" id="seatNum" style="width: 150px;" name="seatNum" placeholder="座位数量" />
+						<label for="seatCarriage">*  车厢个数:</label>
+						<input class="myinput" type="number" id="seatCarriage" style="width: 150px;" name="seatCarriage" placeholder="车厢个数" />
+						<label for="seatPrice">*  车座价格:</label>
+						<input class="myinput" type="number" id="seatPrice"  style="width: 150px;"name="seatPrice" placeholder="车座价格" />
+					</div>
+				</form>
+				<form id="trainSpace" name="trainSpace">
+					<span class="span">* 火车站点信息</span>
+					<input class="Btn"  type="button" value="添加站点信息" onClick="addTextBox(this.form)" />
+					<div class="center">
+						<label for="trainArrive">*  站点名称:</label>
+						<input class="myinput" type="text" id="trainArrive" name="trainArrive" placeholder="站点名称" />
+						<label for="trainArriveTime">*  到达时间:</label>
+						<input class="myinput" type="text" id="trainArriveTime" name="trainArriveTime" placeholder="到达时间" />
+						<label for="trainArriveWite">*  停留时间:</label>
+						<input class="myinput" type="text" id="trainArriveWite" name="trainArriveWite" placeholder="停留时间" />
+					</div>
+				</form>
+	   			
+	   			<div class="center submit">
+	   				<input  type="submit" class="ok" value="提交" onClick="addTrainMessage()" />
+	   				<input  type="button" class="no" value="取消" onClick="alert('取消')" />
+   				</div>
+	   		</div>
+	   </div>
+	   
+	</body>
+</html>

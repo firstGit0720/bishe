@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/erueka/demo (1) (com.eurekaserve).iml" filepath="$PROJECT_DIR$/erueka/demo (1) (com.eurekaserve).iml" />
+      <module fileurl="file://$PROJECT_DIR$/otherWays/demo (2) (com.other).iml" filepath="$PROJECT_DIR$/otherWays/demo (2) (com.other).iml" />
+      <module fileurl="file://$PROJECT_DIR$/redisService/demo (3) (com.redis).iml" filepath="$PROJECT_DIR$/redisService/demo (3) (com.redis).iml" />
+      <module fileurl="file://$PROJECT_DIR$/ticketBuyWays/demo (4) (com.buyTicket).iml" filepath="$PROJECT_DIR$/ticketBuyWays/demo (4) (com.buyTicket).iml" />
+      <module fileurl="file://$PROJECT_DIR$/ticketOther/demo (5) (com.ticketother).iml" filepath="$PROJECT_DIR$/ticketOther/demo (5) (com.ticketother).iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/毕设.iml" filepath="$PROJECT_DIR$/.idea/毕设.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.other.demo.dao.UserTypeDao">
+    <!--添加用户权限-->
+    <insert id="addUserType" parameterType="com.other.demo.entity.UserType">
+        insert into user_type (user_id,user_type,create_time,update_time)
+        value (#{userType.userId},#{userType.userType},#{userType.createTime},#{userType.updateTime})
+    </insert>
+    <!--修改用户权限-->
+    <update id="updateUserType" parameterType="com.other.demo.entity.UserType">
+        update user_type
+        set user_type = #{userType.userType},
+        update_time = #{userType.updateTime}
+        where id = #{userType.id}
+    </update>
+    <!--获取用户权限-->
+    <select id="selectUserType" parameterType="java.lang.Long" resultType="java.lang.Short">
+        select user_type from user_type where user_id = #{userId}
+    </select>
+
+    <!--获取所有的会员及其权限-->
+    <resultMap id="userMap" type="com.other.demo.dto.UserDto">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPname" column="user_pname"/>
+        <result property="userSex" column="user_sex"/>
+        <result property="userAddress" column="user_address"/>
+        <result property="userCard" column="user_card"/>
+        <result property="userBirthday" column="user_birthday"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userAge" column="user_age"/>
+        <result property="userType" column="user_type"/>
+        <result property="userCreateTime" column="create_time"/>
+    </resultMap>
+    <select id="allUsers" resultMap="userMap">
+        select * from user left join user_type on user.id = user_type.user_id
+     </select>
+
+    <delete id="deleteUserType" parameterType="java.lang.Long">
+        delete from user_type where user_id = #{userId}
+    </delete>
+
+    <resultMap id="userTypeMap" type="com.other.demo.entity.UserType">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="userType" column="user_type" />
+    </resultMap>
+
+    <select id="getUserType" resultMap="userTypeMap" parameterType="java.lang.Long">
+        select * from user_type where user_id = #{userId}
+    </select>
+
+</mapper>

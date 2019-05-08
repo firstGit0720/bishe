@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>火车信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+   <link rel="stylesheet" href="css/datatables.min.css" />
+    <link rel="stylesheet" href="css/button.css" />
+    
+    <script type="text/javascript" src="js/jquery-3.3.1.js" ></script>
+    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/cookie.js"></script>
+		<script type="text/javascript" src="js/datatable.js" ></script>
+		<script type="text/javascript" src="js/train_list.js" ></script>
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <xblock>
+        <button class="layui-btn" onclick="x_admin_show('添加火车行程','./train-add.html')"><i class="layui-icon"></i>添加</button>
+      </xblock>
+      <table class="layui-table" id="trainTable"> 
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>火车车次</th>
+            <th>出发地</th>
+            <th>出发时间</th>
+            <th>目的地</th>
+            <th>到达时间</th>
+            <th>经历时长</th>
+            <th>座位数量</th>
+            <th>运行状态</th>
+            <th>操作</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+
+    </div>
+<!--    <script>var _hmt = _hmt || []; (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();</script>-->
+  </body>
+
+</html>

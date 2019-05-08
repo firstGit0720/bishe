@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html  class="x-admin-sm">
+<head>
+	<meta charset="UTF-8">
+	<title>用户详细信息修改</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+	 <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="js/jquery-3.3.1.js" ></script>
+	<script type="text/javascript" src="js/regiest.js" ></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/cookie.js"></script>
+    <script type="text/javascript" src="js/admin-message-edit.js" ></script>
+    <script>
+        // 是否开启刷新记忆tab功能
+        // var is_remember = false;
+    </script>
+</head>
+<body>
+    <div class="x-body">
+    	  <form  id="trainMessahe" name="trainMessahe" class="layui-form">
+	  	 	<div class="layui-form-item">
+	          <label for="username" class="layui-form-label">
+	              * 用户名:
+	          </label>
+	          <div class="layui-input-inline">
+	              <input type="text" id="username" name="username" required="" lay-verify="required" disabled="disabled" placeholder="用户名（用于登录的名称）"
+	              autocomplete="off" class="layui-input">
+	          </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="userpname" class="layui-form-label">
+                 *  姓名:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="userpname" name="userpname" required="" lay-verify="required" placeholder="姓名（您的真实姓名）"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+         <div class="layui-form-item">
+              <label class="layui-form-label"><span class="x-red">*</span>性别</label>
+              <div class="layui-input-block">
+                <input type="radio" name="userSex" value="0" lay-skin="primary"  checked="checked" title="男">
+                <input type="radio" name="userSex" value="1" lay-skin="primary" title="女">
+              </div>
+          </div>
+          <div class="layui-form-item">
+          	<label for="userPhone" class="layui-form-label">
+                  *  手机号:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="userPhone" name="userPhone" required="" lay-verify="required"  maxlength="11" placeholder="手机号"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+           <div class="layui-form-item">
+          	<label for="userBirthday" class="layui-form-label">
+                  *  出身日期:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="date" id="userBirthday" name="userBirthday" required="" lay-verify="required" placeholder="出身日期"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          
+          <div class="layui-form-item">
+          	<label for="userCard" class="layui-form-label">
+                  *  身份证号:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="userCard" name="userCard"  maxlength="18" placeholder="身份证号"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+           <div class="layui-form-item">
+          	<label for="userEmail" class="layui-form-label">
+                  *  电子邮箱:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="email" id="userEmail" name="userEmail"  placeholder="电子邮箱"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+          	<label for="userAddress" class="layui-form-label">
+                  *  居住地址:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="userAddress" name="userAddress" placeholder="居住地址"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+      	</form>
+    	<button  class="layui-btn" id="updateMessage">
+                  	修改
+      </button>
+      <button  class="layui-btn" id="exit">
+          	返回
+      </button>
+    
+</body>
+</html>

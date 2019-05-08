@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>火车票信息添加</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="css/button.css" />
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/cookie.js"></script>
+    <script type="text/javascript" src="js/train-add.js" ></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body>
+    <div class="x-body" style="margin-top: 80px;">
+    		<fieldset class="layui-elem-field">
+    			 <legend>火车基本信息</legend>
+    	  <form  id="trainMessahe" name="trainMessahe" style="margin-top: 20px;">
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                 *  车          次:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="trainCard" name="trainCard" required="" lay-verify="required" placeholder="车次"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="from" class="layui-form-label">
+                  *  出   发   地:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="from" name="from" required="" lay-verify="required" placeholder="出发地"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <label for="fromTime" class="layui-form-label">
+                  *   出发时间:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="fromTime" name="fromTime" required="" lay-verify="required" placeholder="出发时间"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+          	<label for="arrive" class="layui-form-label">
+                  *  目   的   地:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="arrive" name="arrive" required="" lay-verify="required" placeholder="目的地"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <label for="arriveTime" class="layui-form-label">
+                  *  到达时间:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="arriveTime" name="arriveTime" required="" lay-verify="required" placeholder="出发时间"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+      	</form>
+      </fieldset>
+      	<fieldset class="layui-elem-field">
+      		 <legend>火车座位信息</legend>
+      		<form id="trainSeat" name="trainSeat">
+      		  <div class="layui-form-item" style="margin-left: 40px;margin-top: 10px;">
+							<input type="button" class="myButton" value="添加座位信息" onClick="addSeat(this.form)" />
+      			</div>
+      		 <div class="layui-form-item">
+              <label for="seatType" class="layui-form-label">
+                  *  座位等级:
+              </label>
+              <div class="layui-input-inline">
+              	<select id="seatType" name="seatType" class="selectClass">
+									 <option value="0" >特等座</option>
+		   							 <option value="1">一等座</option>
+		   							 <option value="2">二等座</option>
+		   							 <option value="3">软卧一等卧</option>
+		   							 <option value="4">高级软卧</option>
+		   							 <option value="5">动卧</option>
+		   							 <option value="6">硬卧</option>
+		   							 <option value="7">软座</option>
+		   							 <option value="8">硬座</option>
+		   							 <option value="9">无座</option>
+		   							 <option value="10">其他</option>
+								</select>
+              </div>
+              
+              <label for="seatNum" class="layui-form-label">
+                  *  座位数量:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="number" id="seatNum" name="seatNum" required="" lay-verify="required" placeholder="座位数量"
+                  autocomplete="off" class="layui-input">
+              </div>
+              
+              <label for="seatCarriage" class="layui-form-label">
+                  <span class="x-red">*</span>  车厢个数:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="number" id="seatCarriage" name="seatCarriage" required="" lay-verify="required" placeholder="车厢个数"
+                  autocomplete="off" class="layui-input">
+              </div>
+              
+               <label for="seatPrice" class="layui-form-label">
+                  <span class="x-red">*</span>  车座价格:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="number" id="seatPrice" name="seatPrice" required="" lay-verify="required" placeholder="车座价格"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+       </form>
+       </fieldset>
+      <fieldset class="layui-elem-field">
+      	  <legend>火车站点信息</legend>
+      	<form id="trainSpace" name="trainSpace">
+      		  <div class="layui-form-item" style="margin-left: 40px;margin-top: 10px;">
+      		<input class="myButton"  type="button" value="添加站点信息" onClick="addTextBox(this.form)" />
+      	</div>
+      	  <div class="layui-form-item">
+          	<label for="trainArrive" class="layui-form-label">
+                  <span class="x-red">*</span>  站点名称
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="trainArrive" name="trainArrive" required="" lay-verify="required" placeholder="站点名称"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <label for="trainArriveTime" class="layui-form-label">
+                  <span class="x-red">*</span>   到达时间:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="trainArriveTime" name="trainArriveTime" required="" lay-verify="required" placeholder="到达时间"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <label for="trainArriveWite" class="layui-form-label">
+                  <span class="x-red">*</span>   停留时间:
+              </label>
+              <div class="layui-input-inline">
+                  <input type="number" id="trainArriveWite" name="trainArriveWite" required="" lay-verify="required" placeholder="停留时间"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+  	  </form>
+   	</fieldset>
+      	   <div class="layui-form-item">
+              <label for="L_repass" class="layui-form-label">
+              </label>
+              <button  class="layui-btn"  lay-submit="" onClick="addTrainMessage()">
+                  增加
+              </button>
+               <label for="L_repass" class="layui-form-label">
+              </label>
+              <button  class="layui-btn"  lay-submit="" onClick="alert('取消')">
+                  取消
+              </button>
+          </div>
+    </div>
+    <script>
+        layui.use(['form','layer'], function(){
+            $ = layui.jquery;
+          var form = layui.form
+          ,layer = layui.layer;
+        
+          //自定义验证规则
+          form.verify({
+            nikename: function(value){
+              if(value.length < 5){
+                return '昵称至少得5个字符啊';
+              }
+            }
+            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+            ,repass: function(value){
+                if($('#L_pass').val()!=$('#L_repass').val()){
+                    return '两次密码不一致';
+                }
+            }
+          });
+
+          //监听提交
+          form.on('submit(add)', function(data){
+            console.log(data);
+            //发异步，把数据提交给php
+            layer.alert("增加成功", {icon: 6},function () {
+                // 获得frame索引
+                var index = parent.layer.getFrameIndex(window.name);
+                //关闭当前frame
+                parent.layer.close(index);
+                // 可以对父窗口进行刷新 
+                x_admin_father_reload();
+            });
+            return false;
+          });
+          
+          
+        });
+    </script>
+    <script>var _hmt = _hmt || []; (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();</script>
+  </body>
+
+</html>

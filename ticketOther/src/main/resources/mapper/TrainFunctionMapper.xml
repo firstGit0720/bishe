@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ticketother.demo.dao.TrainFunctionDao">
+    <resultMap id="trainSeatMap" type="com.ticketother.demo.entity.TrainSeat">
+        <id property="id" column="id"/>
+        <result property="trainId" column="train_id"/>
+
+        <result property="seatBestEnery" column="seat_best_enery"/>
+        <result property="seatBestNum" column="seat_best_num"/>
+        <result property="seatBestPrice" column="seat_best_price"/>
+        <result property="seatBestCarriage" column="seat_best_carriage"/>
+
+        <result property="seatFirstEnery" column="seat_first_enery"/>
+        <result property="seatFirstNum" column="seat_first_num"/>
+        <result property="seatFirstPrice" column="seat_first_price"/>
+        <result property="seatFirstCarriage" column="seat_first_carriage"/>
+
+        <result property="seatSecondEnery" column="seat_second_enery"/>
+        <result property="seatSecondNum" column="seat_second_num"/>
+        <result property="seatSecondPrice" column="seat_second_price"/>
+        <result property="seatSecondCarriage" column="seat_second_carriage"/>
+
+        <result property="sleeperFirstSoftEnery" column="sleeper_first_soft_enery"/>
+        <result property="sleeperFirstSoftNum" column="sleeper_first_soft_num"/>
+        <result property="sleeperFirstSoftPrice" column="sleeper_first_soft_price"/>
+        <result property="sleeperFirstSoftCarriage" column="sleeper_first_soft_carriage"/>
+
+        <result property="sleeperBestEnery" column="sleeper_best_enery"/>
+        <result property="sleeperBestNum" column="sleeper_best_num"/>
+        <result property="sleeperBestCarriage" column="sleeper_best_carriage"/>
+        <result property="sleeperBestPrice" column="sleeper_best_price"/>
+
+        <result property="sleeperSportEnery" column="sleeper_sport_enery"/>
+        <result property="sleeperSportNum" column="sleeper_sport_num"/>
+        <result property="sleeperSportPrice" column="sleeper_sport_price"/>
+        <result property="sleeperSportCarriage" column="sleeper_sport_carriage"/>
+
+        <result property="sleeperStiffEnery" column="sleeper_stiff_enery"/>
+        <result property="sleeperStiffNum" column="sleeper_stiff_num"/>
+        <result property="sleeperStiffPrice" column="sleeper_stiff_price"/>
+        <result property="sleeperStiffCarriage" column="sleeper_stiff_carriage"/>
+
+        <result property="seatSoftEnery" column="seat_soft_enery"/>
+        <result property="seatSoftNum" column="seat_soft_num"/>
+        <result property="seatSoftPrice" column="seat_soft_price"/>
+        <result property="seatSoftCarriage" column="seat_soft_carriage"/>
+
+        <result property="seatStiffEnery" column="seat_stiff_enery"/>
+        <result property="seatStiffNum" column="seat_stiff_num"/>
+        <result property="seatStiffPrice" column="seat_stiff_price"/>
+        <result property="seatStiffCarriage" column="seat_stiff_carriage"/>
+
+        <result property="seatNoEnery" column="seat_no_enery"/>
+        <result property="seatNoNum" column="seat_no_num"/>
+        <result property="seatNoPrice" column="seat_no_price"/>
+        <result property="seatNoCarriage" column="seat_no_carriage"/>
+
+        <result property="seatOtherEnery" column="seat_other_enery"/>
+        <result property="seatOtherNum" column="seat_other_num"/>
+        <result property="seatOtherPrice" column="seat_other_price"/>
+        <result property="seatOtherCarriage" column="seat_other_carriage"/>
+    </resultMap>
+
+    <resultMap id="trainMap" type="com.ticketother.demo.entity.Train">
+        <id property="id" column="id"/>
+        <result property="trainCard" column="train_card"/>
+        <result property="trainFrom" column="train_from"/>
+        <result property="trainFromTime" column="train_from_time"/>
+        <result property="trainArrive" column="train_arrive"/>
+        <result property="trainArriveTime" column="train_arrive_time"/>
+        <result property="trainAfter" column="train_after"/>
+        <result property="trainSeat" column="train_seat"/>
+        <result property="trainWait" column="train_wait"/>
+        <result property="trainStatus" column="train_status"/>
+    </resultMap>
+    <!--添加火车信息-->
+    <insert id="addTicket" parameterType="com.ticketother.demo.entity.Train" useGeneratedKeys="true" keyProperty="id">
+        insert into train(train_card,train_from,train_from_time,train_arrive,train_arrive_time,train_after,train_seat)
+        value (#{train.trainCard},#{train.trainFrom},#{train.trainFromTime},#{train.trainArrive},#{train.trainArriveTime},#{train.trainAfter},#{train.trainSeat})
+    </insert>
+    <!--根据车次查询id-->
+    <select id="selectIdByCard" resultType="java.lang.Long" parameterType="java.lang.String">
+        select id from train where train_card = #{trainCard}
+    </select>
+
+    <!--根据火车id查询火车座位信息-->
+    <select id="selectSeatByTrainId" resultMap="trainSeatMap" parameterType="java.lang.Long">
+        select * from train_seat where train_id = #{trainId}
+    </select>
+    <!--添加车座信息-->
+    <!-- 动态sql插入方法二   start -->
+    <!-- 对应的插入字段的名字 -->
+    <sql id="key">
+        <trim suffixOverrides=",">
+            <if test="trainSeat.seatBestEnery!=null and trainSeat.seatBestEnery!=''">
+                seat_best_enery,
+            </if>
+            <if test="trainSeat.seatBestNum!=null and trainSeat.seatBestNum!=''">
+                seat_best_num,
+            </if>
+            <if test="trainSeat.seatBestPrice!=null and trainSeat.seatBestPrice!=''">
+                seat_best_price,
+            </if>
+            <if test="trainSeat.seatBestCarriage!=null and trainSeat.seatBestCarriage!=''">
+                seat_best_carriage,
+            </if>
+            <if test="trainSeat.seatFirstEnery!=null and trainSeat.seatFirstEnery!=''">
+                seat_first_enery,
+            </if>
+            <if test="trainSeat.seatFirstNum!=null and trainSeat.seatFirstNum!=''">
+                seat_first_num,
+            </if>
+            <if test="trainSeat.seatFirstPrice!=null and trainSeat.seatFirstPrice!=''">
+                seat_first_price,
+            </if>
+            <if test="trainSeat.seatFirstCarriage!=null and trainSeat.seatFirstCarriage!=''">
+                seat_first_carriage,
+            </if>
+            <if test="trainSeat.seatSecondEnery!=null and trainSeat.seatSecondEnery!=''">
+                seat_second_enery,
+            </if>
+            <if test="trainSeat.seatSecondNum!=null and trainSeat.seatSecondNum!=''">
+                seat_second_num,
+            </if>
+            <if test="trainSeat.seatSecondPrice!=null and trainSeat.seatSecondPrice!=''">
+                seat_second_srice,
+            </if>
+            <if test="trainSeat.seatSecondCarriage!=null and trainSeat.seatSecondCarriage!=''">
+                seat_second_carriage,
+            </if>
+            <if test="trainSeat.sleeperFirstSoftEnery!=null and trainSeat.sleeperFirstSoftEnery!=''">
+                sleeper_first_soft_enery,
+            </if>
+            <if test="trainSeat.sleeperFirstSoftNum!=null and trainSeat.sleeperFirstSoftNum!=''">
+                sleeper_first_soft_num,
+            </if>
+            <if test="trainSeat.sleeperFirstSoftPrice!=null and trainSeat.sleeperFirstSoftPrice!=''">
+                sleeper_first_soft_price,
+            </if>
+            <if test="trainSeat.sleeperFirstSoftCarriage!=null and trainSeat.sleeperFirstSoftCarriage!=''">
+                sleeper_first_soft_carriage,
+            </if>
+            <if test="trainSeat.sleeperBestEnery!=null and trainSeat.sleeperBestEnery!=''">
+                sleeper_best_enery,
+            </if>
+            <if test="trainSeat.sleeperBestNum!=null and trainSeat.sleeperBestNum!=''">
+                sleeper_best_num,
+            </if>
+            <if test="trainSeat.sleeperBestCarriage!=null and trainSeat.sleeperBestCarriage!=''">
+                sleeper_best_carriage,
+            </if>
+            <if test="trainSeat.sleeperBestPrice!=null and trainSeat.sleeperBestPrice!=''">
+                sleeper_best_price,
+            </if>
+            <if test="trainSeat.sleeperSportEnery!=null and trainSeat.sleeperSportEnery!=''">
+                sleeper_sport_enery,
+            </if>
+            <if test="trainSeat.sleeperSportNum!=null and trainSeat.sleeperSportNum!=''">
+                sleeper_sport_num,
+            </if>
+            <if test="trainSeat.sleeperSportCarriage!=null and trainSeat.sleeperSportCarriage!=''">
+                sleeper_sport_carriage,
+            </if>
+            <if test="trainSeat.sleeperSportPrice!=null and trainSeat.sleeperSportPrice!=''">
+                sleeper_sport_price,
+            </if>
+            <if test="trainSeat.sleeperStiffEnery!=null and trainSeat.sleeperStiffEnery!=''">
+                sleeper_stiff_enery,
+            </if>
+            <if test="trainSeat.sleeperStiffNum!=null and trainSeat.sleeperStiffNum!=''">
+                sleeper_stiff_num,
+            </if>
+            <if test="trainSeat.sleeperStiffPrice!=null and trainSeat.sleeperStiffPrice!=''">
+                sleeper_stiff_price,
+            </if>
+            <if test="trainSeat.sleeperStiffCarriage!=null and trainSeat.sleeperStiffCarriage!=''">
+                sleeper_stiff_carriage,
+            </if>
+            <if test="trainSeat.seatSoftEnery!=null and trainSeat.seatSoftEnery!=''">
+                seat_soft_enery,
+            </if>
+            <if test="trainSeat.seatSoftNum!=null and trainSeat.seatSoftNum!=''">
+                seat_soft_num,
+            </if>
+            <if test="trainSeat.seatSoftPrice!=null and trainSeat.seatSoftPrice!=''">
+                seat_soft_price,
+            </if>
+            <if test="trainSeat.seatSoftCarriage!=null and trainSeat.seatSoftCarriage!=''">
+                seat_soft_carriage,
+            </if>
+            <if test="trainSeat.seatStiffEnery!=null and trainSeat.seatStiffEnery!=''">
+                seat_stiff_enery,
+            </if>
+            <if test="trainSeat.seatStiffNum!=null and trainSeat.seatStiffNum!=''">
+                seat_stiff_num,
+            </if>
+            <if test="trainSeat.seatStiffPrice!=null and trainSeat.seatStiffPrice!=''">
+                seat_stiff_price,
+            </if>
+            <if test="trainSeat.seatStiffCarriage!=null and trainSeat.seatStiffCarriage!=''">
+                seat_stiff_carriage,
+            </if>
+            <if test="trainSeat.seatNoEnery!=null and trainSeat.seatNoEnery!=''">
+                seat_no_enery,
+            </if>
+            <if test="trainSeat.seatNoNum!=null and trainSeat.seatNoNum!=''">
+                seat_no_num,
+            </if>
+            <if test="trainSeat.seatNoPrice!=null and trainSeat.seatNoPrice!=''">
+                seat_no_price,
+            </if>
+            <if test="trainSeat.seatNoCarriage!=null and trainSeat.seatNoCarriage!=''">
+                seat_no_carriage,
+            </if>
+            <if test="trainSeat.seatOtherEnery!=null and trainSeat.seatOtherEnery!=''">
+                seat_other_enery,
+            </if>
+            <if test="trainSeat.seatOtherNum!=null and trainSeat.seatOtherNum!=''">
+                seat_other_num,
+            </if>
+            <if test="trainSeat.seatOtherPrice!=null and trainSeat.seatOtherPrice!=''">
+                seat_other_price,
+            </if>
+            <if test="trainSeat.seatOtherCarriage!=null and trainSeat.seatOtherCarriage!=''">
+                seat_other_carriage,
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 对应的插入字段的值 -->
+    <sql id="values">
+        <trim suffixOverrides=",">
+            <if test="trainSeat.seatBestEnery!=null and trainSeat.seatBestEnery!=''">
+                #{trainSeat.seatBestEnery},
+            </if>
+            <if test="trainSeat.seatBestNum!=null and trainSeat.seatBestNum!=''">
+                #{trainSeat.seatBestNum},
+            </if>
+            <if test="trainSeat.seatBestPrice!=null and trainSeat.seatBestPrice!=''">
+                #{trainSeat.seatBestPrice},
+            </if>
+            <if test="trainSeat.seatBestCarriage!=null and trainSeat.seatBestCarriage!=''">
+                #{trainSeat.seatBestCarriage},
+            </if>
+            <if test="trainSeat.seatFirstEnery!=null and trainSeat.seatFirstEnery!=''">
+                #{trainSeat.seatFirstEnery},
+            </if>
+            <if test="trainSeat.seatFirstNum!=null and trainSeat.seatFirstNum!=''">
+                #{trainSeat.seatFirstNum},
+            </if>
+            <if test="trainSeat.seatFirstPrice!=null and trainSeat.seatFirstPrice!=''">
+                #{trainSeat.seatFirstPrice},
+            </if>
+            <if test="trainSeat.seatFirstCarriage!=null and trainSeat.seatFirstCarriage!=''">
+                #{trainSeat.seatFirstCarriage},
+            </if>
+            <if test="trainSeat.seatSecondEnery!=null and trainSeat.seatSecondEnery!=''">
+                #{trainSeat.seatSecondEnery},
+            </if>
+            <if test="trainSeat.seatSecondNum!=null and trainSeat.seatSecondNum!=''">
+                #{trainSeat.seatSecondNum},
+            </if>
+            <if test="trainSeat.seatSecondPrice!=null and trainSeat.seatSecondPrice!=''">
+                #{trainSeat.seatSecondPrice},
+            </if>
+            <if test="trainSeat.seatSecondCarriage!=null and trainSeat.seatSecondCarriage!=''">
+                #{trainSeat.seatSecondCarriage},
+            </if>
+            <if test="trainSeat.sleeperFirstSoftEnery!=null and trainSeat.sleeperFirstSoftEnery!=''">
+                #{trainSeat.sleeperFirstSoftEnery},
+            </if>
+            <if test="trainSeat.sleeperFirstSoftNum!=null and trainSeat.sleeperFirstSoftNum!=''">
+                #{trainSeat.sleeperFirstSoftNum},
+            </if>
+            <if test="trainSeat.sleeperFirstSoftPrice!=null and trainSeat.sleeperFirstSoftPrice!=''">
+                #{trainSeat.sleeperFirstSoftPrice},
+            </if>
+            <if test="trainSeat.sleeperFirstSoftCarriage!=null and trainSeat.sleeperFirstSoftCarriage!=''">
+                #{trainSeat.sleeperFirstSoftCarriage},
+            </if>
+            <if test="trainSeat.sleeperBestEnery!=null and trainSeat.sleeperBestEnery!=''">
+                #{trainSeat.sleeperBestEnery},
+            </if>
+            <if test="trainSeat.sleeperBestNum!=null and trainSeat.sleeperBestNum!=''">
+                #{trainSeat.sleeperBestNum},
+            </if>
+            <if test="trainSeat.sleeperBestCarriage!=null and trainSeat.sleeperBestCarriage!=''">
+                #{trainSeat.sleeperBestCarriage},
+            </if>
+            <if test="trainSeat.sleeperBestPrice!=null and trainSeat.sleeperBestPrice!=''">
+                #{trainSeat.sleeperBestPrice},
+            </if>
+            <if test="trainSeat.sleeperSportEnery!=null and trainSeat.sleeperSportEnery!=''">
+                #{trainSeat.seatBestEnery},
+            </if>
+            <if test="trainSeat.sleeperSportNum!=null and trainSeat.sleeperSportNum!=''">
+                #{trainSeat.sleeperSportNum},
+            </if>
+            <if test="trainSeat.sleeperSportCarriage!=null and trainSeat.sleeperSportCarriage!=''">
+                #{trainSeat.sleeperSportCarriage},
+            </if>
+            <if test="trainSeat.sleeperSportPrice!=null and trainSeat.sleeperSportPrice!=''">
+                #{trainSeat.sleeperSportPrice},
+            </if>
+            <if test="trainSeat.sleeperStiffEnery!=null and trainSeat.sleeperStiffEnery!=''">
+                #{trainSeat.sleeperStiffEnery},
+            </if>
+            <if test="trainSeat.sleeperStiffNum!=null and trainSeat.sleeperStiffNum!=''">
+                #{trainSeat.sleeperStiffNum},
+            </if>
+            <if test="trainSeat.sleeperStiffPrice!=null and trainSeat.sleeperStiffPrice!=''">
+                #{trainSeat.sleeperStiffPrice},
+            </if>
+            <if test="trainSeat.sleeperStiffCarriage!=null and trainSeat.sleeperStiffCarriage!=''">
+                #{trainSeat.sleeperStiffCarriage},
+            </if>
+            <if test="trainSeat.seatSoftEnery!=null and trainSeat.seatSoftEnery!=''">
+                #{trainSeat.seatSoftEnery},
+            </if>
+            <if test="trainSeat.seatSoftNum!=null and trainSeat.seatSoftNum!=''">
+                #{trainSeat.seatSoftNum},
+            </if>
+            <if test="trainSeat.seatSoftPrice!=null and trainSeat.seatSoftPrice!=''">
+                #{trainSeat.seatSoftPrice},
+            </if>
+            <if test="trainSeat.seatSoftCarriage!=null and trainSeat.seatSoftCarriage!=''">
+                #{trainSeat.seatSoftCarriage},
+            </if>
+            <if test="trainSeat.seatStiffEnery!=null and trainSeat.seatStiffEnery!=''">
+                #{trainSeat.seatStiffEnery},
+            </if>
+            <if test="trainSeat.seatStiffNum!=null and trainSeat.seatStiffNum!=''">
+                #{trainSeat.seatStiffNum},
+            </if>
+            <if test="trainSeat.seatStiffPrice!=null and trainSeat.seatStiffPrice!=''">
+                #{trainSeat.seatStiffPrice},
+            </if>
+            <if test="trainSeat.seatStiffCarriage!=null and trainSeat.seatStiffCarriage!=''">
+                #{trainSeat.seatStiffCarriage},
+            </if>
+            <if test="trainSeat.seatNoEnery!=null and trainSeat.seatNoEnery!=''">
+                #{trainSeat.seatNoEnery},
+            </if>
+            <if test="trainSeat.seatNoNum!=null and trainSeat.seatNoNum!=''">
+                #{trainSeat.seatNoNum},
+            </if>
+            <if test="trainSeat.seatNoPrice!=null and trainSeat.seatNoPrice!=''">
+                #{trainSeat.seatNoPrice},
+            </if>
+            <if test="trainSeat.seatNoCarriage!=null and trainSeat.seatNoCarriage!=''">
+                #{trainSeat.seatNoCarriage},
+            </if>
+            <if test="trainSeat.seatOtherEnery!=null and trainSeat.seatOtherEnery!=''">
+                #{trainSeat.seatOtherEnery},
+            </if>
+            <if test="trainSeat.seatOtherNum!=null and trainSeat.seatOtherNum!=''">
+                #{trainSeat.seatOtherNum},
+            </if>
+            <if test="trainSeat.seatOtherPrice!=null and trainSeat.seatOtherPrice!=''">
+                #{trainSeat.seatOtherPrice},
+            </if>
+            <if test="trainSeat.seatOtherCarriage!=null and trainSeat.seatOtherCarriage!=''">
+                #{trainSeat.seatOtherCarriage},
+            </if>
+        </trim>
+    </sql>
+    <insert id="addTrainSeat" parameterType="com.ticketother.demo.entity.TrainSeat">
+        insert into train_seat(train_id, <include refid="key"/>)
+        values(#{trainSeat.trainId},<include refid="values"/>)
+    </insert>
+
+    <!--添加站点信息-->
+    <insert id="addTrainPassSite" parameterType="com.ticketother.demo.entity.TrainArrive">
+        insert into train_arrive(train_id,train_arrive,train_arrive_time,train_arrive_wait,train_after,train_arrive_grade)
+        value (#{trainArrive.trainId},#{trainArrive.trainArrive},#{trainArrive.trainArriveTime},#{trainArrive.trainArriveWite},#{trainArrive.trainAfter},#{trainArrive.trainArriveGrade})
+    </insert>
+
+    <!--查询火车的信息-->
+    <select id="selectTrainByTrainCard"  resultMap="trainMap" parameterType="java.lang.String">
+        select * from train where train_card = #{trainCard}
+    </select>
+    <select id="selectTrainByTrainId"  resultMap="trainMap" parameterType="java.lang.Long">
+        select * from train where id = #{trainId}
+    </select>
+
+    <!--获取所有的火车信息-->
+    <select id="getAllTrain" resultMap="trainMap">
+         select * from train
+        <if test="start > 0 and end > 0">
+            limit #{start} , #{end}
+        </if>
+    </select>
+
+    <!--修改火车信息-->
+    <update id="updateTrain" parameterType="com.ticketother.demo.entity.Train" >
+        update train
+        set train_from = #{train.trainFrom},
+        train_from_time = #{train.trainFromTime},
+        train_arrive = #{train.trainArrive},
+        train_arrive_time = #{train.trainArriveTime}
+        where id = #{train.id}
+    </update>
+
+</mapper>

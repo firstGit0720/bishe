@@ -1,0 +1,49 @@
+<html class="x-admin-sm">
+  <head>
+    <meta charset="UTF-8">
+    <title>中间站点信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="./css/font.css">
+     <link rel="stylesheet" href="css/button.css" />
+    <link rel="stylesheet" href="./css/xadmin.css">
+   <link rel="stylesheet" href="css/datatables.min.css" />
+    <script type="text/javascript" src="js/jquery-3.3.1.js" ></script>
+    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/cookie.js"></script>
+		<script type="text/javascript" src="js/datatable.js" ></script>
+		<script type="text/javascript" src="js/arrive-list.js" ></script>
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body>
+    <div class="x-nav">
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <table class="layui-table x-admin" id="arriveTable">
+        <thead>
+          <tr>
+          	<th>id</th>
+            <th>站点名称</th>
+            <th>到达时间</th>
+            <th>停留时间</th>
+            <th>下次出发时间</th>
+            <th>经历时长</th>
+            <th>站点顺序</th>
+            <th>操作</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+
+    </div>
+  </body>
+
+</html>

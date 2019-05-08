@@ -1,0 +1,184 @@
+@charset  "utf-8";
+/*主页的css文档*/
+*{
+	margin: 0;
+	padding: 0;
+	font-family: "微软雅黑";
+}
+body{
+    background:url(../images/bg.png) no-repeat;
+	background-color: rgb(28, 119, 172);
+	animation:go 100s linear infinite;
+}
+	@keyframes go{
+		
+		0%{
+			background-position:300 0; 
+			}
+			50%{
+				
+				background-position:500px;
+				}
+			
+		100%{
+			background-position:300 0; 
+			}
+		}
+
+.header{
+	min-width: 1200px;
+	height: 62px;
+	background: #f7f8f8;
+	border-bottom: 1px solid #d6dfea;
+}
+.header .inner{
+	width: 1160px;
+	height: 62px;
+	padding-left:20px;
+	padding-right:20px;
+	margin: 0 auto;
+}
+.header .inner .logo{
+   width: 182px;
+   height: 62px;    
+   float: left;
+}
+.header .inner .logo a{
+	display: block;
+	width: 182px;
+    height: 62px; 
+    
+}
+.header .inner .headlink{
+	float: right;
+	font-size: 12px;
+
+}
+.header .inner .headlink a{
+	font-size: 16px;
+	color: #1d5494;
+	line-height: 62px;
+	
+}
+.header .inner .headlink button{
+	font-size: 16px;
+	color: #1d5494;
+	line-height: 25px;
+	
+}
+
+.lable{
+	margin-left:25px ;
+}
+.myinput{
+	width: 260px;
+	height: 24px;
+	border: 1px solid #96a5b4;
+	border-radius: 3px;
+	margin: 0 auto; 
+	margin-bottom: 10px;
+	padding: 8px 10px;
+	position: relative;
+	margin-top: 15px;
+	margin-left:10px ;
+}
+
+/*.img{
+	position: absolute;
+	right: 80px;
+	top: 180px;
+}*/
+.selectbox{
+	top: 150px;
+	position: absolute;
+	right: 200px;
+	width: 420px;
+	height: 420px;
+	border-radius: 3px;
+	border:1px solid #d6dfea;
+	background:#FFF;
+}
+.selectbox .head{
+	height: 50px;
+	width: 320px;
+	border-bottom: 1px solid #c0cdd9;
+	background: #f9fbfe;
+	position: relative;
+	padding: 0 50px;
+}
+
+.selectbox .head a{
+	color: #999;
+	font-size: 16px;
+	line-height: 50px;
+}
+.selectbox .head a.left{
+    float: left;
+}
+.selectbox .head a.right{
+    float: right;
+}
+.selectbox .head a.sel{
+	color: #333;
+}
+
+.submitBtn{
+   width: 284px;
+   height: 40px;
+   margin: 10px auto; 
+   line-height: 40px;
+   text-align: center;
+   
+   
+}
+.submitBtn input{
+	width:284px;
+	height:40px;
+	background: #5a98de;
+	color: #fff;
+	border-radius: 3px;
+	outline:none;
+	border:0px;
+	font-size: 16px;
+	cursor: pointer;
+}
+.submitBtn input:hover{
+	background:#00FF00;
+}
+
+.fontColor{
+	color: darkorange;
+}
+/*购买按钮的样式*/
+.myBtn{
+	width: 40px;
+	height: 25px;
+	text-decoration:none;
+	background:#449D44;
+	color:#f2f2f2;
+	
+	padding: 10px 30px 10px 30px;
+	font-size:16px;
+	font-family: 微软雅黑,宋体,Arial,Helvetica,Verdana,sans-serif;
+	/*font-weight:bold;*/
+	border-radius:25px;
+	
+	-webkit-transition:all linear 0.30s;
+	-moz-transition:all linear 0.30s;
+	transition:all linear 0.30s;
+
+}
+.myBtn:hover { background:#385f9e; }
+
+.buyTicket{
+	width: 75px; height: 35px; line-height: 35px; margin-left: 10px; margin-top: 10px; text-align: center; background-color: #0095D9; color: #FFFFFF; float: left; border-radius: 5px;
+}
+
+.customFont{
+	font-size: 18px;
+	
+}
+.myfont{
+	font-size: 20px;
+	margin-left: 20px;
+}

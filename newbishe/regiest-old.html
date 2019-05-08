@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>注册用户</title>
+		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/regiest.css" />
+		<script type="text/javascript" src="js/jquery-3.3.1.js" ></script>
+		<script type="text/javascript" src="js/regiest.js" ></script>
+	</head>
+	<body>
+		<div class="header">
+	   		<div class="inner">
+	   			<div class="logo">
+	  			 <a href="index.html" title="火车票"></a>
+	   			</div>
+	   			<div class="headlink">
+				  	<a href="index.html">首页</a>
+				  	 &nbsp;|&nbsp;
+	   				<a href="login.html">登录</a>
+	   				&nbsp;|&nbsp;
+	   				<a href="regiest.html">注册</a>
+	                &nbsp;|&nbsp;
+				  	<a href="/" onclick="lgout()">▶注销</a>
+				  	 &nbsp;|&nbsp;
+				  	<a href="/" onclick="goBack()">进入后台</a>
+	   			</div>
+	   		</div>
+	   </div>
+		
+		<div class="message">
+			<form id="regiest" >
+				<div class="center">
+					<label for="pname">*  姓名:</label>
+					<input class="myinput" type="text" id="pname" name="pname" placeholder="姓名（您的真实姓名）" />
+				</div>
+				<div class="center">
+					<label for="username">*  用户名:</label>
+					<input class="myinput" type="text" id="username" name="username" placeholder="用户名（用于登录的名称）" />
+				</div>
+				<div class="center">
+					<label for="password">*  密&nbsp;码:</label>
+					<input class="myinput" type="password" id="password" name="password" placeholder="密码" />
+				</div>
+				<div class="center">
+					<label for="password2">*  确认密码:</label>
+					<input class="myinput" type="password" id="password2" name="password2" placeholder="确认密码" />
+				</div>
+				<div class="center">
+					<span>*  性别</span>
+					<lable for="man">男</lable>
+					<input type="radio" name="userSex" value="0" checked="checked"  />
+					<lable for="woman">女</lable>
+					<input type="radio" name="userSex" value="1"   />
+				</div>
+				<div class="center">
+					<label for="password">* 手机号:</label>
+					<input class="myinput" type="text" id="userPhone" name="userPhone" placeholder="手机号" />
+				</div>
+				<div class="center">
+					<label for="password">*  出身日期:</label>
+					<input class="myinput" type="date" id="userBirthday" name="userBirthday" placeholder="出身日期" />
+				</div>
+				<div class="center">
+					<label for="userCard">*  身份证号码:</label>
+					<input class="myinput" type="datetime" id="userCard" name="userCard" placeholder="身份证号码" />
+				</div>
+				<div class="center">
+					<label for="userCard">*  邮箱:</label>
+					<input class="myinput" type="email" id="userEmail" name="userEmail" placeholder="邮箱" />
+				</div>
+				<div class="center">
+					<label for="userAddress">*  当前所在地:</label>
+					<input class="myinput" type="text" id="userAddress" name="userAddress" placeholder="住址" />
+				</div>
+				<div class="submitBtn">
+                	<input type="button" class="ok" value="注册" id="isok"/>
+                	<input type="button" class="no" value="取消" id="exit" />
+                </div>
+			</form>
+		</div>
+	</body>
+</html>

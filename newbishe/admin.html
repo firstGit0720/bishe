@@ -1,0 +1,121 @@
+<!doctype html>
+<html  class="x-admin-sm">
+<head>
+	<meta charset="UTF-8">
+	<title>用户信息主页</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="./css/font.css">
+	<link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript"src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/public_check.js" ></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/cookie.js"></script>
+    <script>
+        // 是否开启刷新记忆tab功能
+        // var is_remember = false;
+    </script>
+    
+</head>
+<body>
+	
+    <!-- 顶部开始 -->
+    <div class="container">
+        <div class="logo"><a href="./index.html">火车票管理系统</a></div>
+    	<ul class="layui-nav right" lay-filter="" style="margin-right: 50px;">
+		  <li class="layui-nav-item"><a href="index.html">首页</a></li>
+		  <li class="layui-nav-item"><a href="login.html">登录</a></li>
+		  <li class="layui-nav-item"><a href="regiest.html">注册</a></li>
+          <li class="layui-nav-item">
+            <a href="javascript:;"><span id="show"></span></a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+              <!--<dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>-->
+              <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
+              <dd><a onclick="showUserMessage()">退出</a></dd>
+            </dl>
+          </li>
+        </ul>
+        
+    </div>
+    <!-- 顶部结束 -->
+    <!-- 中部开始 -->
+     <!-- 左侧菜单开始 -->
+    <div class="left-nav">
+      <div id="side-nav">
+        <ul id="nav">
+        	<li>
+                <a _href="admin-message-edit.html">
+                    <i class="iconfont">&#xe6a7;</i>
+                    <cite>修改个人信息</cite>
+                </a>
+            </li>
+            <li>
+                <a _href="admin-password.html">
+                    <i class="iconfont">&#xe6a7;</i>
+                    <cite>修改密码</cite>
+                </a>
+            </li>
+            <li>
+                <a _href="journey_histroy.html">
+                    <i class="iconfont">&#xe6a7;</i>
+                    <cite>历史行程</cite>
+                </a>
+            </li>
+             <li>
+                <a _href="journey_future.html">
+                    <i class="iconfont">&#xe6a7;</i>
+                    <cite>未完成的行程</cite>
+                </a>
+            </li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="x-slide_left"></div> -->
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+          <ul class="layui-tab-title">
+            <li class="home"><i class="layui-icon">&#xe68e;</i>我的桌面</li>
+          </ul>
+          <div class="layui-unselect layui-form-select layui-form-selected" id="tab_right">
+                <dl>
+                    <dd data-type="this">关闭当前</dd>
+                    <dd data-type="other">关闭其它</dd>
+                    <dd data-type="all">关闭全部</dd>
+                </dl>
+          </div>
+          <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <iframe src='admin-message.html' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+            </div>
+          </div>
+          <div id="tab_show"></div>
+        </div>
+    </div>
+    <div class="page-content-bg"></div>
+    <!-- 右侧主体结束 -->
+    <!-- 中部结束 -->
+    <!-- 底部开始 -->
+    <div class="footer">
+        <div class="copyright"></div>  
+    </div>
+    <!-- 底部结束 -->
+<!--    <script>
+    	$('#show').empty()
+		$("#show").append("菜单")
+	 //获取当前登录人的信息
+  	var username =sessionStorage.getItem("uesrMessage");
+  	if(username.length == 0 || username ==null){
+		$('#show').empty()
+		$("#show").append("菜单")
+	}else{
+		$('#show').empty()
+		$("#show").append(username)
+	}
+</script>-->
+</body>
+</html>

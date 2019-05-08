@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.other.demo.dao.UserDao">
+    <!--<parameterMap id="user" type="com.other.demo.entity.User">
+        <parameter property="userName" jdbcType="varchar(255)" javaType="String"/>
+        <parameter property="userPname" jdbcType="varchar(255)" javaType="String"/>
+        <parameter property="userSex" jdbcType="smallint" javaType="Short"/>
+        <parameter property="userAddress" jdbcType="varchar(255)" javaType="String"/>
+        <parameter property="userCard" jdbcType="varchar(255)" javaType="String"/>
+        <parameter property="userBirthday" jdbcType="date" javaType="Date"/>
+        <parameter property="userPhone" jdbcType="varchar(255)" javaType="String"/>
+        <parameter property="userEmail" jdbcType="varchar(255)" javaType="String"/>
+        <parameter property="userAge" jdbcType="int" javaType="Integer"/>
+    </parameterMap>-->
+    <resultMap id="user" type="com.other.demo.entity.User">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPname" column="user_pname"/>
+        <result property="userSex" column="user_sex"/>
+        <result property="userAddress" column="user_address"/>
+        <result property="userCard" column="user_card"/>
+        <result property="userBirthday" column="user_birthday"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userAge" column="user_age"/>
+    </resultMap>
+
+    <!--添加用户信息-->
+    <insert id="registerUser" parameterType="com.other.demo.entity.User">
+        insert into user(user_name,user_pname,user_sex,user_address,user_card,user_birthday,user_phone,user_email,user_age)
+        value(#{user.userName},#{user.userPname},#{user.userSex},#{user.userAddress},#{user.userCard},#{user.userBirthday},#{user.userPhone},#{user.userEmail},#{user.userAge})
+    </insert>
+    <!--添加用户密码-->
+    <insert id="insertPassword">
+        insert into user_password(user_id,user_password)
+        value (#{userId},#{password})
+    </insert>
+
+    <!--通过用户id从密码表中查找密码-->
+    <select id="getPassword" parameterType="java.lang.Long" resultType="java.lang.String">
+        select user_password from user_password where user_id=#{userId}
+    </select>
+
+    <!--通过用户名，查找用户id-->
+    <select id="getUserId" parameterType="java.lang.String" resultType="java.lang.Long">
+        select id from user where user_name = #{username}
+    </select>
+
+    <!--通过用户名查找用户信息-->
+    <select id="selectByUsername" parameterType="java.lang.String" resultMap="user">
+        select * from user where user_name = #{username}
+    </select>
+
+    <!--修改密码-->
+    <update id="updateUserPassword">
+        update from user_password
+        set user_password = #{newPassword}
+        where user_id = #{userId}
+    </update>
+
+    <!--修改用户信息-->
+    <update id="updateUserMessage" parameterType="com.other.demo.entity.User">
+        update user
+        set user_pname = #{user.userPname},
+        user_sex = #{user.userSex},
+        user_address = #{user.userAddress},
+        user_card = #{user.userCard},
+        user_birthday = #{user.userBirthday},
+        user_phone = #{user.userPhone},
+        user_email = #{user.userEmail}
+        where user_name = #{user.userName}
+    </update>
+
+    <!--删除用户信息-->
+    <delete id="deleteUser" parameterType="java.lang.Long">
+        delete  from user where id  =  #{id}
+    </delete>
+
+    <!--删除密码-->
+    <delete id="deletePassword" parameterType="java.lang.Long">
+        delete from user_password where user_id = #{userId}
+    </delete>
+
+    <!--根据id获取用户信息-->
+    <select id="getUserById"  resultMap="user" parameterType="java.lang.Long">
+        select  *  from user where id= #{userId}
+    </select>
+</mapper>

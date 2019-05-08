@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ticketother.demo.dao.IndentMessageDao">
+
+    <resultMap id="messageMap" type="com.ticketother.demo.entity.IndentMessage">
+        <id property="id" column="id"/>
+        <result property="indentTime" column="indent_time"/>
+        <result property="indentFrom" column="indent_from"/>
+        <result property="indentArrive" column="indent_arrive"/>
+        <result property="seatType" column="seat_type"/>
+        <result property="isPayment" column="is_payment"/>
+        <result property="isStatus" column="is_status"/>
+        <result property="isSuccess" column="is_success"/>
+        <result property="trainStartTime" column="train_start_time"/>
+        <result property="userId" column="user_id"/>
+        <result property="trainId" column="train_id"/>
+        <result property="seatMessage" column="seat_message"/>
+    </resultMap>
+
+    <!--查询车票信息-->
+    <select id="getMessage" parameterType="java.lang.Long" resultMap="messageMap">
+        select * from indent_message where id = #{id}
+    </select>
+
+    <!--修改车票状态-->
+    <update id="uodateTicketStatus">
+        update indent_message set is_status = #{status} where id = #{id}
+    </update>
+    <!--修改车票付款状态-->
+    <update id="uodatepPymentStatus">
+        update indent_message set is_payment = #{status} where id = #{id}
+    </update>
+</mapper>

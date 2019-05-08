@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="buyTicket" />
+        <module name="demo (1) (com.eurekaserve)" />
+        <module name="demo (2) (com.other)" />
+        <module name="demo (3) (com.redis)" />
+        <module name="demo (4) (com.buyTicket)" />
+        <module name="demo (5) (com.ticketother)" />
+        <module name="erueka" />
+        <module name="otherWays" />
+        <module name="redisService" />
+        <module name="ticketBuyWays" />
+        <module name="ticketOther" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="buyTicket" target="1.8" />
+      <module name="demo (1) (com.eurekaserve)" target="1.8" />
+      <module name="demo (2) (com.other)" target="1.8" />
+      <module name="demo (3) (com.redis)" target="1.8" />
+      <module name="demo (4) (com.buyTicket)" target="1.8" />
+      <module name="demo (5) (com.ticketother)" target="1.8" />
+      <module name="erueka" target="1.8" />
+      <module name="otherWays" target="1.8" />
+      <module name="redisService" target="1.8" />
+      <module name="ticketBuyWays" target="1.8" />
+      <module name="ticketOther" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
