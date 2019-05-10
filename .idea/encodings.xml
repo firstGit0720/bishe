@@ -4,7 +4,6 @@
     <file url="file://$PROJECT_DIR$/erueka" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/otherWays" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/redisService" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/redisService/src/main/java/com/redis/demo/redisUtil/RedisGlobalLock.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ticketBuyWays" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ticketBuyWays/src/main/java/com/buyticket/demo/redis/RedisGlobalLock.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ticketOther" charset="UTF-8" />

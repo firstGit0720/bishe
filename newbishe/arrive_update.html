@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		 <meta charset="UTF-8">
+	    <title>火车中间站点信息修改</title>
+	    <meta name="renderer" content="webkit">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+	    <link rel="stylesheet" href="./css/font.css">
+	    <link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="js/jquery-3.3.1.js" ></script>
+		<script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="./js/xadmin.js"></script>
+	    <script type="text/javascript" src="./js/cookie.js"></script>
+	    <script type="text/javascript" src="js/arrive-update.js" ></script>
+	</head>
+	<body>
+		<div class="x-body">
+	        <form class="layui-form">
+	        	<input type="hidden" id="id" name="id" />
+	        	<input type="hidden" id="trainId" name="trainId"  />
+	          <div class="layui-form-item">
+	              <label for="trainArrive" class="layui-form-label">
+	                 * 站点名称:
+	              </label>
+	              <div class="layui-input-inline">
+	                  <input type="text" id="trainArrive" name="trainArrive" required=""  placeholder="站点名称" 
+	                  autocomplete="off" class="layui-input">
+	              </div>
+	          </div>
+	          <div class="layui-form-item">
+	              <label for="trainArriveTime" class="layui-form-label">
+	                  *  到达时间:
+	              </label>
+	              <div class="layui-input-inline">
+	                  <input type="text" id="trainArriveTime" name="trainArriveTime" required=""  placeholder="到达时间"
+	                  autocomplete="off" class="layui-input">
+	              </div>
+	              <label for="trainArriveWite" class="layui-form-label">
+	                  *   等待时间:
+	              </label>
+	              <div class="layui-input-inline">
+	                  <input type="text" id="trainArriveWite" name="trainArriveWite" required=""  placeholder="等待时间"
+	                  autocomplete="off" class="layui-input">
+	              </div>
+	          </div>
+	          <div class="layui-form-item">
+	              <button  class="layui-btn" id="editSpaceOK" >
+	                  	修改
+	              </button>
+	              <button  class="layui-btn" id="exit">
+	                  	返回
+	              </button>
+	          </div>
+	      </form>
+	    </div>
+	</body>
+</html>

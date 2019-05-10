@@ -2,6 +2,7 @@ package com.ticketother.demo.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ticketother.demo.dto.BackTicketDto;
 import com.ticketother.demo.dto.IndentMessageDto;
 import com.ticketother.demo.dto.ShowTicketHestoryDto;
 import com.ticketother.demo.entity.IndentMessage;
@@ -48,7 +49,7 @@ public class UserOtherController {
                 iDisplayLength = obj.getInteger("value");
             }
         }
-        List<IndentMessageDto> userHistroy = userOtherService.showUserHistroy(userId);
+        List<IndentMessageDto> userHistroy = userOtherService.showUserHistroy(userId,iDisplayStart,iDisplayLength);
         JSONObject getObj = new JSONObject();
         getObj.put("sEcho", sEcho);
         getObj.put("iTotalRecords", userHistroy.size());//实际的行数
@@ -121,6 +122,72 @@ public class UserOtherController {
     @GetMapping("/getMessage")
     public IndentMessage getMessage(@RequestParam("id")long id){
         return userOtherService.getMessage(id);
+    }
+
+    /**
+     *
+     * @param
+     * @param aoData
+     * @return
+     */
+    @GetMapping("/allIndent")
+    public String getAllIndent(@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("aoData") String aoData){
+
+        JSONArray jsonarray = JSONArray.parseArray(aoData);
+        String sEcho = null;//记录操作的次数  
+        int iDisplayStart=0;// 起始索引    
+        int iDisplayLength=0;// 每页显示的行数    
+        //这里获取从前台传递过来的参数，从而确保是否分页、是否进行查询、是否排序等
+        for (int i = 0; i < jsonarray.size() ; i++){
+            JSONObject obj = (JSONObject) jsonarray.get(i);
+            if(obj.get("name").equals("sEcho")){
+                sEcho = obj.get("value").toString();
+            }else if(obj.get("name").equals("iDisplayStart")){
+                iDisplayStart = obj.getInteger("value");
+            }else if(obj.get("name").equals("iDisplayLength")){
+                iDisplayLength = obj.getInteger("value");
+            }
+        }
+        List<IndentMessageDto> userHistroy = userOtherService.allIndentMessage(startTime,endTime,iDisplayStart,iDisplayLength);
+        JSONObject getObj = new JSONObject();
+        getObj.put("sEcho", sEcho);
+        getObj.put("iTotalRecords", userHistroy.size());//实际的行数
+        getObj.put("iTotalDisplayRecords", userHistroy.size()); //显示的行数，和上面一致
+        getObj.put("aaData", userHistroy);
+        return getObj.toString();
+    }
+
+    /**
+     *
+     * @param
+     * @param aoData
+     * @return
+     */
+    @GetMapping("/allBackTicket")
+    public String getAllBackTicket(@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("aoData") String aoData){
+
+        JSONArray jsonarray = JSONArray.parseArray(aoData);
+        String sEcho = null;//记录操作的次数  
+        int iDisplayStart=0;// 起始索引    
+        int iDisplayLength=0;// 每页显示的行数    
+        //这里获取从前台传递过来的参数，从而确保是否分页、是否进行查询、是否排序等
+        for (int i = 0; i < jsonarray.size() ; i++){
+            JSONObject obj = (JSONObject) jsonarray.get(i);
+            if(obj.get("name").equals("sEcho")){
+                sEcho = obj.get("value").toString();
+            }else if(obj.get("name").equals("iDisplayStart")){
+                iDisplayStart = obj.getInteger("value");
+            }else if(obj.get("name").equals("iDisplayLength")){
+                iDisplayLength = obj.getInteger("value");
+            }
+        }
+        List<BackTicketDto> userHistroy = userOtherService.lists(startTime,endTime,iDisplayStart,iDisplayLength);
+        JSONObject getObj = new JSONObject();
+        getObj.put("sEcho", sEcho);
+        getObj.put("iTotalRecords", userHistroy.size());//实际的行数
+        getObj.put("iTotalDisplayRecords", userHistroy.size()); //显示的行数，和上面一致
+        getObj.put("aaData", userHistroy);
+        return getObj.toString();
     }
 
 }

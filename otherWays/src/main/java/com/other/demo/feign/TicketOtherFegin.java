@@ -4,6 +4,7 @@ import com.other.demo.dto.ShowTicketHestoryDto;
 import com.other.demo.dto.TrainSeatMessageDto;
 import com.other.demo.entity.IndentMessage;
 import com.other.demo.entity.Train;
+import com.other.demo.entity.TrainArrive;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -107,4 +108,46 @@ public interface TicketOtherFegin {
      */
     @PostMapping("/exitTicket")
     public boolean exitTicket(@RequestParam("id")long id);
+
+    /**
+     * 修改中间站点信息
+     * @param trainArriveStr
+     * @return
+     */
+    @PostMapping("/train/updateSpace")
+    public boolean updateSpace(@RequestParam("trainMessage")String trainArriveStr);
+
+    /**
+     * 获取中间站点的详细信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/train/getTrainArrive")
+    public TrainArrive getTrainArrive(@RequestParam("id") long id);
+    /**
+     * 修改火车状态 0 正常 1 停运
+     * @param trainId
+     * @param status
+     * @return
+     */
+    @PostMapping("/train/updateTrainSuccess")
+    public boolean updateTrainTask(@RequestParam("trainId") long trainId , @RequestParam("status") int status);
+
+    /**
+     * 所有的订单
+     * @param startTime
+     * @param endTime
+     * @param aoData
+     * @return
+     */
+    @GetMapping("/userother/allIndent")
+    public String getAllIndent(@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("aoData") String aoData);
+    /**
+     * 所有的退票和改签
+     * @param
+     * @param aoData
+     * @return
+     */
+    @GetMapping("/userother/allBackTicket")
+    public String getAllBackTicket(@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("aoData") String aoData);
 }

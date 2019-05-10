@@ -22,59 +22,62 @@
   </head>
   
   <body>
-    <div class="x-body">
-        <form class="layui-form">
-        	<input type="hidden" id="id" name="id" />
-          <div class="layui-form-item">
-              <label for="username" class="layui-form-label">
-                 *  车          次:
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="trainCard" name="trainCard" required="" lay-verify="required" placeholder="车次" disabled="disabled"
-                  autocomplete="off" class="layui-input">
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="from" class="layui-form-label">
-                  *  出   发   地:
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="from" name="from" required="" lay-verify="required" placeholder="出发地"
-                  autocomplete="off" class="layui-input">
-              </div>
-              <label for="fromTime" class="layui-form-label">
-                  *   出发时间:
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="fromTime" name="fromTime" required="" lay-verify="required" placeholder="出发时间"
-                  autocomplete="off" class="layui-input">
-              </div>
-          </div>
-          <div class="layui-form-item">
-          	<label for="arrive" class="layui-form-label">
-                  *  目   的   地:
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="arrive" name="arrive" required="" lay-verify="required" placeholder="目的地"
-                  autocomplete="off" class="layui-input">
-              </div>
-              <label for="arriveTime" class="layui-form-label">
-                  *  到达时间:
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="arriveTime" name="arriveTime" required="" lay-verify="required" placeholder="出发时间"
-                  autocomplete="off" class="layui-input">
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <button  class="layui-btn" id="editOK" >
-                  	修改
-              </button>
-              <button  class="layui-btn" id="exit">
-                  	返回
-              </button>
-          </div>
-      </form>
+    <div class="x-body" align="center">
+    	<fieldset class="layui-elem-field"  style="margin-top: 15px; width: 800px;">
+    			 <legend>火车基本信息的修改</legend>
+	        <form class="layui-form" style="margin-top: 15px;">
+	        	<input type="hidden" id="id" name="id" />
+	          <div class="layui-form-item">
+	              <label for="username" class="layui-form-label">
+	                 *  车          次:
+	              </label>
+	              <div class="layui-input-inline">
+	                  <input type="text" id="trainCard" name="trainCard" required="" lay-verify="required" placeholder="车次" disabled="disabled"
+	                  autocomplete="off" class="layui-input">
+	              </div>
+	          </div>
+	          <div class="layui-form-item">
+	              <label for="from" class="layui-form-label">
+	                  *  出   发   地:
+	              </label>
+	              <div class="layui-input-inline">
+	                  <input type="text" id="from" name="from" required="" lay-verify="required" placeholder="出发地"
+	                  autocomplete="off" class="layui-input">
+	              </div>
+	              <label for="fromTime" class="layui-form-label">
+	                  *   出发时间:
+	              </label>
+	              <div class="layui-input-inline">
+	                  <input type="text" id="fromTime" name="fromTime" required="" lay-verify="required" placeholder="出发时间"
+	                  autocomplete="off" class="layui-input">
+	              </div>
+	          </div>
+	          <div class="layui-form-item">
+	          	<label for="arrive" class="layui-form-label">
+	                  *  目   的   地:
+	              </label>
+	              <div class="layui-input-inline">
+	                  <input type="text" id="arrive" name="arrive" required="" lay-verify="required" placeholder="目的地"
+	                  autocomplete="off" class="layui-input">
+	              </div>
+	              <label for="arriveTime" class="layui-form-label">
+	                  *  到达时间:
+	              </label>
+	              <div class="layui-input-inline">
+	                  <input type="text" id="arriveTime" name="arriveTime" required="" lay-verify="required" placeholder="出发时间"
+	                  autocomplete="off" class="layui-input">
+	              </div>
+	          </div>
+	          <div class="layui-form-item"  style="margin-right: 300px;">
+	              <button  class="layui-btn" id="editOK" >
+	                  	修改
+	              </button>
+	              <button  class="layui-btn" id="exit">
+	                  	返回
+	              </button>
+	          </div>
+	      </form>
+      </fieldset>
     </div>
     <script>
         layui.use(['form','layer'], function(){

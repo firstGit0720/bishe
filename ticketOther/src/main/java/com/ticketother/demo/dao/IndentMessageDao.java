@@ -1,8 +1,11 @@
 package com.ticketother.demo.dao;
 
+import com.ticketother.demo.dto.IndentMessageDto;
 import com.ticketother.demo.entity.IndentMessage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 订单的dao
@@ -34,5 +37,15 @@ public interface IndentMessageDao {
      */
     public boolean uodatepPymentStatus(@Param("id") long id,@Param("status") int status);
 
+    /***
+     * 订单的显示以及查询
+     * @param startTime
+     * @param endTime
+
+     * @param start
+     * @param end
+     * @return
+     */
+    public List<IndentMessage> allIndentMessage(@Param("startTime") String startTime,@Param("endtime") String endTime,@Param("status") int status,@Param("start") int start,@Param("end") int end);
 
 }

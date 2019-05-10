@@ -14,11 +14,20 @@ $(function(){
 				userMessage = result;
                 },    
                 error : function(msg) {  
-	 				layer.msg('信息获取失败', {icon: 1});
+//	 				layer.msg('信息获取失败', {icon: 1});
                 }    
       });    
-	//获取所有会员信息,并封装到datatable
-	$("#userTables").dataTable({      
+
+	search = function(){
+		var user = $("#userpname").val()
+	 	$("#userTables").dataTable().fnDestroy();
+		getDateTable(user);
+	}
+	//显示table表格
+	getDateTable(null);
+	function getDateTable(userpanme){
+		//获取所有会员信息,并封装到datatable
+		$("#userTables").dataTable({      
                 "bProcessing": false,                   // 是否显示取数据时的那个等待提示    
 				searching: false,//搜索
                 "bServerSide": true,                    //这个用来指明是通过服务端来取数据    
@@ -41,7 +50,7 @@ $(function(){
 			                    "data": "id",
 			                    "render": function(data, type, full) {
 			                        return "<button class='smailButton' id='" + data + "' onClick =member_del(this,"+data+")>删除</button>"+
-									"<button class='smailButton' id='" + data + "' onClick = 'updateType("+data+")'>修改权限等级</button>";
+									"<button class='smailButton' style='width:120px;' id='" + data + "' onClick = 'updateType("+data+")'>修改权限等级</button>";
 			                    }
 			                }
 			            ],
@@ -56,7 +65,7 @@ $(function(){
 		
 		                    zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
 		                    //下面三者构成了总体的左下角的内容。
-		                    info: "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",//左下角的信息显示，大写的词为关键字。
+		                    info: "总共_PAGES_ 页，显示第_START_ 条到第 _END_ 条 ",//左下角的信息显示，大写的词为关键字。
 		                    infoEmpty: "0条记录",//筛选为空时左下角的显示。
 		                    infoFiltered: ""//筛选之后的左下角筛选提示，
 		                },
@@ -70,40 +79,47 @@ $(function(){
                 url : sSource,                              //这个就是请求地址对应sAjaxSource    
                 data : {
 					"aoData":JSON.stringify(aoData),
+					"userpname" : userpanme
 				},   //这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数 ,分页,排序,查询等的值   
                 type : 'get',    
                 dataType : 'json',   
 				contentType :"application/json;charset=UTF-8", 
                 async : false,  
                 success : function(result) {  
-			console.info(result)  
                     fnCallback(result);                     //把返回的数据传给这个方法就可以了,datatable会自动绑定数据的    
                 },    
                 error : function(msg) {    
-				layer.msg('数据获取失败', {icon: 1});
+				/*layer.msg('数据获取失败', {icon: 1});*/
                 }    
             });    
         } 
+	}
 
 	 updateType = function(id){
+	 	alert(id)
 	 	if(userMessage == null){
-	 		var txt=  "您的登录已过期,请重新登录!";
-			var option = {
-				title: "提示",
-				btn: parseInt("0011",2),
-				onOk: function(){
-					window.open.href = "login.html"
-				}
-			}
-			window.wxc.xcConfirm(txt, "custom", option);
+	 		 layer.confirm('您的登录时间已过期,请重新登录？',function(){
+      		 	window.location.href = "login.html"
+	        });
 	 	}else{
-	 		x_admin_show('会员权限修改','admin-edit.html?id='+id)
-	 		
+	 		if(userMessage.userType == 0){
+	 			setTimeout(function(){
+		 			x_admin_show('会员权限修改','admin-edit.html?id='+id)
+		 		},100)
+	 		}else{
+	 			  layer.msg('您的权限不够,不能完成此功能!', {icon: 2});
+	 		}
 	 	}
 	 	
 	 }  
 	
-	
+	/*"fnDrawCallback": function() {
+                                    var api = this.api();
+                                    var startIndex= api.context[0]._iDisplayStart;// 获取到本页开始的条数
+                                    api.column(1).nodes().each(function(cell, i) {
+                                        cell.innerHTML = startIndex + i + 1;
+                                    });
+                                }*/
 	
 	 member_del = function(obj,id){
 		if(userMessage == null){

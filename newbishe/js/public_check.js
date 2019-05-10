@@ -1,7 +1,23 @@
 $(function(){
 	 //获取当前登录人的信息
   	var username =sessionStorage.getItem("uesrMessage");
-  	 	
+  	var userMessage;
+  	 $.ajax({    
+                url :"http://localhost:8089/otherWays/getUser",                               
+                data : {
+									"username" : username
+								}, 
+                type : 'get',    
+                dataType : 'json',  
+								async : false, 
+								contentType :"application/json;charset=UTF-8", 
+				                success : function(result) {   
+								userMessage = result;
+								console.info(result)
+                },    
+                error : function(msg) {    
+                }    
+      });    	
   
   	$('#show').empty()
 	$("#show").append("菜单")
@@ -49,10 +65,8 @@ $(function(){
 				async : false, 
 				contentType :"application/json;charset=UTF-8", 
                 success : function(result) {   
-					if(result){
-						layer.msg('退出成功,即将调至主页！',{icon:1,time:1000});
-						setTimeout(function() {window.location.href = "index.html";}, 1000);
-					}
+					layer.msg('退出成功,即将调至主页！',{icon:1,time:1000});
+					setTimeout(function() {window.location.href = "index.html";}, 1000);
                 },    
                 error : function(msg) {    
                 }    

@@ -1,14 +1,18 @@
 package com.ticketother.demo.service.impl;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.netflix.discovery.converters.Auto;
 import com.ticketother.demo.dao.TrainFunctionDao;
+import com.ticketother.demo.dao.UserOtherDao;
 import com.ticketother.demo.dto.PassSiteDto;
 import com.ticketother.demo.dto.TrainSeatMessageDto;
 import com.ticketother.demo.entity.Train;
 import com.ticketother.demo.entity.TrainArrive;
 import com.ticketother.demo.entity.TrainSeat;
+import com.ticketother.demo.entity.TrainSeatMessage;
 import com.ticketother.demo.fegin.TicketBuyFegin;
 import com.ticketother.demo.service.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,8 @@ public class TrainServiceImpl implements TrainService {
 
     @Autowired
     private TrainFunctionDao trainDao;
+    @Autowired
+    private UserOtherDao userOtherDao;
     @Autowired
     private TicketBuyFegin ticketBuyFegin;
     //计算座位的价格
@@ -79,6 +85,7 @@ public class TrainServiceImpl implements TrainService {
             TrainSeat trainSeat = new TrainSeat();
             trainSeat.setTrainId(trainId);
             for (int i = 0 ; i< seatType.size(); i++){
+                System.out.println("座位等级是：" + seatType.getInteger(i));
                 switch(seatType.getInteger(i)){
                     case 0 :{  //特等座
                         trainSeat.setSeatBestCarriage(seatCarriage.getLong(i));  //设置车厢数量
@@ -153,19 +160,19 @@ public class TrainServiceImpl implements TrainService {
             //封装站点信息
             List<PassSiteDto> trainArrives = new ArrayList<>();
             TrainArrive arrive = new TrainArrive();
-            for (int i = 0 ; i <trainArrive.size(); i ++){
+            for (int i = 0 ; i <trainArrive.size(); i++){
                 arrive.setTrainId(trainId);
-                arrive.setTrainArriveGrade((short) i);  //站点等级
+                arrive.setTrainArriveGrade((short) (i+1));  //站点等级
                 arrive.setTrainArrive(trainArrive.getString(i));
                 arrive.setTrainAfter(trainArrive.get(i).toString());
                 arrive.setTrainArriveTime(trainArriveTime.get(i).toString());
                 arrive.setTrainArriveWite(trainArriveWite.getInteger(i));
                 //计算行驶时长
-                if(i == 0){
+//                if(i == 0){
                     arrive.setTrainAfter(getDatePoor(sdf.parse(trainArriveTime.get(i).toString()),sdf.parse(train.getTrainFromTime())));
-                }else{
-                    arrive.setTrainAfter(getDatePoor(sdf.parse(trainArriveTime.get(i).toString()),sdf.parse(trainArriveTime.get(i - 1).toString())));
-                }
+//                }else{
+//                    arrive.setTrainAfter(getDatePoor(sdf.parse(trainArriveTime.get(i).toString()),sdf.parse(trainArriveTime.get(i - 1).toString())));
+//                }
                 addArrive = trainDao.addTrainPassSite(arrive);
             }
 
@@ -333,6 +340,71 @@ public class TrainServiceImpl implements TrainService {
     public boolean updateTrain(Train train) {
         train.setTrainAfter(getExperienceTime(train.getTrainArriveTime(),train.getTrainFromTime()));
         return trainDao.updateTrain(train);
+    }
+
+    /**
+     * 修改中间站点信息
+     * @param trainArrive
+     * @return
+     */
+    @Override
+    public boolean updateSpace(TrainArrive trainArrive) {
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        //获取火车信息
+        Train train = userOtherDao.selectTrainById(trainArrive.getTrainId());
+        try {
+            trainArrive.setTrainAfter(getDatePoor(sdf.parse(trainArrive.getTrainArriveTime()),sdf.parse(train.getTrainFromTime())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return trainDao.updateSpace(trainArrive);
+    }
+
+    /**
+     * 获取详细的中间站点信息
+     * @param id
+     * @return
+     */
+    @Override
+    public TrainArrive getTrainArrive(long id) {
+        return trainDao.getTrainArrive(id);
+    }
+
+    /**
+     * 修改火车状态
+     * @param trainId
+     * @param status
+     * @return
+     */
+    @Override
+    public boolean updateTrainSuccess(long trainId, int status) {
+        return trainDao.updateTrainSuccess(trainId,status);
+    }
+
+    /**
+     * 查询所有的退票改签信息
+     * @param trainId
+     * @param from
+     * @param arrive
+     * @param startTime
+     * @param status
+     * @param seatType
+     * @return
+     */
+    @Override
+    public List<TrainSeatMessage> allTrainSeatMessage(long trainId, String from, String arrive, String startTime, int status, int seatType) {
+        return trainDao.allTrainSeatMessage(trainId, from, arrive, startTime, status, seatType);
+    }
+
+    /**
+     * 修改是否卖出的状态
+     * @param id
+     * @param status
+     * @return
+     */
+    @Override
+    public boolean updateStatus(long id, int status) {
+        return trainDao.updateTrainSuccess(id, status);
     }
 
     /**

@@ -16,7 +16,7 @@ public interface UserOtherDao {
      * @param userId 用户的id
      * @return
      */
-    public List<IndentMessage> showHistroy(@Param("userId") Long userId,@Param("status") int status);
+    public List<IndentMessage> showHistroy(@Param("userId") Long userId,@Param("status") int status,@Param("start") int start,@Param("end") int end);
 
     /**
      * 未完成的行程
@@ -27,10 +27,16 @@ public interface UserOtherDao {
 
     /**
      * 查看个人信息
+     * @param userName
+     * @return
+     */
+    public List<User> showUserMessage(@Param("userName") String userName);
+    /**
+     * 查看个人信息
      * @param userId
      * @return
      */
-    public User showUserMessage(@Param("userId") Long userId);
+    public User showUser(@Param("userId") Long userId);
 
     /**
      * 根据id查找火车的信息
@@ -52,5 +58,15 @@ public interface UserOtherDao {
      * @return
      */
     public boolean addTrainSeatMessage(@Param("seatMessage") TrainSeatMessage trainSeatMessage);
+
+    /**
+     *
+     * @param startTime
+     * @param endTime
+     * @param start
+     * @param end
+     * @return
+     */
+    public List<TrainSeatMessage> allMessage(@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("start") int start,@Param("end") int end);
 
 }

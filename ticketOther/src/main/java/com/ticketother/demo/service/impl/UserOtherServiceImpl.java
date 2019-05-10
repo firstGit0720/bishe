@@ -3,11 +3,14 @@ package com.ticketother.demo.service.impl;
 import com.ticketother.demo.dao.IndentMessageDao;
 import com.ticketother.demo.dao.TrainFunctionDao;
 import com.ticketother.demo.dao.UserOtherDao;
+import com.ticketother.demo.dto.BackTicketDto;
 import com.ticketother.demo.dto.IndentMessageDto;
 import com.ticketother.demo.entity.IndentMessage;
 import com.ticketother.demo.entity.Train;
 import com.ticketother.demo.entity.TrainSeatMessage;
+import com.ticketother.demo.entity.User;
 import com.ticketother.demo.service.UserOtherService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,9 +71,9 @@ public class UserOtherServiceImpl implements UserOtherService {
      * @return
      */
     @Override
-    public List<IndentMessageDto> showUserHistroy(Long userId) {
+    public List<IndentMessageDto> showUserHistroy(Long userId,int start,int end) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        List<IndentMessage>  indentMessages= userOtherDao.showHistroy(userId,1);
+        List<IndentMessage>  indentMessages= userOtherDao.showHistroy(userId,1,start,end);
         List<IndentMessageDto> indentMessageDtos = new ArrayList<IndentMessageDto>();
         for(IndentMessage indentMessage : indentMessages){
             IndentMessageDto indentMessageDto = new IndentMessageDto();
@@ -189,6 +192,71 @@ public class UserOtherServiceImpl implements UserOtherService {
         indentMessageDao.uodatepPymentStatus(id,2);
 
         return  userOtherDao.addTrainSeatMessage(trainSeatMessage);
+    }
+
+    /**
+     * 订单的显示
+     * @param startTime
+     * @param endTime
+     * @param start
+     * @param end
+     * @return
+     */
+    @Override
+    public List<IndentMessageDto> allIndentMessage(String startTime, String endTime, int start, int end) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        List<IndentMessage> all = indentMessageDao.allIndentMessage(startTime,endTime,0,start,end);
+        //封装数据对象
+        List<IndentMessageDto> lists = new ArrayList<IndentMessageDto>();
+        for (IndentMessage indentMessage : all){
+            IndentMessageDto indentMessageDto = new IndentMessageDto();
+            //获取火车信息
+            Train train = trainDao.selectTrainByTrainId(indentMessage.getTrainId());
+            //获取用户信息
+            User user = userOtherDao.showUser(indentMessage.getUserId());
+            indentMessageDto.setId(indentMessage.getId());
+            indentMessageDto.setIsSuccess(SUCCESS.get(indentMessage.getIsSuccess()));
+            indentMessageDto.setIsStatus(STATUS.get(indentMessage.getIsStatus()));
+            indentMessageDto.setIsPayment(PAYMENT.get(indentMessage.getIsPayment()));
+            indentMessageDto.setTrainCrad(train.getTrainCard());
+            indentMessageDto.setUsername(user.getUserName());
+            indentMessageDto.setUserPanem(user.getUserPname());
+            indentMessageDto.setSeatType(SEAT_TYPE.get(indentMessage.getSeatType()));
+            indentMessageDto.setSeatMessage(indentMessage.getSeatMessage());
+            indentMessageDto.setTrainStartTime(indentMessage.getTrainStartTime());
+            indentMessageDto.setIndentArrive(indentMessage.getIndentArrive());
+            indentMessageDto.setIndentFrom(indentMessage.getIndentFrom());
+            indentMessageDto.setIndentTime(sdf.format(indentMessage.getIndentTime()));
+            lists.add(indentMessageDto);
+        }
+        return lists;
+    }
+
+    /**
+     *
+     * @param startTime
+     * @param endTime
+     * @param start
+     * @param end
+     * @return
+     */
+    @Override
+    public List<BackTicketDto> lists(String startTime, String endTime, int start, int end) {
+        List<TrainSeatMessage> messageList = userOtherDao.allMessage(startTime, endTime, start, end);
+        List<BackTicketDto> list = new ArrayList<BackTicketDto>();
+        for(TrainSeatMessage message : messageList){
+            BackTicketDto backTicketDto = new BackTicketDto();
+            backTicketDto.setId(message.getId());
+            Train train = trainDao.selectTrainByTrainId(message.getTrainId());
+            backTicketDto.setTrainCard(train.getTrainCard());
+            backTicketDto.setBackChangeMessage(message.getBackChangeMessage());
+            backTicketDto.setSeatType(SEAT_TYPE.get(message.getSeatType()));
+            backTicketDto.setTrainArrive(message.getTrainArrive());
+            backTicketDto.setTrainFrom(message.getTrainFrom());
+            backTicketDto.setTrainTime(message.getTrainTime());
+            list.add(backTicketDto);
+        }
+        return list;
     }
 
     public boolean updateStatis(long id,int status){

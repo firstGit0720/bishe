@@ -17,13 +17,13 @@ public interface UserTypeService {
      * @param userType
      * @return
      */
-    public boolean updateUserType(UserType userType);
+    public boolean updateUserType(long id, int userType);
 
     /**
      * 所有会员信息
      * @return
      */
-    public List<UsersDto> allUsers();
+    public List<UsersDto> allUsers(String userpname,int start,int end);
 
     /**
      * 获取用户权限

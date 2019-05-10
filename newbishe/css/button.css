@@ -32,8 +32,9 @@ background: linear-gradient(top,#66B5E6,#2e88c0);
 }
 
 .smailButton{
-	width: 100px;
+	width: 80px;
     height: 40px;
+    margin-left: 10px;
     font-size: 15px;
     font-family: 微软雅黑;
     padding-left: 12px;

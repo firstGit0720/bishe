@@ -1,5 +1,6 @@
 package com.ticketother.demo.service;
 
+import com.ticketother.demo.dto.BackTicketDto;
 import com.ticketother.demo.dto.IndentMessageDto;
 import com.ticketother.demo.dto.ShowTicketHestoryDto;
 import com.ticketother.demo.entity.IndentMessage;
@@ -14,7 +15,7 @@ public interface UserOtherService {
      * @param userId
      * @return
      */
-    public List<IndentMessageDto> showUserHistroy(Long userId);
+    public List<IndentMessageDto> showUserHistroy(Long userId,int start,int end);
 
     /**
      * 获取未完成的行程
@@ -50,4 +51,24 @@ public interface UserOtherService {
      * @return
      */
     public boolean exitTicket( long id);
+
+    /**
+     * 订单的显示
+     * @param startTime
+     * @param endTime
+     * @param start
+     * @param end
+     * @return
+     */
+    public List<IndentMessageDto>  allIndentMessage(String startTime,String endTime,int start,int end);
+
+    /**
+     * 退票和改签的票的显示
+     * @param startTime
+     * @param endTime
+     * @param start
+     * @param end
+     * @return
+     */
+    public List<BackTicketDto> lists(String startTime,String endTime,int start,int end);
 }

@@ -9,6 +9,8 @@ public class IndentMessageDto {
 
     private Long id;
     private String trainCrad; //火车id
+    private String username;//用户名
+    private String userPanem; //用户姓名
     private String seatMessage; //座位信息
     private String indentTime; //订单创建时间
     private String trainStartTime; //火车出发时间
@@ -106,5 +108,21 @@ public class IndentMessageDto {
 
     public void setIsSuccess(String isSuccess) {
         this.isSuccess = isSuccess;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUserPanem() {
+        return userPanem;
+    }
+
+    public void setUserPanem(String userPanem) {
+        this.userPanem = userPanem;
     }
 }

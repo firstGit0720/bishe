@@ -53,11 +53,19 @@ $(function(){
                 success : function(result) {   
 					console.info(result) 
 					if(result){
-						layer.msg('修改成功!',{icon:1,time:2000});
-						location.replace(location.href);
+						x_admin_close();
+      					x_admin_father_reload();
+      					
+						layer.alert('修改成功!',{icon:1,time:2000});
+						
+						
 					}else{
 						layer.msg('修改失败!',{icon:2,time:2000});
-						location.replace(location.href);
+//						location.replace(location.href);
+						setTimeout(function(){
+							x_admin_close();
+          					x_admin_father_reload();
+						},2000)
 					}
                 },    
                 error : function(msg) {    

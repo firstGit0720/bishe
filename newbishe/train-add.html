@@ -22,7 +22,7 @@
   </head>
   
   <body>
-    <div class="x-body" style="margin-top: 80px;">
+    <div class="x-body" style="margin-top: 10px;">
     		<fieldset class="layui-elem-field">
     			 <legend>火车基本信息</legend>
     	  <form  id="trainMessahe" name="trainMessahe" style="margin-top: 20px;">
@@ -152,18 +152,20 @@
           </div>
   	  </form>
    	</fieldset>
-      	   <div class="layui-form-item">
+   	<fieldset class="layui-elem-field">
+      	   <div class="layui-form-item" style="margin-left: 200px;margin-top: 15px;"> 
               <label for="L_repass" class="layui-form-label">
               </label>
               <button  class="layui-btn"  lay-submit="" onClick="addTrainMessage()">
                   增加
               </button>
-               <label for="L_repass" class="layui-form-label">
+               <label for="L_repass" class="layui-form-label" >
               </label>
-              <button  class="layui-btn"  lay-submit="" onClick="alert('取消')">
+              <button  class="layui-btn"  style="margin-left: 100px;" lay-submit="" onClick="alert('取消')">
                   取消
               </button>
           </div>
+      </fieldset>
     </div>
     <script>
         layui.use(['form','layer'], function(){

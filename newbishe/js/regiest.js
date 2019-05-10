@@ -33,8 +33,8 @@ $(function(){
 				contentType :"application/json;charset=UTF-8", 
                 success : function(result) {  
 					if(result){
-						layer.msg('注册成功!',{icon:1,time:2000});
-						window.location.href = "login.html";
+							layer.msg('注册成功！',{icon:1,time:1000});
+							setTimeout(function() {window.history.go(-1);}, 1000);
 					} else{
 						layer.msg('注册失败', {icon:2,time:2000});
 					}

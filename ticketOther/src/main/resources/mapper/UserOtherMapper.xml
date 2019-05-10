@@ -16,21 +16,60 @@
         <result property="isSuccess" column="is_success"/>
     </resultMap>
 
+    <resultMap id="trainMap" type="com.ticketother.demo.entity.Train">
+        <id property="id" column="id"/>
+        <result property="trainCard" column="train_card"/>
+        <result property="trainFrom" column="train_from"/>
+        <result property="trainFromTime" column="train_from_time"/>
+        <result property="trainArrive" column="train_arrive"/>
+        <result property="trainArriveTime" column="train_arrive_time"/>
+        <result property="trainAfter" column="train_after"/>
+        <result property="trainSeat" column="train_seat"/>
+        <result property="trainWait" column="train_wait"/>
+    </resultMap>
+    <resultMap id="user" type="com.ticketother.demo.entity.User">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPname" column="user_pname"/>
+        <result property="userSex" column="user_sex"/>
+        <result property="userAddress" column="user_address"/>
+        <result property="userCard" column="user_card"/>
+        <result property="userBirthday" column="user_birthday"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userAge" column="user_age"/>
+    </resultMap>
+
+    <resultMap id="trainSeatMap" type="com.ticketother.demo.entity.TrainSeatMessage">
+        <id property="id" column="id"/>
+        <result property="trainId" column="train_id"/>
+        <result property="backChangeMessage" column="back_change_message"/>
+        <result property="trainFrom" column="train_from"/>
+        <result property="trainArrive" column="train_arrive"/>
+        <result property="trainTime" column="train_time"/>
+        <result property="seatType" column="seat_type"/>
+        <result property="status" column="status"/>
+    </resultMap>
 
     <!--查用户的历史行程-->
     <select id="showHistroy" resultMap="showMap">
-        select * from indent_message where user_id = #{userId} and is_success = #{status}
+        select * from indent_message where user_id = #{userId} and is_success = #{status}   order by indent_time DESC
+        <if test=" end > 0">
+            limit #{start} , #{end}
+        </if>
+
     </select>
 
     <!--查看未完成的行程-->
     <select id="showFuture" resultMap="showMap">
-         select * from indent_message where user_id = #{userId} and is_success =  #{status}
+         select * from indent_message where user_id = #{userId} and is_success =  #{status}  order by indent_time DESC
         <if test=" end > 0">
             limit #{start} , #{end}
         </if>
+
     </select>
 
-    <select id="selectTrainById" resultType="com.ticketother.demo.entity.Train" parameterType="java.lang.Long">
+    <select id="selectTrainById" resultMap="trainMap" parameterType="java.lang.Long">
         select * from train where id = #{trainId}
     </select>
 
@@ -44,5 +83,23 @@
         value (#{seatMessage.trainId},#{seatMessage.backChangeMessage},#{seatMessage.trainFrom},#{seatMessage.trainArrive},#{seatMessage.trainTime},#{seatMessage.seatType})
     </insert>
 
+    <select id="showUserMessage"  resultMap="user" parameterType="java.lang.String">
+        select * from user where user_name like CONCAT('%',#{userName},'%')
+    </select>
+    <select id="showUser" resultMap="user" parameterType="java.lang.Long">
+        select * from user where id = #{userId}
+    </select>
 
+    <select id="allMessage" resultMap="trainSeatMap">
+        select * from train_seat_message where 1=1
+        <if test="startTime != null and startTime != ''">
+            and train_time >= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and train_time &lt;= #{endTime}
+        </if>
+        <if test=" end > 0">
+            limit #{start} , #{end}
+        </if>
+    </select>
 </mapper>

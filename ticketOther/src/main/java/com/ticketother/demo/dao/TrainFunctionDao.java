@@ -3,6 +3,7 @@ package com.ticketother.demo.dao;
 import com.ticketother.demo.entity.Train;
 import com.ticketother.demo.entity.TrainArrive;
 import com.ticketother.demo.entity.TrainSeat;
+import com.ticketother.demo.entity.TrainSeatMessage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -47,13 +48,20 @@ public interface TrainFunctionDao {
      * @return
      */
     public TrainSeat selectSeatByTrainId(@Param("trainId") Long trainId);
-
     /**
      * 根据火车编号查找
      * @param trainCard
      * @return
      */
     public Train selectTrainByTrainCard(@Param("trainCard") String trainCard);
+
+
+    /**
+     * 根据火车编号查找
+     * @param trainCard
+     * @return
+     */
+    public List<Train> selectTrainByTrainCard1(@Param("trainCard") String trainCard);
 
     /**
      * 根据火车编号查找
@@ -74,5 +82,46 @@ public interface TrainFunctionDao {
      * @return
      */
     public boolean updateTrain(@Param("train") Train train);
+
+    /**
+     * 修改中间站点信息
+     * @param trainArrive
+     * @return
+     */
+    public boolean updateSpace(@Param("trainArrive") TrainArrive trainArrive);
+
+    /**
+     * 根据id获取中间站点的详细信息
+     * @param id
+     * @return
+     */
+    public TrainArrive getTrainArrive(@Param("id") long id);
+
+    /**
+     * 火车的停运或恢复
+     * @param trainId
+     * @return
+     */
+    public boolean updateTrainSuccess(@Param("trainId") long trainId,@Param("status") int status);
+
+    /**
+     * 查询退票改签的信息
+     * @param trainId
+     * @param from
+     * @param arrive
+     * @param startTime
+     * @param status
+     * @return
+     */
+    public List<TrainSeatMessage> allTrainSeatMessage(@Param("trainId") long trainId,@Param("from") String from,@Param("arrive") String arrive,
+                                                      @Param("startTime") String startTime, @Param("status") int status ,@Param("seatType") int seatType);
+
+    /**
+     * 修改卖出的状态
+     * @param id
+     * @param status
+     * @return
+     */
+    public boolean updateStatus(@Param("id") long id,@Param("status") int status);
 
 }

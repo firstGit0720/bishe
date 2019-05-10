@@ -11,6 +11,7 @@ import com.buyticket.demo.fegin.OtherWaysFegin;
 import com.buyticket.demo.fegin.TicketOtherFegin;
 import com.buyticket.demo.redis.RedisGlobalLock;
 import com.buyticket.demo.service.BuyTivketService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,6 @@ public class BuyTicketServiceImpl implements BuyTivketService {
     private static final Logger logger = Logger.getLogger(BuyTicketServiceImpl.class);
     @Autowired
     private BuyTicketDao buyTicketDao;
-    @Autowired
-    private RedisGlobalLock redisGlobalLock;
     @Autowired
     private OtherWaysFegin otherWaysFegin;
     @Autowired
@@ -131,7 +130,6 @@ public class BuyTicketServiceImpl implements BuyTivketService {
                         trainDto.setTrainArriveTime(trainArrive.getTrainArriveTime());
                         arriveTime = trainArrive.getTrainArriveTime();
                         try {
-//                            System.out.println(trainArrive.getTrainArriveWite());
                             trainDto.setTrainWait(String.valueOf(trainArrive.getTrainArriveWite()) + new String("分钟".getBytes(),"UTF-8"));
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
@@ -194,8 +192,22 @@ public class BuyTicketServiceImpl implements BuyTivketService {
                 }
             }
             //计算经历时长
-            trainDto.setTrainAfter(getExperienceTime(arriveTime,fromTime));
-            trainDtos.add(trainDto);
+            if(StringUtils.isNotEmpty(arriveTime) && StringUtils.isNotEmpty(fromTime)){
+                trainDto.setTrainAfter(getExperienceTime(arriveTime,fromTime));
+            }else{
+                continue;
+            }
+            //进行火车的过滤
+            Integer fromGrade = buyTicketDao.getGrade(from,train.getId());
+            fromGrade = fromGrade == null ? 0 : fromGrade;
+            Integer arriveGrade = buyTicketDao.getGrade(arrive,train.getId());
+            arriveGrade = arriveGrade == null ? trainArrives.size() + 1 : arriveGrade ;
+            if (fromGrade < arriveGrade){
+                trainDtos.add(trainDto);
+            }else{
+                continue;
+            }
+
 
         }
         return trainDtos;
@@ -210,20 +222,36 @@ public class BuyTicketServiceImpl implements BuyTivketService {
     @Transactional
     public boolean buyTicket(BuyTicketDto ticketDto){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        //定义key
-        String key = "train"+ticketDto.getTrainId()+ticketDto.getTrainFrom()+ticketDto.getTrainArrive();
-        //根据车次获取火车信息
-//        Train train = ticketOtherFegin.selectTrainById(ticketDto.getTrainId());
-        //记录发车时间
-//        StringBuffer startTime = new StringBuffer();
+        //更具用户名查找用户id
+        Long userId = otherWaysFegin.getUserId(ticketDto.getUserName());
+        boolean buyCheck = false;
+        //首先从退票改签的表中查询该火车是否有人退票会改签
+        List<TrainSeatMessage> allList = ticketOtherFegin.allTrainSeatMessage(ticketDto.getTrainId(),ticketDto.getTrainFrom(),ticketDto.getTrainArrive(),
+                ticketDto.getDateStr(),0,getKey(ticketDto.getSeatType()));
 
-        //通过redis获取锁
-//        boolean lock = redisGlobalLock.lock(key);
-        boolean buyCheck = false,addCheck = false;
-//        if (lock){
+        if (allList.size() > 0){
+            //获取第一条
+            TrainSeatMessage trainSeatMessage = allList.get(0);
+            //封装数据对象
+            IndentMessage indent = new IndentMessage();
+            indent.setTrainId(trainSeatMessage.getTrainId());
+            indent.setUserId(userId);
+            indent.setIndentTime(new Date());
+            indent.setIndentFrom(trainSeatMessage.getTrainFrom());
+            indent.setIndentArrive(trainSeatMessage.getTrainArrive());
+            indent.setSeatType(trainSeatMessage.getSeatType());
+            indent.setSeatMessage(trainSeatMessage.getBackChangeMessage());
+            indent.setTrainStartTime(trainSeatMessage.getTrainTime());
+            indent.setIsPayment((short) 1);//能添加证明已付款
+            indent.setIsStatus((short) 0);
+            indent.setIsSuccess((short) 0);
+            buyCheck = indentMessageDao.addIndentMessage(indent);
+            if (buyCheck){
+                //将改票的信息改为已售出
+                ticketOtherFegin.updateStatus(trainSeatMessage.getId(),1);
+            }
+        }else{
             // 座位等级0：特等座，1：一等座，2：二等座，3：软卧一等卧，4：高级软卧，5：动卧，6：硬卧，7：软座，8：硬座，9：无座
-            //更具用户名查找用户id
-            Long userId = otherWaysFegin.getUserId(ticketDto.getUserName());
             //根据车次id查询火车座位信息
             TrainSeat trainSeat = buyTicketDao.selectTrainSeatById(ticketDto.getTrainId());
             //map数据封装,用于计算座位信息
@@ -244,30 +272,8 @@ public class BuyTicketServiceImpl implements BuyTivketService {
             indent.setIsStatus((short) 0);
             indent.setIsSuccess((short) 0);
             buyCheck = indentMessageDao.addIndentMessage(indent);
-          /*  UserTickerMessage userTickerMessage = new UserTickerMessage();
-            userTickerMessage.setTarinId(ticketDto.getTrainId());
-            userTickerMessage.setUserId(userId);
-            userTickerMessage.setIsPayment((short) 1); //默认为付款
-            userTickerMessage.setSeatMessage(getSeatMessage(getKey(ticketDto.getSeatType())));
-            userTickerMessage.setTrainDate(ticketDto.getDateStr());
-            userTickerMessage.setIsChageTicket((short) 0); //默认为为改签
-            userTickerMessage.setIsBackTicket((short) 0);  //默认为未退票
-            userTickerMessage.setIsUseTicket((short) 0);  //默认为未出票，当用户点击出票时改为出票*/
-//            buyCheck = buyTicketDao.buyTicket(userTickerMessage); //将数据插入数据库，插入成功则购票成功
-//            Long okId = indent.getId();
-//            if (buyCheck){
-//                IndentMessage indentMessage = new IndentMessage();
-//                indentMessage.setId(okId);
-//                indentMessage.setIndentFrom(ticketDto.getTrainFrom());
-//                indentMessage.setIndentArrive(ticketDto.getTrainArrive());
-//                indentMessage.setSeatType(getKey(ticketDto.getSeatType()));
-//                indentMessage.setTrainStartTime(ticketDto.getDateStr());
-//                indentMessage.setIndentTime(new Date());
-//                indentMessage.setTrainStartTime(ticketDto.getDateStr());
-//                addCheck = indentMessageDao.addIndentMessage(indentMessage);
-//            }
-//            redisGlobalLock.unlock(key);
-//        }
+        }
+
         return buyCheck;
     }
 

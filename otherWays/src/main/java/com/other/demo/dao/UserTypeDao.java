@@ -24,7 +24,7 @@ public interface UserTypeDao {
      * @param userType
      * @return
      */
-    public boolean updateUserType(@Param("userType")UserType userType);
+    public boolean updateUserType(@Param("id") long id,@Param("userType")int userType);
 
     /**
      * 获取用户权限
@@ -37,7 +37,7 @@ public interface UserTypeDao {
      * 搜索所有的会员
      * @return
      */
-    public List<UserDto> allUsers();
+    public List<UserDto> allUsers(@Param("userpname") String userpname ,@Param("start") int start,@Param("end") int end);
 
     /**
      *

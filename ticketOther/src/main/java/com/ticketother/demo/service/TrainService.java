@@ -2,6 +2,8 @@ package com.ticketother.demo.service;
 
 import com.ticketother.demo.dto.TrainSeatMessageDto;
 import com.ticketother.demo.entity.Train;
+import com.ticketother.demo.entity.TrainArrive;
+import com.ticketother.demo.entity.TrainSeatMessage;
 import org.apache.ibatis.annotations.Param;
 
 import java.text.ParseException;
@@ -47,7 +49,47 @@ public interface TrainService {
      * @param train
      * @return
      */
-    public boolean updateTrain(@Param("train") Train train);
+    public boolean updateTrain(Train train);
+
+    /**
+     * 修改中间站点信息
+     * @param trainArrive
+     * @return
+     */
+    public boolean updateSpace(TrainArrive trainArrive);
+
+    /**
+     * 获取详细的中间站点信息
+     * @param id
+     * @return
+     */
+    public TrainArrive getTrainArrive(long id);
+
+    /**
+     * 火车的停运或回复
+     * @param trainId
+     * @return
+     */
+    public boolean updateTrainSuccess(long trainId,int status);
+
+    /**
+     * 查询退票改签的信息
+     * @param trainId
+     * @param from
+     * @param arrive
+     * @param startTime
+     * @param status
+     * @return
+     */
+    public List<TrainSeatMessage> allTrainSeatMessage( long trainId,  String from, String arrive,String startTime,  int status , int seatType);
+
+    /**
+     * 修改卖出的状态
+     * @param id
+     * @param status
+     * @return
+     */
+    public boolean updateStatus( long id,int status);
 
 
 }

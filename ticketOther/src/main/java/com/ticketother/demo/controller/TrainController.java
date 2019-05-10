@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ticketother.demo.dto.TrainSeatMessageDto;
 import com.ticketother.demo.entity.Train;
+import com.ticketother.demo.entity.TrainArrive;
+import com.ticketother.demo.entity.TrainSeatMessage;
 import com.ticketother.demo.service.TrainService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,13 +100,70 @@ public class TrainController {
      * @return
      */
     @PostMapping("/updateTrain")
-    public boolean updateTrain(@Param("trainMessage") String trainStr){
+    public boolean updateTrain(@RequestParam("trainMessage") String trainStr){
 
         Train train = JSONObject.parseObject(trainStr,Train.class);
         System.out.print(trainStr);
         return trainService.updateTrain(train);
     }
 
+    /**
+     * 修改中间站点信息
+     * @param trainArriveStr
+     * @return
+     */
+    @PostMapping("/updateSpace")
+    public boolean updateSpace(@RequestParam("trainMessage")String trainArriveStr){
+        TrainArrive trainArrive = JSONObject.parseObject(trainArriveStr,TrainArrive.class);
+        return trainService.updateSpace(trainArrive);
+    }
+
+    /**
+     * 获取中间站点的详细信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/getTrainArrive")
+    public TrainArrive getTrainArrive(@RequestParam("id") long id){
+        return trainService.getTrainArrive(id);
+    }
+
+    /**
+     * 修改火车状态 0 正常 1 停运
+     * @param trainId
+     * @param status
+     * @return
+     */
+    @PostMapping("/updateTrainSuccess")
+    public boolean updateTrainTask(@RequestParam("trainId") long trainId , @RequestParam("status") int status){
+        return trainService.updateTrainSuccess(trainId, status);
+    }
+
+    /**
+     * 查询退票改签的信息
+     * @param trainId
+     * @param from
+     * @param arrive
+     * @param startTime
+     * @param status
+     * @return
+     */
+    @GetMapping("/getAllIndentMessage")
+    public List<TrainSeatMessage> allTrainSeatMessage(@RequestParam("trainId") long trainId, @RequestParam("from") String from, @RequestParam("arrive") String arrive,
+                                                      @RequestParam("startTime") String startTime, @RequestParam("status") int status , @RequestParam("seatType") int seatType){
+        return trainService.allTrainSeatMessage(trainId, from, arrive, startTime, status, seatType);
+    }
+
+    /**
+     * 修改卖出的状态
+     * @param id
+     * @param status
+     * @return
+     */
+    @PostMapping("/updateStatus")
+    public boolean updateStatus(@RequestParam("id") long id,@RequestParam("status") int status){
+        return trainService.updateStatus(id, status);
+    }
 
 
 }

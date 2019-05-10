@@ -30,4 +30,16 @@
     <update id="uodatepPymentStatus">
         update indent_message set is_payment = #{status} where id = #{id}
     </update>
+    <select id="allIndentMessage" resultMap="messageMap">
+        select  * from indent_message where is_status = #{status}
+        <if test="startTime != null and startTime != ''">
+            and indent_time >= #{startTime}
+        </if>
+        <if test="endtime != null and endtime != ''">
+            and indent_time &lt;= #{endtime}
+        </if>
+        <if test="end > 0">
+          limit #{start} , #{end}
+        </if>
+    </select>
 </mapper>

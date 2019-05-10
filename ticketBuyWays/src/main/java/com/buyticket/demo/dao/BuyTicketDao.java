@@ -44,4 +44,12 @@ public interface BuyTicketDao {
      */
     public List<TrainArrive> getTrainArrives(@Param("trainId") long trainId, @Param("start") Integer start, @Param("end") Integer end);
 
+    /**
+     * 获取中间站点的等级，判断该车辆是否符合要求
+     * @param space
+     * @param trainId
+     * @return
+     */
+    public Integer getGrade(@Param("space") String space,@Param("trainId") Long trainId);
+
 }

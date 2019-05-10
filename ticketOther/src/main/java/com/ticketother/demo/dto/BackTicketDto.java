@@ -1,17 +1,41 @@
-package com.ticketother.demo.entity;
+package com.ticketother.demo.dto;
 
 /**
- * 火车退票和改签的信息
+ * 退票改签现实
  */
-public class TrainSeatMessage {
+public class BackTicketDto {
     private Long id;
-    private Long trainId;  //火车的id
+    private String trainCard;  //火车的id
     private String backChangeMessage; //退票或改签的信息
     private String trainFrom;
     private String trainArrive;
     private String trainTime;
-    private int seatType;
+    private String seatType;
     private int status; //是否已经卖出0：为卖出 1 卖出
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTrainCard() {
+        return trainCard;
+    }
+
+    public void setTrainCard(String trainCard) {
+        this.trainCard = trainCard;
+    }
+
+    public String getBackChangeMessage() {
+        return backChangeMessage;
+    }
+
+    public void setBackChangeMessage(String backChangeMessage) {
+        this.backChangeMessage = backChangeMessage;
+    }
 
     public String getTrainFrom() {
         return trainFrom;
@@ -37,38 +61,12 @@ public class TrainSeatMessage {
         this.trainTime = trainTime;
     }
 
-    public int getSeatType() {
+    public String getSeatType() {
         return seatType;
     }
 
-    public void setSeatType(int seatType) {
+    public void setSeatType(String seatType) {
         this.seatType = seatType;
-    }
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getTrainId() {
-        return trainId;
-    }
-
-    public void setTrainId(Long trainId) {
-        this.trainId = trainId;
-    }
-
-    public String getBackChangeMessage() {
-        return backChangeMessage;
-    }
-
-    public void setBackChangeMessage(String backChangeMessage) {
-        this.backChangeMessage = backChangeMessage;
     }
 
     public int getStatus() {

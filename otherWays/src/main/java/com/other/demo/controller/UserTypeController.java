@@ -27,16 +27,11 @@ public class UserTypeController {
      * @param data
      * @return
      */
-    @RequestMapping(value = "/updateUserType",method = RequestMethod.POST ,consumes = {CONTENT_TYPE})
+    @PostMapping(value = "/updateUserType" ,consumes = {CONTENT_TYPE})
     public boolean updateUserType(@RequestBody String data){
         System.out.print(data);
         JSONObject jsonObject = JSONObject.parseObject(data);
-        UserType userType1Message = new UserType();
-        userType1Message.setId(jsonObject.getLong("id"));
-        userType1Message.setUserType(jsonObject.getShort("userType"));
-        userType1Message.setUpdateTime(new Date());
-        System.out.println(userType1Message.getId() + "," + userType1Message.getUserType());
-        return userTypeService.updateUserType(userType1Message);
+        return userTypeService.updateUserType(jsonObject.getLong("id"),jsonObject.getShort("userType"));
     }
 
     /**
@@ -68,7 +63,7 @@ public class UserTypeController {
      * @return
      */
     @RequestMapping(value = "/allusers" , method = RequestMethod.GET , consumes = {CONTENT_TYPE})
-    public String allUser(@RequestParam("aoData") String aoData){
+    public String allUser(@RequestParam("aoData") String aoData ,@RequestParam("userpname") String  userpname){
         JSONArray jsonarray = JSONArray.parseArray(aoData);
         String sEcho = null;//记录操作的次数  
         int iDisplayStart=0;// 起始索引    
@@ -84,7 +79,7 @@ public class UserTypeController {
                 iDisplayLength = obj.getInteger("value");
             }
         }
-        List<UsersDto> allusers  = userTypeService.allUsers();
+        List<UsersDto> allusers  = userTypeService.allUsers(userpname,iDisplayStart,iDisplayLength);
         JSONObject getObj = new JSONObject();
         getObj.put("sEcho", sEcho);
         getObj.put("iTotalRecords", allusers.size());//实际的行数
@@ -92,5 +87,7 @@ public class UserTypeController {
         getObj.put("aaData", allusers);
         return getObj.toString();
     };
+
+
 
 }

@@ -28,16 +28,16 @@ public class UserTypeServiceImpl implements UserTypeService {
     private UserDao userDao;
 
     @Override
-    public boolean updateUserType(UserType userType) {
+    public boolean updateUserType(long id, int userType) {
         //设置修改的最新时间，创建时间不变
-        return userTypeDao.updateUserType(userType);
+        return userTypeDao.updateUserType(id,userType);
     }
 
     @Override
-    public List<UsersDto> allUsers() {
+    public List<UsersDto> allUsers(String userpname,int start,int end) {
         SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat  sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        List<UserDto> userDtos = userTypeDao.allUsers();
+        List<UserDto> userDtos = userTypeDao.allUsers(userpname,start,end);
         List<UsersDto> usersDtos = new ArrayList<>();
         for (UserDto userDto : userDtos){
             UsersDto usersDto = new UsersDto();

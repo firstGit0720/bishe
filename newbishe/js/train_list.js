@@ -1,4 +1,6 @@
 $(function(){
+	
+		var status;
 		  $("#trainTable").dataTable({      
                 "bProcessing": false,                   // 是否显示取数据时的那个等待提示    
 				searching: false,//搜索
@@ -24,7 +26,7 @@ $(function(){
 			                    "render": function(data, type, full) {
 			                        return "<button class='smailButton' style='width : 120px' id='" + data + "' onClick = 'showArrive("+data+")'>中间站点</button>"+
 											"<button class='smailButton' id='" + data + "' onClick = 'editTicket("+data+")'>编辑</button>"+
-											"<button class='smailButton' id='" + data + "' onClick = 'updateStatus("+data+")'>停运</button>" +
+											"<button class='smailButton' style='width : 150px' id='" + data + "' onClick = 'updateStatus("+data+")'>修改运行状态</button>" +
 											"<button class='smailButton' style='width : 120px' id='" + data + "' onClick = 'updateSeats("+data+")'>座位信息</button>";
 			                    }
 			                },
@@ -51,7 +53,7 @@ $(function(){
 		
 		                    zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
 		                    //下面三者构成了总体的左下角的内容。
-		                    info: "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",//左下角的信息显示，大写的词为关键字。
+		                    info: "总共_PAGES_ 页，显示第_START_ 条到第 _END_ 条 ",//左下角的信息显示，大写的词为关键字。
 		                    infoEmpty: "0条记录",//筛选为空时左下角的显示。
 		                    infoFiltered: ""//筛选之后的左下角筛选提示，
 		                },
@@ -86,6 +88,37 @@ $(function(){
 	editTicket = function(id){
 		//获取该行信息
 		x_admin_show('修改火车信息','train-edit.html?id='+id)
+	}
+	
+	updateStatus = function(id){
+		alert( status == 0 ? 1 : 0)
+		 layer.confirm('确定修改火车运行的状态吗？',function(){
+  		 	$.ajax({    
+                url :"http://localhost:8089/ticketother/updateTrainSuccess",                          
+                data :JSON.stringify({
+									"trainId" : id,
+									"status" : status == 0 ? 1 : 0
+								}),
+                type : 'post',    
+                dataType : 'json',   
+							  contentType :"application/json;charset=UTF-8", 
+                async : false,  
+                success : function(result) {   
+					     	if(result){
+					     		 layer.msg('修改成功!', {icon:1,time:2000});
+					     		 setTimeout(function(){
+					     		 	location.replace(location.href);
+					     		 },1500);
+					     	}else{
+					     		 layer.msg('修改失败!', {icon:2,time:2000});
+					     	}
+					 		
+                },    
+                error : function(msg) {    
+						   	layer.msg('信息获取失败', {icon:2,time:2000});
+                }    
+            });
+    });
 	}
 
 })

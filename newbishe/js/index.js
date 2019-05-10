@@ -5,8 +5,8 @@ $(function(){
 	$("#fromTime").val(format(new Date()))
 	
  	var username =sessionStorage.getItem("uesrMessage");
-  	var userMessage;
-  	var strfrom,strarrive,datestr,trainCard;
+	var userMessage;
+  	var strfrom,strarrive,datestr = null,trainCard;
 	var obj = {
 		"username" :username,
 		
@@ -27,7 +27,6 @@ $(function(){
                 error : function(msg) {    
                 }    
       });    
-	
 	   /**
 	    * 火车票根据地点查询
 	    */
@@ -60,8 +59,12 @@ $(function(){
 			setTimeout(function() {window.location.href = "login.html"}, 1000);
 		}else{
 			$("#mytable").find("tr").each(function(){
-				trainCard = $(this).children('td:eq(0)').text()
-		        datestr += " " +  $(this).children('td:eq(2)').text()
+				var checkId = $(this).children('td:eq(0)').text()
+				if(checkId == id){
+					trainCard = $(this).children('td:eq(1)').text()
+		        	datestr += " " +  $(this).children('td:eq(3)').text()
+				}
+				
 		    });
 			
 			trainId = id;
@@ -87,7 +90,7 @@ $(function(){
 					"<tr align='center'>"+
                 		"<td>"+ result[i].seatType +"</td>"+
                 		"<td>" + result[i].seatPrice + "</td>"+
-                		"<td><button class='smailButton' onclick=buyOK('" + result[i].seatType + "',"+ result[i].seatPrice +")>提交订单</button></td>"+
+                		"<td><button class='smailButton' onclick=buyOK('" + result[i].seatType + "',"+ result[i].seatPrice +")>购买</button></td>"+
                 	"</tr>"
 				}
 				seat += "</tbody></table>"
@@ -159,7 +162,7 @@ $(function(){
 		"</fieldset>"
 		"</div>"
 		var option = {
-				title: "座位详情",
+				title: "订单详情",
 				btn: parseInt("0011",2),
 				onOk: function(){
 					console.log("确认啦");
@@ -188,7 +191,7 @@ $(function(){
                 success : function(result) {    
 					if(result){
 						$(".clsBtn").trigger('click')
-						layer.msg('购买成功！',{icon:2,time:1000});
+						layer.msg('购买成功！',{icon:1,time:1000});
 //						setTimeout(function() {window.location.href = "admin.html"}, 1000);
 					}else{
 						layer.msg('购买失败！',{icon:2,time:1000});
@@ -210,7 +213,8 @@ $(function(){
                 "sAjaxSource": "http://localhost:8089/ticketBuy/selectTrainTickets",      //这个是请求的地址    
                 "fnServerData": retrieveData,            // 获取数据的处理函数    
 			     "columns": [
-			                {"data": "trainCard","bSortable": false},
+							{"data": "id","bSortable": false},
+			                {"data": "trainCard"},
 			                {"data": "trainFrom"},
 							{"data": "trainFromTime"},
 			                {"data": "trainArrive"},
@@ -231,7 +235,7 @@ $(function(){
 			            ],
 			            "columnDefs": [
 			                {
-			                    "targets": [18],
+			                    "targets": [19],
 			                    "data": "id",
 			                    "render": function(data, type, full) {
 			                        return "<a class='smailButton' id='" + data + "' onClick = 'buyTicket("+data+")'>购买</a>";

@@ -374,10 +374,14 @@
         insert into train_arrive(train_id,train_arrive,train_arrive_time,train_arrive_wait,train_after,train_arrive_grade)
         value (#{trainArrive.trainId},#{trainArrive.trainArrive},#{trainArrive.trainArriveTime},#{trainArrive.trainArriveWite},#{trainArrive.trainAfter},#{trainArrive.trainArriveGrade})
     </insert>
-
     <!--查询火车的信息-->
     <select id="selectTrainByTrainCard"  resultMap="trainMap" parameterType="java.lang.String">
         select * from train where train_card = #{trainCard}
+    </select>
+
+    <!--查询火车的信息-->
+    <select id="selectTrainByTrainCard1"  resultMap="trainMap" parameterType="java.lang.String">
+        select * from train where train_card like CONCAT('%', #{trainCard},'%')
     </select>
     <select id="selectTrainByTrainId"  resultMap="trainMap" parameterType="java.lang.Long">
         select * from train where id = #{trainId}
@@ -399,6 +403,54 @@
         train_arrive = #{train.trainArrive},
         train_arrive_time = #{train.trainArriveTime}
         where id = #{train.id}
+    </update>
+
+    <!--修改中间站点信息-->
+    <update id="updateSpace" parameterType="com.ticketother.demo.entity.TrainArrive" >
+        update train_arrive
+        set train_arrive = #{trainArrive.trainArrive},
+        train_arrive_wait = #{trainArrive.trainArriveWite},
+        train_arrive_time = #{trainArrive.trainArriveTime},
+        train_after = #{trainArrive.trainAfter}
+        where id = #{trainArrive.id}
+    </update>
+    <resultMap id="trainArrive" type="com.ticketother.demo.entity.TrainArrive">
+        <id property="id" column="id" />
+        <result property="trainId" column="train_id" />
+        <result property="trainArrive" column="train_arrive" />
+        <result property="trainArriveWite" column="train_arrive_wait" />
+        <result property="trainArriveTime" column="train_arrive_time" />
+        <result property="trainAfter" column="train_after" />
+        <result property="trainArriveGrade" column="train_arrive_grade" />
+    </resultMap>
+
+    <select id="getTrainArrive" resultMap="trainArrive" parameterType="java.lang.Long">
+        select * from train_arrive where id = #{id}
+    </select>
+
+    <update id="updateTrainSuccess">
+        update train set train_status = #{status} where id = #{trainId}
+    </update>
+    <resultMap id="trainSeatMessage" type="com.ticketother.demo.entity.TrainSeatMessage">
+        <id column="id" property="id" />
+        <result property="trainId" column="train_id"/>
+        <result property="backChangeMessage" column="back_change_message"/>
+        <result property="trainFrom" column="train_from"/>
+        <result property="trainArrive" column="train_arrive"/>
+        <result property="trainTime" column="train_time"/>
+        <result property="seatType" column="seat_type"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <select id="allTrainSeatMessage"  resultMap="trainSeatMessage">
+        select  * from train_seat_message where train_id = #{trainId} and train_from = #{from} and train_arrive = #{arrive}
+        and train_time = #{startTime} and seat_type = #{seatType} and status = #{status}
+    </select>
+
+    <update id="updateStatus" >
+        update  train_seat_message
+        set status = #{status}
+        where id = #{id}
     </update>
 
 </mapper>

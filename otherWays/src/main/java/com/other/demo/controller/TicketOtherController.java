@@ -1,9 +1,13 @@
 package com.other.demo.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.other.demo.dto.TrainSeatMessageDto;
 import com.other.demo.entity.IndentMessage;
 import com.other.demo.entity.Train;
+import com.other.demo.entity.TrainArrive;
 import com.other.demo.feign.TicketOtherFegin;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -163,6 +167,60 @@ public class TicketOtherController {
     public IndentMessage getMessage(@RequestParam("id") long id){
         System.out.println("传过来的id是" + id);
         return ticketOtherFegin.getMessage(id);
+    }
+
+    /**
+     * 修改中间站点信息
+     * @param trainArriveStr
+     * @return
+     */
+    @PostMapping(value = "/updateSpace" , consumes = {CONTENT_TYPE})
+    public boolean updateSpace(@RequestBody String trainArriveStr){
+        return ticketOtherFegin.updateSpace(trainArriveStr);
+    }
+
+    /**
+     * 获取中间站点的详细信息
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/getTrainArrive" , consumes = {CONTENT_TYPE})
+    public TrainArrive getTrainArrive(@RequestParam("id") long id){
+        return ticketOtherFegin.getTrainArrive(id);
+    }
+
+    /**
+     * 修改火车状态 0 正常 1 停运
+     * @return
+     */
+    @PostMapping("/updateTrainSuccess")
+    public boolean updateTrainTask(@RequestBody String data){
+        JSONObject obj = JSON.parseObject(data);
+        return ticketOtherFegin.updateTrainTask(obj.getLong("trainId"), obj.getInteger("status"));
+    }
+
+    /**
+     * 所有的订单
+
+     * @param startTime
+     * @param endTime
+     * @param aoData
+     * @return
+     */
+    @GetMapping("/allIndent")
+    public String getAllIndent(@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("aoData") String aoData){
+        return ticketOtherFegin.getAllIndent( startTime, endTime, aoData);
+    }
+
+    /**
+     * 所有的退票和改签
+     * @param
+     * @param aoData
+     * @return
+     */
+    @GetMapping("/allBackTicket")
+    public String getAllBackTicket(@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("aoData") String aoData){
+        return ticketOtherFegin.getAllBackTicket(startTime, endTime, aoData);
     }
 
 }

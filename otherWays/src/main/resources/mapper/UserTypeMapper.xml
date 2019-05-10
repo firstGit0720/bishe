@@ -7,11 +7,10 @@
         value (#{userType.userId},#{userType.userType},#{userType.createTime},#{userType.updateTime})
     </insert>
     <!--修改用户权限-->
-    <update id="updateUserType" parameterType="com.other.demo.entity.UserType">
+    <update id="updateUserType">
         update user_type
-        set user_type = #{userType.userType},
-        update_time = #{userType.updateTime}
-        where id = #{userType.id}
+        set user_type = #{userType}
+        where id = #{id}
     </update>
     <!--获取用户权限-->
     <select id="selectUserType" parameterType="java.lang.Long" resultType="java.lang.Short">
@@ -34,7 +33,15 @@
         <result property="userCreateTime" column="create_time"/>
     </resultMap>
     <select id="allUsers" resultMap="userMap">
-        select * from user left join user_type on user.id = user_type.user_id
+        select * from user left join user_type on user.id = user_type.user_id where 1=1
+        <if test="userpname != null and userpname!= ''">
+           and user_pname like concat('%',#{userpname},'%')
+        </if>
+
+        <if test="end > 0">
+            limit #{start} , #{end}
+        </if>
+
      </select>
 
     <delete id="deleteUserType" parameterType="java.lang.Long">
