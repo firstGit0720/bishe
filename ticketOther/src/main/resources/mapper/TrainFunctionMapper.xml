@@ -390,7 +390,7 @@
     <!--获取所有的火车信息-->
     <select id="getAllTrain" resultMap="trainMap">
          select * from train
-        <if test="start > 0 and end > 0">
+        <if test="end > 0">
             limit #{start} , #{end}
         </if>
     </select>
@@ -422,6 +422,7 @@
         <result property="trainArriveTime" column="train_arrive_time" />
         <result property="trainAfter" column="train_after" />
         <result property="trainArriveGrade" column="train_arrive_grade" />
+        <result property="status" column="status" />
     </resultMap>
 
     <select id="getTrainArrive" resultMap="trainArrive" parameterType="java.lang.Long">
@@ -836,5 +837,11 @@
     <delete id="deleteSeat">
         delete from train_seat where train_id = #{trainId}
     </delete>
+
+    <update id="updateTrainArriveStatus">
+        update train_arrive
+        set status = #{status}
+        where id = #{id}
+    </update>
 
 </mapper>

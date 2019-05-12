@@ -146,4 +146,13 @@ public interface TrainFunctionDao {
      */
     public boolean deleteSeat (@Param("trainId") long trainId);
 
+    /**
+     * 修改站点的运行状态
+     * @param id
+     * @param status
+     * @return
+     */
+    public boolean updateTrainArriveStatus(@Param("id") long id,@Param("status") int status);
+
+
 }

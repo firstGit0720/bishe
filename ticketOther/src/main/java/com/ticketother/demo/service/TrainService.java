@@ -107,5 +107,19 @@ public interface TrainService {
      */
     public List<ShowSeatDto> showSeata(Long trainId);
 
+    /**
+     * 添加中间站点
+     * @param data
+     * @return
+     */
+    public boolean addArrive(String data);
+
+    /**
+     * 修改状态，相当于删除
+     * @param id
+     * @return
+     */
+    public boolean updateArriveStatus(long id);
+
 
 }

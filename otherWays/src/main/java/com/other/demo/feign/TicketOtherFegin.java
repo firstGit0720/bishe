@@ -166,4 +166,20 @@ public interface TicketOtherFegin {
      */
     @PostMapping("/train/updateSeat")
     public boolean updateSeatMessage(@RequestParam("seatMessage") String seatMessage);
+
+    /**
+     * 添加座位信息
+     * @param date
+     * @return
+     */
+    @PostMapping("/train/addSeat")
+    public boolean addTrainArrive(@RequestParam("seatMessage") String date);
+
+    /**
+     * 修改站点状态
+     * @param id
+     * @return
+     */
+    @PostMapping("/train/updateArriveStatus")
+    public boolean updateSeatStatus(@RequestParam("id") long id);
 }

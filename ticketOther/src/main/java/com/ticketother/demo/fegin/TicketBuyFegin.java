@@ -14,4 +14,11 @@ public interface TicketBuyFegin {
 
     @GetMapping("/allTrainArrive")
     public List<TrainArrive> allTrainArrive(@RequestParam("trainId") Long trainId);
+    /**
+     * 获取站点信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/getArrive")
+    public TrainArrive selectArriveById(@RequestParam("id") long id);
 }

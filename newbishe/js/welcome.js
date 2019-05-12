@@ -42,4 +42,20 @@ $(function(){
 		$('#time').append(currentTime());
 		},1000);
 	
+	 $.ajax({    
+                url :"http://localhost:8089/statistics",                          
+                data : {},
+                type : 'get',    
+                dataType : 'json',   
+				contentType :"application/json;charset=UTF-8", 
+                async : false,  
+                success : function(result) {   
+					console.info(result) 
+                },    
+                error : function(msg) {    
+                }    
+            });
+	
+	
+	
 })

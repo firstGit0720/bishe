@@ -11,6 +11,7 @@ import com.ticketother.demo.entity.TrainSeatMessage;
 import com.ticketother.demo.entity.User;
 import com.ticketother.demo.service.UserOtherService;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 @Service
 public class UserOtherServiceImpl implements UserOtherService {
-
+    private static final Logger logger = Logger.getLogger(UserOtherServiceImpl.class);
     @Autowired
     private UserOtherDao userOtherDao;
     @Autowired

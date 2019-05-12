@@ -11,6 +11,7 @@ public class TicketShowDto {
     private String trainArriveTime; //到达时间
     private String trainAfter;  //历时
     private Integer trainWait;  //停留时间
+    private Short status;
 
     public String getTrainFrom() {
         return trainFrom;
@@ -66,5 +67,13 @@ public class TicketShowDto {
 
     public void setGrade(Short grade) {
         this.grade = grade;
+    }
+
+    public Short getStatus() {
+        return status;
+    }
+
+    public void setStatus(Short status) {
+        this.status = status;
     }
 }

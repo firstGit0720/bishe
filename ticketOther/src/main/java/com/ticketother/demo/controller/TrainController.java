@@ -186,5 +186,25 @@ public class TrainController {
         return trainService.updateTrainSeat(seatMessage);
     }
 
+    /**
+     * 添加座位信息
+     * @param date
+     * @return
+     */
+    @PostMapping("/addSeat")
+    public boolean addTrainArrive(@RequestParam("seatMessage") String date){
+        return trainService.addArrive(date);
+    }
+
+    /**
+     * 修改站点状态
+     * @param id
+     * @return
+     */
+    @PostMapping("/updateArriveStatus")
+    public boolean updateSeatStatus(@RequestParam("id") long id){
+        return trainService.updateArriveStatus(id);
+    }
+
 
 }

@@ -16,6 +16,7 @@ import com.ticketother.demo.entity.TrainSeat;
 import com.ticketother.demo.entity.TrainSeatMessage;
 import com.ticketother.demo.fegin.TicketBuyFegin;
 import com.ticketother.demo.service.TrainService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,7 @@ import java.util.Map;
 @Service
 public class TrainServiceImpl implements TrainService {
 
+    private static final Logger logger = Logger.getLogger(TrainServiceImpl.class);
     @Autowired
     private TrainFunctionDao trainDao;
     @Autowired
@@ -181,6 +183,20 @@ public class TrainServiceImpl implements TrainService {
         return addArrive && addSeat;
     }
 
+    /**
+     * 添加中间站点
+     * @param data
+     * @return
+     */
+    public boolean addArrive(String data){
+        TrainArrive trainArrive = JSONObject.parseObject(data,TrainArrive.class);
+        List<TrainArrive> lists = ticketBuyFegin.allTrainArrive(trainArrive.getTrainId());
+        Train train = trainDao.selectTrainByTrainId(trainArrive.getTrainId());
+        //计算经历的时长
+        trainArrive.setTrainAfter(getExperienceTime(trainArrive.getTrainArriveTime(),train.getTrainFromTime()));
+        trainArrive.setTrainArriveGrade((short)(lists.size() + 1));
+        return trainDao.addTrainPassSite(trainArrive);
+    }
     /**
      * 前端显示的座位信息以及相关座位的价格
      * @param trainId
@@ -430,6 +446,7 @@ public class TrainServiceImpl implements TrainService {
         //获取火车信息
         Train train = trainDao.selectTrainByTrainId(trainId);
 
+
         //计算座位总数
         long nums = 0;
         for (int i = 0 ; i< seatNum.size() ; i++){
@@ -440,6 +457,7 @@ public class TrainServiceImpl implements TrainService {
         if(updateTrain){
             //封装座位信息
             TrainSeat trainSeat = new TrainSeat();
+
             trainSeat.setTrainId(trainId);
             for (int i = 0 ; i< seatType.size(); i++){
                 System.out.println("座位等级是：" + seatType.getInteger(i));
@@ -518,9 +536,6 @@ public class TrainServiceImpl implements TrainService {
                 trainDao.addTrainSeat(trainSeat);
             }
         }
-
-
-
         return updateSeat && updateTrain;
     }
 
@@ -627,6 +642,19 @@ public class TrainServiceImpl implements TrainService {
             }
         }
         return lists;
+    }
+
+    /**
+     * 修改状态，相当于删除
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean updateArriveStatus(long id) {
+        TrainArrive trainArrive = ticketBuyFegin.selectArriveById(id);
+        int status = trainArrive.getStatus();
+        int newStatus = status == 0 ? 1 : 0;
+        return trainDao.updateTrainArriveStatus(id, newStatus);
     }
 
     /**

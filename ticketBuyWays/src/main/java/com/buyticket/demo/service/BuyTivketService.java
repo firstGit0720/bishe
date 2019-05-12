@@ -58,5 +58,10 @@ public interface BuyTivketService {
      */
     public List<TrainArrive> allTrainArrives(Long trainId);
 
-
+    /**
+     * 更具id查询站点信息
+     * @param id
+     * @return
+     */
+    public TrainArrive selectArriveById(long id);
 }

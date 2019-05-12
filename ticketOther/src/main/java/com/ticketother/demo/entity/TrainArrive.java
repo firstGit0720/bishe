@@ -11,6 +11,7 @@ public class TrainArrive {
     private String trainArriveTime; //到达的时间
     private String trainAfter;  //经历的时长
     private Short trainArriveGrade; //站点的等级
+    private Short status; //运行状态
     private  Double trainArrivePrice; //到达该站的价格
 
     public long getId() {
@@ -67,5 +68,13 @@ public class TrainArrive {
 
     public void setTrainArriveGrade(Short trainArriveGrade) {
         this.trainArriveGrade = trainArriveGrade;
+    }
+
+    public Short getStatus() {
+        return status;
+    }
+
+    public void setStatus(Short status) {
+        this.status = status;
     }
 }

@@ -10,8 +10,6 @@ $(function(){
 		
 	}
 	
-	
-	
 	function getAllIndent(startTimd,endtime){
 		//获取所有会员信息,并封装到datatable
 		$("#backTicketTable").dataTable({      

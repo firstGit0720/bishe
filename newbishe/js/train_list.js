@@ -114,7 +114,7 @@ $(function(){
 			     		 layer.msg('修改成功!', {icon:1,time:2000});
 			     		 setTimeout(function(){
 			     		 	location.replace(location.href);
-			     		 },1500);
+			     		 },2500);
 			     	}else{
 			     		 layer.msg('修改失败!', {icon:2,time:2000});
 			     	}

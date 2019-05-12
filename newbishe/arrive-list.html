@@ -22,11 +22,20 @@
   </head>
   
   <body>
-    <div class="x-nav">
+  	<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
       <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
+    	 <xblock>
+        <button class="layui-btn" onclick="addArrive()"><i class="layui-icon"></i>添加站点信息</button>
+      </xblock>
       <table class="layui-table x-admin" id="arriveTable">
         <thead>
           <tr>
@@ -37,6 +46,7 @@
             <th>下次出发时间</th>
             <th>经历时长</th>
             <th>站点顺序</th>
+            <th>站点状态</th>
             <th>操作</th></tr>
         </thead>
         <tbody>

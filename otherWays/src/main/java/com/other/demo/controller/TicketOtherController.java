@@ -238,4 +238,27 @@ public class TicketOtherController {
         return ticketOtherFegin.updateSeatMessage(data);
     }
 
+    /**
+     * 添加座位信息
+     * @param date
+     * @return
+     */
+    @PostMapping(value = "/addSeat",consumes = {CONTENT_TYPE})
+    public boolean addTrainArrive(@RequestBody String date){
+        return ticketOtherFegin.addTrainArrive(date);
+    }
+
+    /**
+     * 修改站点状态
+     * @param id
+     * @return
+     */
+    @PostMapping(value = "/updateArriveStatus",consumes = {CONTENT_TYPE})
+    public boolean updateSeatStatus(@RequestBody String id){
+        JSONObject jsonObject = JSONObject.parseObject(id);
+        long seatId = jsonObject.getLong("id");
+        return ticketOtherFegin.updateSeatStatus(seatId);
+    }
+
+
 }

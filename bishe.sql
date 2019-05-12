@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : 65001
 
- Date: 08/05/2019 22:56:21
+ Date: 12/05/2019 22:35:23
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,14 @@ CREATE TABLE `indent_message`  (
   `train_id` bigint(20) NULL DEFAULT NULL COMMENT '火车id',
   `seat_message` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '座位信息',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of indent_message
+-- ----------------------------
+INSERT INTO `indent_message` VALUES (1, '2019-05-10 15:54:53', '北京', '廊坊北', 8, 1, 2, 0, '2019-05-10 7:15', 2, 2, '1号车厢001号座位');
+INSERT INTO `indent_message` VALUES (2, '2019-05-10 17:42:52', '北京', '天津', 8, 1, 0, 0, '2019-05-11 7:15', 2, 2, '1号车厢001号座位');
+INSERT INTO `indent_message` VALUES (4, '2019-05-12 20:13:56', '北京', '廊坊北', 8, 1, 0, 0, '2019-05-12 7:15', 1, 2, '1号车厢001号座位');
 
 -- ----------------------------
 -- Table structure for train
@@ -55,6 +62,12 @@ CREATE TABLE `train`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of train
+-- ----------------------------
+INSERT INTO `train` VALUES (1, 'k7729', '北京', '09:13', '德州', '15:28', '6小时15分钟', 1800, 1);
+INSERT INTO `train` VALUES (2, 'k1330', '北京', '7:15', '天津', '9:30', '2小时15分钟', 2500, 0);
+
+-- ----------------------------
 -- Table structure for train_arrive
 -- ----------------------------
 DROP TABLE IF EXISTS `train_arrive`;
@@ -68,8 +81,21 @@ CREATE TABLE `train_arrive`  (
   `othrt` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段',
   `train_arrive_grade` smallint(11) NULL DEFAULT NULL COMMENT '站点的等级',
   `train_arrive_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '到达该站点的额、票价',
+  `status` smallint(11) NULL DEFAULT 0 COMMENT '状态0正常运行，1停运',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of train_arrive
+-- ----------------------------
+INSERT INTO `train_arrive` VALUES (1, 1, '廊坊北', 4, '10:10', '57分钟', NULL, 1, NULL, 0);
+INSERT INTO `train_arrive` VALUES (2, 1, '天津西', 3, '11:14', '2小时1分钟', NULL, 2, NULL, 0);
+INSERT INTO `train_arrive` VALUES (3, 1, '杨柳青', 3, '11:32', '2小时19分钟', NULL, 3, NULL, 0);
+INSERT INTO `train_arrive` VALUES (4, 1, '静海', 3, '11:54', '2小时41分钟', NULL, 4, NULL, 0);
+INSERT INTO `train_arrive` VALUES (5, 1, '青县', 5, '12:23', '3小时10分钟', NULL, 5, NULL, 0);
+INSERT INTO `train_arrive` VALUES (6, 1, '泊头', 3, '13:17', '4小时4分钟', NULL, 6, NULL, 0);
+INSERT INTO `train_arrive` VALUES (7, 2, '廊坊北', 5, '8:10', '55分钟', NULL, 1, NULL, 0);
+INSERT INTO `train_arrive` VALUES (8, 2, '燕郊', 3, '8:45', '1小时30分钟', NULL, 2, NULL, 0);
 
 -- ----------------------------
 -- Table structure for train_seat
@@ -123,7 +149,13 @@ CREATE TABLE `train_seat`  (
   `seat_other_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '其他的价格',
   `seat_other_carriage` bigint(20) NULL DEFAULT NULL COMMENT '其他的车厢数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of train_seat
+-- ----------------------------
+INSERT INTO `train_seat` VALUES (2, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 100, 5, 500, 22.30, 100, 10, 1000, 12.50, 100, 10, 1000, 12.50, 0, NULL, NULL, NULL);
+INSERT INTO `train_seat` VALUES (6, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 100, 3, 300, 35.50, NULL, NULL, NULL, NULL, 150, 10, 1500, 12.50, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for train_seat_message
@@ -139,7 +171,12 @@ CREATE TABLE `train_seat_message`  (
   `seat_type` int(11) NOT NULL COMMENT '座位等级',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '是否已卖出0：未卖出，1：已卖出',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of train_seat_message
+-- ----------------------------
+INSERT INTO `train_seat_message` VALUES (1, 2, '1号车厢001号座位', '北京', '廊坊北', '2019-05-10 7:15', 8, 0);
 
 -- ----------------------------
 -- Table structure for user
@@ -157,7 +194,13 @@ CREATE TABLE `user`  (
   `user_email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户邮箱',
   `user_age` int(11) NOT NULL COMMENT '用户年龄',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, 'admin', '李刚', 0, '北京', '', '1996-03-01', '15028409088', '1041189691@qq.com', 23);
+INSERT INTO `user` VALUES (2, 'test1', '测试1号', 0, '廊坊', '', '1997-05-06', '15833234589', '', 22);
 
 -- ----------------------------
 -- Table structure for user_password
@@ -168,7 +211,13 @@ CREATE TABLE `user_password`  (
   `user_id` bigint(20) NOT NULL COMMENT '用户id',
   `user_password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户密码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_password
+-- ----------------------------
+INSERT INTO `user_password` VALUES (1, 1, 'ISMvKXpXpadDiUoOSoAfww==');
+INSERT INTO `user_password` VALUES (2, 2, '4QrcOUm6Wau+VuBX8g+IPg==');
 
 -- ----------------------------
 -- Table structure for user_ticket_message
@@ -195,9 +244,15 @@ CREATE TABLE `user_type`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id自增长',
   `user_id` bigint(20) NOT NULL COMMENT '用户id',
   `user_type` smallint(6) NOT NULL COMMENT '用户权限，0：管理员，1，票务人员，2：普通用户',
-  `create_time` datetime(0) NOT NULL COMMENT '用户创建时间',
+  `create_time` datetime(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '用户创建时间',
   `update_time` datetime(0) NOT NULL COMMENT '权限修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_type
+-- ----------------------------
+INSERT INTO `user_type` VALUES (1, 1, 0, '2019-05-10 00:30:30', '2019-05-10 00:29:58');
+INSERT INTO `user_type` VALUES (2, 2, 1, '2019-05-10 10:24:11', '2019-05-10 09:55:29');
 
 SET FOREIGN_KEY_CHECKS = 1;

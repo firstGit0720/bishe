@@ -1,7 +1,6 @@
 window.onload = function () {
   'use strict';
   var username =sessionStorage.getItem("uesrMessage");
-  alert(username)
   var Cropper = window.Cropper;
   var URL = window.URL || window.webkitURL;
   var container = document.querySelector('.img-container');

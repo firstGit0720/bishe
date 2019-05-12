@@ -80,11 +80,12 @@
         <result property="trainArriveWite" column="train_arrive_wait"/>
         <result property="trainAfter" column="train_after"/>
         <result property="trainArriveGrade" column="train_arrive_grade"/>
+        <result property="status" column="status" />
     </resultMap>
 
     <!--查火车的信息-->
     <select id="allTrain" resultMap="trainMap" >
-        select * from train  where train.train_from = #{from} or #{from} in (select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id) and train.train_arrive = #{arrive} or #{arrive} in(select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id)
+        select * from train  where  train_status = 0 and (train.train_from = #{from} or #{from} in (select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id)) and (train.train_arrive = #{arrive} or #{arrive} in(select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id))
         <if test=" end > 0">
            limit #{start} , #{end}
         </if>
@@ -108,7 +109,19 @@
              limit #{start} , #{end}
         </if>
     </select>
+
+    <!--中间站点-->
+    <select id="getTrainArrivesWithOK" resultMap="trainArriveMap" parameterType="java.lang.Long">
+        select * from train_arrive where train_id = #{trainId} and status = 0
+        <if test="end > 0">
+            limit #{start} , #{end}
+        </if>
+    </select>
     <select id="getGrade" resultType="java.lang.Integer" >
         select train_arrive_grade from train_arrive where train_arrive =#{space} and train_id = #{trainId}
+    </select>
+
+    <select id="selectArriveById" resultMap="trainArriveMap" parameterType="java.lang.Long">
+         select * from train_arrive where id = #{id}
     </select>
 </mapper>

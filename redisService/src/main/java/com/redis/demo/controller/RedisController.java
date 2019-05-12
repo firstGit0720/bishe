@@ -3,12 +3,14 @@ package com.redis.demo.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.redis.demo.dto.UserDto;
 import com.redis.demo.redisUtil.Redis;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/redis")
 public class RedisController {
+    private static final Logger logger = Logger.getLogger(RedisController.class);
     @Autowired
     private Redis redis;
 

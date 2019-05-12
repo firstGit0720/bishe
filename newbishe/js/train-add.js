@@ -311,15 +311,21 @@ $(function(){
                 async : false,  
                 success : function(result) {   
 					if(result){
-						layer.msg('火车信息添加成功！',{icon:1,time:1000});
+						layer.confirm('火车信息添加成功!',function(){
+							 x_admin_close();
+		                	x_admin_father_reload();
+						});
+						/*layer.msg('！',{icon:1,time:1000});
 		                x_admin_close();
 		                x_admin_father_reload();
-						location.replace(location.href);
+						location.replace(location.href);*/
 					}else{
-						layer.msg('火车信息添加失败！',{icon:2,time:1000});
-		                x_admin_close();
-		                x_admin_father_reload();
-						location.replace(location.href);
+						layer.msg('火车信息添加失败！',{icon:2,time:2000});
+						setTimeout(function(){
+							x_admin_close();
+          					x_admin_father_reload();
+						},2500)
+//						location.replace(location.href);
 					}
                 },    
                 error : function(msg) {  
@@ -331,6 +337,10 @@ $(function(){
 		
 	    
 	}
+	exit = function(){
+		x_admin_close();
+	}
+	
 	
 	
 })

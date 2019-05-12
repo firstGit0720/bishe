@@ -5,6 +5,7 @@ $(function(){
 	    var r = window.location.search.substr(1).match(reg);
 	    if(r!=null)return  unescape(r[2]); return null;
 	}
+	var status;
   	$("#arriveTable").dataTable({      
                 "bProcessing": false,                   // 是否显示取数据时的那个等待提示    
 				"searching": false,//搜索
@@ -18,16 +19,30 @@ $(function(){
 							{"data": "trainWait"},
 			               	{"data": "trainFromTime"},
 							{"data": "trainAfter"},
-								{"data": "grade"},
+							{"data": "grade"},
+							{"data": "status"},
 			            ],
 			            "columnDefs": [ 
 			                {
-			                    "targets": [7],
+			                    "targets": [8],
 			                    "data": "id",
 			                    "render": function(data, type, full) {
-			                        return "<button class='smailButton' id='" + data + "' onClick = 'updateArriveSpace("+data+")'>编辑</button>";
+			                        return "<button class='smailButton' id='" + data + "' onClick = 'updateArriveSpace("+data+")'>编辑</button>" + 
+											"<button class='smailButton' style='width:120px' id='" + data + "' onClick = 'updateArriveStatus("+data+")'>修改运行状态</button>";
+			                    }
+			                },
+							{
+			                    "targets": [7],
+			                    "data": "status",
+			                    "render": function(data, type, full) {
+			                        if(data == 0){
+										return "正常运行";
+									}else{
+										return "已停运";
+									}
 			                    }
 			                }
+			
 			            ],
 					language: {
 		                    lengthMenu: '显示<select style="width:80px;height:30px">' + '<option value="1">1</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
@@ -54,7 +69,7 @@ $(function(){
                 url : sSource,                              //这个就是请求地址对应sAjaxSource    
                 data : {
 					"aoData":JSON.stringify(aoData),
-					"trainId" : id
+					"trainId" : id,
 					
 				},   //这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数 ,分页,排序,查询等的值   
                 type : 'get',    
@@ -73,6 +88,36 @@ $(function(){
 
 	updateArriveSpace = function(id){
 		x_admin_show('修改中间站点信息','arrive_update.html?id='+id)
+	}
+	
+	addArrive = function(){
+		x_admin_show('添加中间站点信息','arrive_add.html?id='+id)
+	}
+	
+	updateArriveStatus = function(seatid){
+		layer.confirm('确定修改该站点的运行状态吗?',function(){
+  		 	$.ajax({    
+                url : "http://localhost:8089/ticketother/updateArriveStatus",                            
+                data : JSON.stringify({
+					"id" : seatid
+				}),   //这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数 ,分页,排序,查询等的值   
+                type : 'post',    
+                dataType : 'json',   
+				contentType :"application/json; charset=UTF-8", 
+                async : false,  
+                success : function(result) {    
+					console.info(result)
+					if(result){
+						layer.confirm('修改成功!',function(){
+							x_admin_close();
+						});
+					}
+                },    
+                error : function(msg) { 
+					   
+                }    
+            });    	
+        });
 	}
 	
 

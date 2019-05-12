@@ -88,7 +88,7 @@ public class BuyTicketServiceImpl implements BuyTivketService {
             //获取座位信息
             TrainSeat trainSeat = buyTicketDao.selectTrainSeatById(train.getId());
             //获取中间站点的信息
-            List<TrainArrive> trainArrives = buyTicketDao.getTrainArrives(train.getId(),start,end);
+            List<TrainArrive> trainArrives = buyTicketDao.getTrainArrivesWithOK(train.getId(),start,end);
             //前端显示的dyo对象
             TrainDto trainDto = new TrainDto();
             //将作为信息添加到数据对象中
@@ -337,6 +337,7 @@ public class BuyTicketServiceImpl implements BuyTivketService {
             ticketShowDto.setTrainFromTime(getGoTime(arrive.getTrainArriveTime(),arrive.getTrainArriveWite()));
             ticketShowDto.setTrainWait(arrive.getTrainArriveWite());
             ticketShowDto.setTrainAfter(arrive.getTrainAfter());
+            ticketShowDto.setStatus(arrive.getStatus());
             ticketShowDtos.add(ticketShowDto);
         }
         return ticketShowDtos;
@@ -350,6 +351,11 @@ public class BuyTicketServiceImpl implements BuyTivketService {
     @Override
     public List<TrainArrive> allTrainArrives(Long trainId) {
         return buyTicketDao.getTrainArrives(trainId,null,null);
+    }
+
+    @Override
+    public TrainArrive selectArriveById(long id) {
+        return buyTicketDao.selectArriveById(id);
     }
 
     /**

@@ -141,6 +141,15 @@ public class BuyTicketController {
         return buyTivketService.allTrainArrives(trainId);
     }
 
+    /**
+     * 获取站点信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/getArrive")
+    public TrainArrive selectArriveById(@RequestParam("id") long id){
+        return buyTivketService.selectArriveById(id);
+    }
 
 
 }

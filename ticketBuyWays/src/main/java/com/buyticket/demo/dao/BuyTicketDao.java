@@ -42,7 +42,14 @@ public interface BuyTicketDao {
      * @param trainId
      * @return
      */
-    public List<TrainArrive> getTrainArrives(@Param("trainId") long trainId, @Param("start") Integer start, @Param("end") Integer end);
+    public List<TrainArrive> getTrainArrives(@Param("trainId") long trainId, @Param("start") Integer start, @Param("end") Integer end );
+
+    /**
+     * 获取中间站点的信息
+     * @param trainId
+     * @return
+     */
+    public List<TrainArrive> getTrainArrivesWithOK(@Param("trainId") long trainId, @Param("start") Integer start, @Param("end") Integer end );
 
     /**
      * 获取中间站点的等级，判断该车辆是否符合要求
@@ -51,5 +58,13 @@ public interface BuyTicketDao {
      * @return
      */
     public Integer getGrade(@Param("space") String space,@Param("trainId") Long trainId);
+
+    /**
+     * 更具id查询中间站点信息
+     * @param id
+     * @return
+     */
+    public TrainArrive selectArriveById(@Param("id") long id);
+
 
 }
