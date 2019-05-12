@@ -64,3 +64,11 @@ background: linear-gradient(top,#66B5E6,#2e88c0);
     background: -ms-linear-gradient(top, #8DC9EF, #4E9FD1);
 
 }
+
+.delete{
+	width: 55px;
+	height: 30px;
+	color: red;
+	background: #EAEAEA;
+	
+}

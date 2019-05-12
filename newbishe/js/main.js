@@ -1,5 +1,7 @@
 window.onload = function () {
   'use strict';
+  var username =sessionStorage.getItem("uesrMessage");
+  alert(username)
   var Cropper = window.Cropper;
   var URL = window.URL || window.webkitURL;
   var container = document.querySelector('.img-container');
@@ -175,10 +177,35 @@ window.onload = function () {
 
         case 'getCroppedCanvas':
           if (result) {
+          	var str = result.toDataURL(uploadedImageType);
           	 console.log(result.toDataURL(uploadedImageType)) //base64编码后的推片，
           	 /*
           	  * 这写请求
           	  * */
+          	 $.ajax({
+          	 	type:"post",
+          	 	url:"http://localhost:8089/otherWays/uploadImage",
+          	 	async:false,
+          	 	dataType : 'json',   
+							contentType :"application/json; charset=UTF-8", 
+          	 	data:JSON.stringify({
+          	 		"username" : username,
+          	 		"baseStr" : str
+          	 	}),
+          	 	success :function(result){
+          	 		console.info(result)
+          	 		if(result){
+		                x_admin_close();
+		                x_admin_father_reload();
+          	 		}
+          	 	},
+          	 	error : function(msg) {    
+              }  
+          	 	
+          	 });
+          	 
+          	 
+          	 
             
           }
           break;

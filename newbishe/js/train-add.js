@@ -1,9 +1,11 @@
 $(function(){
 	/*动态添加文本框*/
+	 var j = 1,i = 1;
 	addTextBox = function (form) {
 	  // Create the label
 	  var div = document.createElement("div");
 	  div.setAttribute("class","layui-form-item");
+	    div.setAttribute("id","text" + i);
 	  //创建lable标签
 	  var label1 = document.createElement("label");
 	  label1.appendChild(document.createTextNode("*  站点名称:"));
@@ -38,7 +40,7 @@ $(function(){
 	  textField2.setAttribute("class","layui-input");
 	  textField2.setAttribute("name","trainArriveTime");
 	  textField2.setAttribute("id","trainArriveTime");
-	  textField2.setAttribute("placeholder","到达时间");
+	  textField2.setAttribute("placeholder","到达时间（9:30）");
 	  div.appendChild(label2)
 	  inputDiv2.appendChild(textField2)
 	  div.appendChild(inputDiv2);
@@ -61,25 +63,27 @@ $(function(){
 	  div.appendChild(label3)
 	  inputDiv3.appendChild(textField3)
 	  div.appendChild(inputDiv3);
+	  
+	   //创建一个按钮，用于删除本格div
+	  var button = document.createElement("button");
+	  button.setAttribute("onclick","deleteSeat("+i+")");
+	  button.setAttribute("class","delete");
+	   button.appendChild(document.createTextNode("删除"))
+	   div.appendChild(button);
 	 
 	  //添加到from表单中
 	  form.append(div)
+	  i++;
 //	  form.insertBefore(div,afterElement);
 	  return false;
 	}
-	/*function removeTextBox(form) {
-	  if (textNumber > 1) { // If there's more than one text box
-	    // Remove the last one added
-	    form.removeChild(document.getElementById("txt"+textNumber).parentNode);
-	    textNumber--;
-	  }
-	}*/
+
 	
-	
-	addSeat = function(){
-		var form = document.getElementById("trainSeat")
+	addSeat = function(form){
+//	var form = document.getElementById("trainSeat")
 	 var div = document.createElement("div");
 	  div.setAttribute("class","layui-form-item");
+	   div.setAttribute("id","seat"+ j);
 	  //创建lable标签
 	  var label0 = document.createElement("label");
 	  label0.appendChild(document.createTextNode("*  座位等级:"));
@@ -165,7 +169,7 @@ $(function(){
 	  var inputDiv1 = document.createElement("div");
 	  inputDiv1.setAttribute("class","layui-input-inline");
 	  var textField1 = document.createElement("input");
-	  textField1.setAttribute("type","text");
+	  textField1.setAttribute("type","number");
 	  textField1.setAttribute("name","seatNum");
 	  textField1.setAttribute("id","seatNum");
 	  textField1.setAttribute("class","layui-input");
@@ -185,7 +189,7 @@ $(function(){
 	  var inputDiv2 = document.createElement("div");
 	  inputDiv2.setAttribute("class","layui-input-inline");
 	  var textField2 = document.createElement("input");
-	  textField2.setAttribute("type","text");
+	  textField2.setAttribute("type","number");
 	  textField2.setAttribute("name","seatCarriage");
 	  textField2.setAttribute("id","seatCarriage");
 	  textField2.setAttribute("class","layui-input");
@@ -205,7 +209,7 @@ $(function(){
 	  var inputDiv3 = document.createElement("div");
 	  inputDiv3.setAttribute("class","layui-input-inline");
 	  var textField3 = document.createElement("input");
-	  textField3.setAttribute("type","text");
+	  textField3.setAttribute("type","number");
 	  textField3.setAttribute("name","seatPrice");
 	  textField3.setAttribute("id","seatPrice");
 	  textField3.setAttribute("class","layui-input");
@@ -213,11 +217,23 @@ $(function(){
 	  div.appendChild(label3)
 	  inputDiv3.appendChild(textField3)
 	  div.appendChild(inputDiv3);
+	  
+	  //创建一个按钮，用于删除本格div
+	  var button = document.createElement("button");
+	  button.setAttribute("onclick","deleteSeat("+j+")");
+	  button.setAttribute("class","delete");
+	   button.appendChild(document.createTextNode("删除"))
+	   div.appendChild(button);
 
 	  //添加到from表单中
 	  form.append(div)
 	}
-	
+	deleteText = function(id){
+		$("#text" + id).remove()
+	}
+	deleteSeat = function(id){
+		$("#seat" + id).remove()
+	}
 	
 	//添加火车信息
 	addTrainMessage = function (){

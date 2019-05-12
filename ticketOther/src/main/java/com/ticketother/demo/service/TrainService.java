@@ -1,8 +1,10 @@
 package com.ticketother.demo.service;
 
+import com.ticketother.demo.dto.ShowSeatDto;
 import com.ticketother.demo.dto.TrainSeatMessageDto;
 import com.ticketother.demo.entity.Train;
 import com.ticketother.demo.entity.TrainArrive;
+import com.ticketother.demo.entity.TrainSeat;
 import com.ticketother.demo.entity.TrainSeatMessage;
 import org.apache.ibatis.annotations.Param;
 
@@ -90,6 +92,20 @@ public interface TrainService {
      * @return
      */
     public boolean updateStatus( long id,int status);
+
+    /**
+     * 修改火车座位信息
+     * @param trainSeat
+     * @return
+     */
+    public boolean updateTrainSeat(String  trainSeat);
+
+    /**
+     * 显示火车座位信息
+     * @param trainId
+     * @return
+     */
+    public List<ShowSeatDto> showSeata(Long trainId);
 
 
 }

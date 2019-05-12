@@ -1,5 +1,6 @@
 package com.ticketother.demo.dao;
 
+import com.ticketother.demo.dto.ShowSeatDto;
 import com.ticketother.demo.entity.Train;
 import com.ticketother.demo.entity.TrainArrive;
 import com.ticketother.demo.entity.TrainSeat;
@@ -123,5 +124,26 @@ public interface TrainFunctionDao {
      * @return
      */
     public boolean updateStatus(@Param("id") long id,@Param("status") int status);
+    /**
+     * 修改座位信息
+     * @param trainSeat
+     * @return
+     */
+    public boolean updateTrainSeat(@Param("trainSeat") TrainSeat trainSeat);
+
+    /**
+     * 修改火车座位信息
+     * @param trainId
+     * @param seatNum
+     * @return
+     */
+    public boolean updateSeatNum(@Param("trainId") long trainId,@Param("seatNum") long seatNum);
+
+    /**
+     * 删除
+     * @param trainId
+     * @return
+     */
+    public boolean deleteSeat (@Param("trainId") long trainId);
 
 }

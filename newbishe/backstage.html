@@ -24,6 +24,7 @@
     <div class="container">
         <div class="logo"><a href="index.html">火车票系统</a></div>
         <ul class="layui-nav right" lay-filter="">
+    	 <li class="layui-nav-item to-index"><a href="index.html">前台首页</a></li>
           <li class="layui-nav-item">
             <a href="javascript:;"><span id="show"></span></a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
@@ -32,7 +33,8 @@
               <dd><a onclick="lgout()">退出</a></dd>
             </dl>
           </li>
-          <li class="layui-nav-item to-index"><a href="index.html">前台首页</a></li>
+          <li class="layui-nav-item" style="margin-left: 30px;"><img style="width: 50px;height: 50px; border-radius:25px;"  id="logo"
+           	 onclick="updateImage()"  onerror="this.style.display='none'"></li>
         </ul>
         
     </div>

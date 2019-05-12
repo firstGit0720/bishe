@@ -1,5 +1,6 @@
 package com.other.demo.feign;
 
+import com.other.demo.dto.ShowSeatDto;
 import com.other.demo.dto.ShowTicketHestoryDto;
 import com.other.demo.dto.TrainSeatMessageDto;
 import com.other.demo.entity.IndentMessage;
@@ -150,4 +151,19 @@ public interface TicketOtherFegin {
      */
     @GetMapping("/userother/allBackTicket")
     public String getAllBackTicket(@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("aoData") String aoData);
+
+    /**
+     * 显示座位的信息
+     * @param trainId
+     * @return
+     */
+    @GetMapping("/train/getSeats")
+    public List<ShowSeatDto> getSeats(@RequestParam("trainId") long trainId);
+    /**
+     * 修改座位信息
+     * @param seatMessage
+     * @return
+     */
+    @PostMapping("/train/updateSeat")
+    public boolean updateSeatMessage(@RequestParam("seatMessage") String seatMessage);
 }

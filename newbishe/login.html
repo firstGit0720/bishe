@@ -16,6 +16,7 @@
 		<script src="./lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="js/cookie.js" ></script>
 		<script type="text/javascript" src="js/xcConfirm.js" ></script>
+		<script type="text/javascript" src="js/public_check.js" ></script>
 	</head>
 	<body>
 		<!--header-->
@@ -28,14 +29,17 @@
 		  <li class="layui-nav-item"><a id="goBack">进入后台</a></li>
           <li class="layui-nav-item">
             <a href="javascript:;"><span id="show">菜单</span></a>
-            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+            <dl class="layui-nav-child"> 
               <dd><a onclick="showUserMessage()">个人信息</a></dd>
               <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
               <dd><a onclick="lgout()">退出</a></dd>
             </dl>
           </li>
+          <li class="layui-nav-item" style="margin-left: 30px;"><img style="width: 50px;height: 50px; border-radius:25px;"  id="logo"
+           	onclick="updateImage()"  onerror="this.style.display='none'"></li>
         </ul>
     </div>
+     
 		
 		 <div class="middle">
 		   <div class="cont">

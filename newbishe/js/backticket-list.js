@@ -32,13 +32,6 @@ $(function(){
 							
 			            ],
 			            "columnDefs": [
-			                {
-			                    "targets": [8],
-			                    "data": "id",
-			                    "render": function(data, type, full) {
-			                        return "<button class='smailButton' id='" + data + "' onClick =member_del(this,"+data+")>删除</button>";
-								}
-			                },
 							 {
 			                    "targets": [7],
 			                    "data": "status",

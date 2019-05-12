@@ -1,9 +1,9 @@
 $(function(){
 //	var eventType = window.wxc.xcConfirm.eventEnum;
+
 	$("#showMessage1").hide()
 	//给时间复制
 	$("#fromTime").val(format(new Date()))
-	
  	var username =sessionStorage.getItem("uesrMessage");
 	var userMessage;
   	var strfrom,strarrive,datestr = null,trainCard;

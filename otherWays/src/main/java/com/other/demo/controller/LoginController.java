@@ -4,10 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.other.demo.dto.UserDto;
 import com.other.demo.feign.RedisServiceFeign;
 import com.other.demo.service.UserService;
+import com.other.demo.util.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
@@ -23,6 +26,8 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private RedisServiceFeign redisServiceFeign;
+    @Autowired
+    private ImageUtil imageUtil;
 
     /**
      * 登录验证
@@ -91,6 +96,29 @@ public class LoginController {
     @PostMapping(value = "/deleteuser",consumes = {CONTENT_TYPE})
     public boolean deleteUser(@RequestParam("userId") Long userid){
         return userService.deleteUser(userid);
+    }
+
+    /**
+     * 上传图片
+     * @return
+     */
+    @PostMapping(value = "/uploadImage" , consumes = {CONTENT_TYPE})
+    public boolean uploadImage(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        String baseStr = jsonObject.getString("baseStr");
+        String username = jsonObject.getString("username");
+        try {
+            return imageUtil.uploadImage(baseStr, username);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @GetMapping("/getiamge")
+    public void getImage(HttpServletRequest request, HttpServletResponse response, @RequestParam("username") String username) throws IOException {
+        imageUtil.getImage(username,request,response);
+
     }
 
 }

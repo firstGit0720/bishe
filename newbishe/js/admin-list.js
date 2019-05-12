@@ -96,7 +96,6 @@ $(function(){
 	}
 
 	 updateType = function(id){
-	 	alert(id)
 	 	if(userMessage == null){
 	 		 layer.confirm('您的登录时间已过期,请重新登录？',function(){
       		 	window.location.href = "login.html"

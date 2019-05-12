@@ -34,6 +34,7 @@ $(function(){
 			                    "targets": [8],
 			                    "data": "trainStatus",
 			                    "render": function(data, type, full) {
+			                    	status = data;
 			                        if(data == 0){
 			                        	return "正常运行";
 			                        }else{
@@ -89,33 +90,38 @@ $(function(){
 		//获取该行信息
 		x_admin_show('修改火车信息','train-edit.html?id='+id)
 	}
+	//修改座位信息
+	updateSeats = function(id){
+		//获取该行信息
+		x_admin_show('修改座位信息','seat-update.html?id='+id)
+	}
 	
 	updateStatus = function(id){
-		alert( status == 0 ? 1 : 0)
 		 layer.confirm('确定修改火车运行的状态吗？',function(){
+		 	var num = status == 0 ? 1 : 0;
   		 	$.ajax({    
                 url :"http://localhost:8089/ticketother/updateTrainSuccess",                          
                 data :JSON.stringify({
 									"trainId" : id,
-									"status" : status == 0 ? 1 : 0
+									"status" : num
 								}),
                 type : 'post',    
                 dataType : 'json',   
-							  contentType :"application/json;charset=UTF-8", 
+			  contentType :"application/json;charset=UTF-8", 
                 async : false,  
                 success : function(result) {   
-					     	if(result){
-					     		 layer.msg('修改成功!', {icon:1,time:2000});
-					     		 setTimeout(function(){
-					     		 	location.replace(location.href);
-					     		 },1500);
-					     	}else{
-					     		 layer.msg('修改失败!', {icon:2,time:2000});
-					     	}
+			     	if(result){
+			     		 layer.msg('修改成功!', {icon:1,time:2000});
+			     		 setTimeout(function(){
+			     		 	location.replace(location.href);
+			     		 },1500);
+			     	}else{
+			     		 layer.msg('修改失败!', {icon:2,time:2000});
+			     	}
 					 		
                 },    
                 error : function(msg) {    
-						   	layer.msg('信息获取失败', {icon:2,time:2000});
+				   	layer.msg('信息获取失败', {icon:2,time:2000});
                 }    
             });
     });

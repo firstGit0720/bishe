@@ -2,6 +2,7 @@ package com.other.demo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.other.demo.dto.ShowSeatDto;
 import com.other.demo.dto.TrainSeatMessageDto;
 import com.other.demo.entity.IndentMessage;
 import com.other.demo.entity.Train;
@@ -193,7 +194,7 @@ public class TicketOtherController {
      * 修改火车状态 0 正常 1 停运
      * @return
      */
-    @PostMapping("/updateTrainSuccess")
+    @PostMapping(value = "/updateTrainSuccess",consumes = {CONTENT_TYPE})
     public boolean updateTrainTask(@RequestBody String data){
         JSONObject obj = JSON.parseObject(data);
         return ticketOtherFegin.updateTrainTask(obj.getLong("trainId"), obj.getInteger("status"));
@@ -207,7 +208,7 @@ public class TicketOtherController {
      * @param aoData
      * @return
      */
-    @GetMapping("/allIndent")
+    @GetMapping(value = "/allIndent",consumes = {CONTENT_TYPE})
     public String getAllIndent(@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("aoData") String aoData){
         return ticketOtherFegin.getAllIndent( startTime, endTime, aoData);
     }
@@ -218,9 +219,23 @@ public class TicketOtherController {
      * @param aoData
      * @return
      */
-    @GetMapping("/allBackTicket")
+    @GetMapping(value = "/allBackTicket" , consumes = {CONTENT_TYPE})
     public String getAllBackTicket(@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("aoData") String aoData){
         return ticketOtherFegin.getAllBackTicket(startTime, endTime, aoData);
+    }
+
+    /**
+     * 获取座位信息
+     * @param trainId
+     * @return
+     */
+    @GetMapping(value = "/getSeats" , consumes = {CONTENT_TYPE})
+    public List<ShowSeatDto> showSeats (@RequestParam("trainId") long trainId){
+        return ticketOtherFegin.getSeats(trainId);
+    }
+    @PostMapping(value = "/updateSeat" , consumes = {CONTENT_TYPE})
+    public boolean updateSeats(@RequestBody String data){
+        return ticketOtherFegin.updateSeatMessage(data);
     }
 
 }

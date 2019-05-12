@@ -8,6 +8,7 @@ import com.netflix.discovery.converters.Auto;
 import com.ticketother.demo.dao.TrainFunctionDao;
 import com.ticketother.demo.dao.UserOtherDao;
 import com.ticketother.demo.dto.PassSiteDto;
+import com.ticketother.demo.dto.ShowSeatDto;
 import com.ticketother.demo.dto.TrainSeatMessageDto;
 import com.ticketother.demo.entity.Train;
 import com.ticketother.demo.entity.TrainArrive;
@@ -42,11 +43,11 @@ public class TrainServiceImpl implements TrainService {
     private static double SECOND_SEAT_FACTOR = 3.0; //二等座的价格增长倍数
     private static double SLEEPER_FIRST_SOFT_FACTOR = 2.75; //软卧一等卧的价格增长倍数
     private static double SLEEPER_BEST_FACTOR = 2.5; //高级软卧价格增长倍数
-    private static double SLEEPER_SPORT_FACTOR = 2.25; //动卧的价格增长倍数
-    private static double SLEEPER_STIFF_FACTOR = 2.0; //硬卧的价格增长倍数
-    private static double SEAT_SOFT_FACTOR = 1.75; //软座的价格增长倍数
-    private static double SEAT_STIFF_FACTOR = 1.5; //硬座的价格增长倍数
-    private static double SEAT_NO_FACTOR = 1.5; //无座的价格增长倍数
+    private static double SLEEPER_SPORT_FACTOR = 1.5; //动卧的价格增长倍数
+    private static double SLEEPER_STIFF_FACTOR = 1.25; //硬卧的价格增长倍数
+    private static double SEAT_SOFT_FACTOR = 1; //软座的价格增长倍数
+    private static double SEAT_STIFF_FACTOR = 0.75; //硬座的价格增长倍数
+    private static double SEAT_NO_FACTOR = 0.75; //无座的价格增长倍数
 
 
     @Override
@@ -405,6 +406,227 @@ public class TrainServiceImpl implements TrainService {
     @Override
     public boolean updateStatus(long id, int status) {
         return trainDao.updateTrainSuccess(id, status);
+    }
+
+    /**
+     * 修改座位信息
+     * @param trainSeatStr
+     * @return
+     */
+    @Override
+    @Transactional
+    public boolean updateTrainSeat(String trainSeatStr) {
+        //判断条件
+        boolean updateSeat = false, updateTrain = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        //将字符串转换为json对象
+        JSONObject jsonObject = JSON.parseObject(trainSeatStr);
+        //获取座位信息
+        JSONArray seatType = JSONArray.parseArray(jsonObject.get("seatType").toString());
+        JSONArray seatNum = JSONArray.parseArray(jsonObject.get("seatNum").toString());
+        JSONArray seatCarriage = JSONArray.parseArray(jsonObject.get("seatCarriage").toString());
+        JSONArray seatPrice = JSONArray.parseArray(jsonObject.get("seatPrice").toString());
+         Long trainId = jsonObject.getLong("id");
+        //获取火车信息
+        Train train = trainDao.selectTrainByTrainId(trainId);
+
+        //计算座位总数
+        long nums = 0;
+        for (int i = 0 ; i< seatNum.size() ; i++){
+            nums += seatNum.getLong(i);
+        }
+        //修改座位信息
+        updateTrain = trainDao.updateSeatNum(trainId,nums);
+        if(updateTrain){
+            //封装座位信息
+            TrainSeat trainSeat = new TrainSeat();
+            trainSeat.setTrainId(trainId);
+            for (int i = 0 ; i< seatType.size(); i++){
+                System.out.println("座位等级是：" + seatType.getInteger(i));
+                switch(seatType.getInteger(i)){
+                    case 0 :{  //特等座
+                        trainSeat.setSeatBestCarriage(seatCarriage.getLong(i));  //设置车厢数量
+                        trainSeat.setSeatBestNum(seatNum.getLong(i));  //设置座位总数
+                        trainSeat.setSeatBestEnery(seatNum.getLong(i) / seatCarriage.getLong(i)); //设置每节的车作数
+                        trainSeat.setSeatBestPrice(seatPrice.getDouble(i));
+                    }; break;
+                    case 1 : {   //一等座
+                        trainSeat.setSeatFirstCarriage(seatCarriage.getLong(i));
+                        trainSeat.setSeatFirstNum(seatNum.getLong(i));
+                        trainSeat.setSeatFirstEnery(seatNum.getLong(i) / seatCarriage.getLong(i));
+                        trainSeat.setSeatFirstPrice(seatPrice.getDouble(i));
+                    };break;
+                    case 2 : {  //二等座
+                        trainSeat.setSeatSecondNum(seatNum.getLong(i));
+                        trainSeat.setSeatSecondCarriage(seatCarriage.getLong(i));
+                        trainSeat.setSeatSecondEnery(seatNum.getLong(i) /seatCarriage.getLong(i));
+                        trainSeat.setSeatSecondPrice(seatPrice.getDouble(i));
+                    };break;
+                    case 3 : {//软卧一等卧
+                        trainSeat.setSleeperFirstSoftNum(seatNum.getLong(i));
+                        trainSeat.setSleeperFirstSoftCarriage(seatCarriage.getLong(i));
+                        trainSeat.setSleeperFirstSoftEnery(seatNum.getLong(i) /seatCarriage.getLong(i));
+                        trainSeat.setSleeperFirstSoftPrice(seatPrice.getDouble(i));
+                    } break;
+                    case 4 : {//高级软卧
+                        trainSeat.setSleeperBestNum(Long.parseLong(seatNum.get(i).toString()));
+                        trainSeat.setSleeperBestCarriage(Long.parseLong(seatCarriage.get(i).toString()));
+                        trainSeat.setSleeperBestEnery(Long.parseLong(seatNum.get(i).toString()) / Long.parseLong(seatCarriage.get(i).toString()));
+                        trainSeat.setSleeperBestPrice(Double.parseDouble(seatPrice.get(i).toString()));
+                    }break;
+                    case 5 : {//动卧
+                        trainSeat.setSleeperSportNum(Long.parseLong(seatNum.get(i).toString()));
+                        trainSeat.setSleeperSportCarriage(Long.parseLong(seatCarriage.get(i).toString()));
+                        trainSeat.setSleeperSportEnery(Long.parseLong(seatNum.get(i).toString()) / Long.parseLong(seatCarriage.get(i).toString()));
+                        trainSeat.setSleeperSportPrice(Double.parseDouble(seatPrice.get(i).toString()));
+                    } break;
+                    case 6 : { //硬卧
+                        trainSeat.setSleeperStiffNum(Long.parseLong(seatNum.get(i).toString()));
+                        trainSeat.setSleeperStiffCarriage(Long.parseLong(seatCarriage.get(i).toString()));
+                        trainSeat.setSleeperStiffEnery(Long.parseLong(seatNum.get(i).toString()) / Long.parseLong(seatCarriage.get(i).toString()));
+                        trainSeat.setSleeperStiffPrice(seatPrice.getDouble(i));
+                    } break;
+                    case 7 : {//软座
+                        trainSeat.setSeatSoftNum(seatNum.getLong(i));
+                        trainSeat.setSeatSoftCarriage(seatCarriage.getLong(i));
+                        trainSeat.setSeatSoftEnery(seatNum.getLong(i) / seatCarriage.getLong(i));
+                        trainSeat.setSeatSoftPrice(seatPrice.getDouble(i));
+                    } break;
+                    case 8 :{//硬座
+                        trainSeat.setSeatStiffNum(seatNum.getLong(i));
+                        trainSeat.setSeatStiffCarriage(seatCarriage.getLong(i));
+                        trainSeat.setSeatStiffEnery(seatNum.getLong(i) / seatCarriage.getLong(i));
+                        trainSeat.setSeatStiffPrice(seatPrice.getDouble(i));
+                    } break;
+                    case 9 : {//无座
+                        trainSeat.setSeatNoNum(seatNum.getLong(i));
+                        trainSeat.setSeatNoCarriage(seatCarriage.getLong(i));
+                        trainSeat.setSeatNoEnery(seatNum.getLong(i) / seatCarriage.getLong(i));
+                        trainSeat.setSeatNoPrice(seatPrice.getDouble(i));
+                    } break;
+                    case 10 : { //其他
+                        trainSeat.setSeatOtherNum(seatNum.getLong(i));
+                        trainSeat.setSeatOtherCarriage(seatCarriage.getLong(i));
+                        trainSeat.setSeatOtherEnery(seatNum.getLong(i) / seatCarriage.getLong(i));
+                        trainSeat.setSeatOtherPrice(seatPrice.getDouble(i));
+                    } break;
+                }
+            }
+            //修改座位信息
+            updateSeat = trainDao.deleteSeat(trainId);
+            if (updateSeat){
+                trainDao.addTrainSeat(trainSeat);
+            }
+        }
+
+
+
+        return updateSeat && updateTrain;
+    }
+
+    /**
+     * 显示座位信息
+     * @param trainId
+     * @return
+     */
+    @Override
+    public List<ShowSeatDto> showSeata(Long trainId) {
+        TrainSeat trainSeat = trainDao.selectSeatByTrainId(trainId);
+        List<ShowSeatDto> lists = new ArrayList<ShowSeatDto>();
+        //封装数据
+        if (trainSeat != null){
+            if (trainSeat.getSeatBestCarriage() != null){  //特等座
+                ShowSeatDto showSeatDto = new ShowSeatDto();
+                showSeatDto.setPrice(trainSeat.getSeatBestPrice());
+                showSeatDto.setCarriage(trainSeat.getSeatBestCarriage());
+                showSeatDto.setSeatNum(trainSeat.getSeatBestNum());
+                showSeatDto.setSeatType(0);
+                lists.add(showSeatDto);
+            }
+            if (trainSeat.getSeatFirstCarriage() != null) {  //一等座
+                ShowSeatDto showSeatDto = new ShowSeatDto();
+                showSeatDto.setSeatType(1);
+                showSeatDto.setCarriage(trainSeat.getSeatFirstCarriage());
+                showSeatDto.setSeatNum(trainSeat.getSeatFirstNum());
+                showSeatDto.setPrice(trainSeat.getSeatFirstPrice());
+                lists.add(showSeatDto);
+            }
+            if(trainSeat.getSeatSecondCarriage() != null){ //二等座
+                ShowSeatDto showSeatDto = new ShowSeatDto();
+                showSeatDto.setPrice(trainSeat.getSeatSecondPrice());
+                showSeatDto.setSeatNum(trainSeat.getSeatSecondNum());
+                showSeatDto.setSeatType(2);
+                showSeatDto.setCarriage(trainSeat.getSeatSecondCarriage());
+                lists.add(showSeatDto);
+            }
+            if (trainSeat.getSleeperFirstSoftCarriage() != null){  //软卧一等卧
+                ShowSeatDto showSeatDto = new ShowSeatDto();
+                showSeatDto.setCarriage(trainSeat.getSleeperFirstSoftCarriage());
+                showSeatDto.setSeatType(3);
+                showSeatDto.setSeatNum(trainSeat.getSleeperFirstSoftNum());
+                showSeatDto.setPrice(trainSeat.getSleeperFirstSoftPrice());
+                lists.add(showSeatDto);
+            }
+            if (trainSeat.getSleeperBestCarriage() != null){  //高级软卧
+                ShowSeatDto showSeatDto = new ShowSeatDto();
+                showSeatDto.setPrice(trainSeat.getSleeperBestPrice());
+                showSeatDto.setSeatNum(trainSeat.getSleeperBestNum());
+                showSeatDto.setSeatType(4);
+                showSeatDto.setCarriage(trainSeat.getSleeperBestCarriage());
+                lists.add(showSeatDto);
+            }
+            if (trainSeat.getSleeperSportCarriage() != null){  //动卧
+                ShowSeatDto showSeatDto = new ShowSeatDto();
+                showSeatDto.setCarriage(trainSeat.getSleeperSportCarriage());
+                showSeatDto.setSeatType(5);
+                showSeatDto.setSeatNum(trainSeat.getSleeperSportNum());
+                showSeatDto.setPrice(trainSeat.getSleeperSportPrice());
+                lists.add(showSeatDto);
+
+            }
+            if (trainSeat.getSleeperStiffCarriage() != null){  //硬卧
+                ShowSeatDto showSeatDto = new ShowSeatDto();
+                showSeatDto.setPrice(trainSeat.getSleeperStiffPrice());
+                showSeatDto.setSeatNum(trainSeat.getSleeperStiffNum());
+                showSeatDto.setSeatType(6);
+                showSeatDto.setCarriage(trainSeat.getSleeperStiffCarriage());
+                lists.add(showSeatDto);
+            }
+            if (trainSeat.getSeatSoftCarriage() != null){  //软座
+                ShowSeatDto showSeatDto = new ShowSeatDto();
+                showSeatDto.setCarriage(trainSeat.getSeatSoftCarriage());
+                showSeatDto.setSeatType(7);
+                showSeatDto.setSeatNum(trainSeat.getSeatSoftNum());
+                showSeatDto.setPrice(trainSeat.getSeatSoftPrice());
+                lists.add(showSeatDto);
+            }
+            if (trainSeat.getSeatStiffCarriage() != null) { //硬座
+                ShowSeatDto showSeatDto = new ShowSeatDto();
+                showSeatDto.setPrice(trainSeat.getSeatStiffPrice());
+                showSeatDto.setSeatNum(trainSeat.getSeatStiffNum());
+                showSeatDto.setSeatType(8);
+                showSeatDto.setCarriage(trainSeat.getSeatStiffCarriage());
+                lists.add(showSeatDto);
+            }
+
+            if (trainSeat.getSeatNoCarriage() != null){ //无座
+                ShowSeatDto showSeatDto = new ShowSeatDto();
+                showSeatDto.setCarriage(trainSeat.getSeatNoCarriage());
+                showSeatDto.setSeatType(9);
+                showSeatDto.setSeatNum(trainSeat.getSeatNoNum());
+                showSeatDto.setPrice(trainSeat.getSeatNoPrice());
+                lists.add(showSeatDto);
+            }
+            if (trainSeat.getSeatOtherCarriage() != null){
+                ShowSeatDto showSeatDto = new ShowSeatDto();
+                showSeatDto.setPrice(trainSeat.getSeatOtherPrice());
+                showSeatDto.setSeatNum(trainSeat.getSeatOtherNum());
+                showSeatDto.setSeatType(10);
+                showSeatDto.setCarriage(trainSeat.getSeatOtherCarriage());
+                lists.add(showSeatDto);
+            }
+        }
+        return lists;
     }
 
     /**

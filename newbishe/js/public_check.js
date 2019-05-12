@@ -17,7 +17,16 @@ $(function(){
                 },    
                 error : function(msg) {    
                 }    
-      });    	
+      });    
+	var aaa = "test";
+
+	//显示头像
+	$("#logo").attr("src","http://localhost:8089/otherWays/getiamge?username="+username)
+	
+	updateImage = function(){
+		//获取该行信息
+		x_admin_show('修改头像','updateLogo.html')
+	}
   
   	$('#show').empty()
 	$("#show").append("菜单")

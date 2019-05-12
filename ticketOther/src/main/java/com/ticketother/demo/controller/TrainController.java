@@ -2,6 +2,7 @@ package com.ticketother.demo.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ticketother.demo.dto.ShowSeatDto;
 import com.ticketother.demo.dto.TrainSeatMessageDto;
 import com.ticketother.demo.entity.Train;
 import com.ticketother.demo.entity.TrainArrive;
@@ -163,6 +164,26 @@ public class TrainController {
     @PostMapping("/updateStatus")
     public boolean updateStatus(@RequestParam("id") long id,@RequestParam("status") int status){
         return trainService.updateStatus(id, status);
+    }
+
+    /**
+     * 显示座位的信息
+     * @param trainId
+     * @return
+     */
+    @GetMapping("/getSeats")
+    public List<ShowSeatDto> getSeats(@RequestParam("trainId") long trainId){
+        return trainService.showSeata(trainId);
+    }
+
+    /**
+     * 修改座位信息
+     * @param seatMessage
+     * @return
+     */
+    @PostMapping("/updateSeat")
+    public boolean updateSeatMessage(@RequestParam("seatMessage") String seatMessage){
+        return trainService.updateTrainSeat(seatMessage);
     }
 
 
