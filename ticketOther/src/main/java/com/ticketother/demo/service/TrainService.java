@@ -2,10 +2,7 @@ package com.ticketother.demo.service;
 
 import com.ticketother.demo.dto.ShowSeatDto;
 import com.ticketother.demo.dto.TrainSeatMessageDto;
-import com.ticketother.demo.entity.Train;
-import com.ticketother.demo.entity.TrainArrive;
-import com.ticketother.demo.entity.TrainSeat;
-import com.ticketother.demo.entity.TrainSeatMessage;
+import com.ticketother.demo.entity.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.text.ParseException;
@@ -120,6 +117,21 @@ public interface TrainService {
      * @return
      */
     public boolean updateArriveStatus(long id);
+
+    /**
+     * 所有的订单
+     * @return
+     */
+    public List<IndentMessage> allIndents();
+
+    /**
+     * 修改第状态
+     * @param status
+     * @param startTime
+     * @return
+     */
+    public boolean updateSuccess(int status , String startTime);
+
 
 
 }

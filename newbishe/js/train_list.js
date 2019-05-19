@@ -1,6 +1,5 @@
 $(function(){
 	
-		var status;
 		  $("#trainTable").dataTable({      
                 "bProcessing": false,                   // 是否显示取数据时的那个等待提示    
 				searching: false,//搜索
@@ -34,7 +33,6 @@ $(function(){
 			                    "targets": [8],
 			                    "data": "trainStatus",
 			                    "render": function(data, type, full) {
-			                    	status = data;
 			                        if(data == 0){
 			                        	return "正常运行";
 			                        }else{
@@ -98,12 +96,10 @@ $(function(){
 	
 	updateStatus = function(id){
 		 layer.confirm('确定修改火车运行的状态吗？',function(){
-		 	var num = status == 0 ? 1 : 0;
   		 	$.ajax({    
                 url :"http://localhost:8089/ticketother/updateTrainSuccess",                          
                 data :JSON.stringify({
 									"trainId" : id,
-									"status" : num
 								}),
                 type : 'post',    
                 dataType : 'json',   

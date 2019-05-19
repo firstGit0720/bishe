@@ -1,12 +1,10 @@
 package com.other.demo.feign;
 
 import com.other.demo.dto.ShowSeatDto;
-import com.other.demo.dto.ShowTicketHestoryDto;
 import com.other.demo.dto.TrainSeatMessageDto;
 import com.other.demo.entity.IndentMessage;
 import com.other.demo.entity.Train;
 import com.other.demo.entity.TrainArrive;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -182,4 +180,21 @@ public interface TicketOtherFegin {
      */
     @PostMapping("/train/updateArriveStatus")
     public boolean updateSeatStatus(@RequestParam("id") long id);
+
+    /**
+     * 所有订单
+     * @return
+     */
+    @GetMapping("/train/getAll")
+    public List<IndentMessage> allIndents();
+
+    /**
+     * 修改订单状态
+     * @param status
+     * @param startTime
+     * @return
+     */
+    @PostMapping("/train/updateSuccess")
+    public boolean updateSuccess(@RequestParam("status") int status, @RequestParam("startTime") String startTime);
+
 }

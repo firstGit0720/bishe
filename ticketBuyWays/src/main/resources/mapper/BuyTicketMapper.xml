@@ -85,7 +85,8 @@
 
     <!--查火车的信息-->
     <select id="allTrain" resultMap="trainMap" >
-        select * from train  where  train_status = 0 and (train.train_from = #{from} or #{from} in (select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id)) and (train.train_arrive = #{arrive} or #{arrive} in(select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id))
+        select * from train  where  train_status = 0 and (train.train_from = #{from} or #{from} in (select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id)) and
+        (train.train_arrive = #{arrive} or #{arrive} in (select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id))
         <if test=" end > 0">
            limit #{start} , #{end}
         </if>

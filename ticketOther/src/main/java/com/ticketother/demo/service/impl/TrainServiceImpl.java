@@ -5,15 +5,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.netflix.discovery.converters.Auto;
+import com.ticketother.demo.dao.IndentMessageDao;
 import com.ticketother.demo.dao.TrainFunctionDao;
 import com.ticketother.demo.dao.UserOtherDao;
 import com.ticketother.demo.dto.PassSiteDto;
 import com.ticketother.demo.dto.ShowSeatDto;
 import com.ticketother.demo.dto.TrainSeatMessageDto;
-import com.ticketother.demo.entity.Train;
-import com.ticketother.demo.entity.TrainArrive;
-import com.ticketother.demo.entity.TrainSeat;
-import com.ticketother.demo.entity.TrainSeatMessage;
+import com.ticketother.demo.entity.*;
 import com.ticketother.demo.fegin.TicketBuyFegin;
 import com.ticketother.demo.service.TrainService;
 import org.apache.log4j.Logger;
@@ -37,6 +35,8 @@ public class TrainServiceImpl implements TrainService {
     private TrainFunctionDao trainDao;
     @Autowired
     private UserOtherDao userOtherDao;
+    @Autowired
+    private IndentMessageDao indentMessageDao;
     @Autowired
     private TicketBuyFegin ticketBuyFegin;
     //计算座位的价格
@@ -655,6 +655,26 @@ public class TrainServiceImpl implements TrainService {
         int status = trainArrive.getStatus();
         int newStatus = status == 0 ? 1 : 0;
         return trainDao.updateTrainArriveStatus(id, newStatus);
+    }
+
+    /**
+     * 所有的订单
+     * @return
+     */
+    @Override
+    public List<IndentMessage> allIndents() {
+        return indentMessageDao.allIndents();
+    }
+
+    /**
+     * 修改火车票的状态
+     * @param status
+     * @param startTime
+     * @return
+     */
+    @Override
+    public boolean updateSuccess(int status, String startTime) {
+        return indentMessageDao.updateSuccess(status, startTime);
     }
 
     /**

@@ -88,14 +88,14 @@ $(function(){
         }   
 
 		updateTicket = function(id){
-			alert(id)
 	        x_admin_show('车票改签','ticket_update.html?id='+id)
 			
 		}
 		
 		exitTicket = function(id){
-			$.ajax({
-			 		type:"get",
+			layer.confirm('确定退票吗!',function(){
+      		 	$.ajax({
+			 		type:"post",
 			 		url:"http://localhost:8089/ticketother/exitTicket",
 			 		async:false,
 			 		dataType : 'json',   
@@ -114,6 +114,8 @@ $(function(){
 			 			
 			 		}
 			 });
+	        });
+			
 		}
 	
 	

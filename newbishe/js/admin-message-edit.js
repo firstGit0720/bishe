@@ -49,7 +49,7 @@ $(function(){
 	
 	
 	$("#updateMessage").on("click",function(){
-		alert("修改用户信息")
+//		alert("修改用户信息")
 		var data = {
 			"userName" : $("#username").val(),
 			"userPname" : $("#userpname").val(),

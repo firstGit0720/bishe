@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ticketother.demo.dto.ShowSeatDto;
 import com.ticketother.demo.dto.TrainSeatMessageDto;
+import com.ticketother.demo.entity.IndentMessage;
 import com.ticketother.demo.entity.Train;
 import com.ticketother.demo.entity.TrainArrive;
 import com.ticketother.demo.entity.TrainSeatMessage;
@@ -12,6 +13,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import java.text.ParseException;
 import java.util.List;
 
@@ -206,5 +208,24 @@ public class TrainController {
         return trainService.updateArriveStatus(id);
     }
 
+    /**
+     * 所有订单
+     * @return
+     */
+    @GetMapping("/getAll")
+    public List<IndentMessage> allIndents(){
+        return trainService.allIndents();
+    }
+
+    /**
+     * 修改订单状态
+     * @param status
+     * @param startTime
+     * @return
+     */
+    @PostMapping("/updateSuccess")
+    public boolean updateSuccess(@RequestParam("status") int status, @Param("startTime") String startTime){
+        return trainService.updateSuccess(status, startTime);
+    }
 
 }

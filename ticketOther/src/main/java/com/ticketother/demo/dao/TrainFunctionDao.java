@@ -1,13 +1,11 @@
 package com.ticketother.demo.dao;
 
 import com.ticketother.demo.dto.ShowSeatDto;
-import com.ticketother.demo.entity.Train;
-import com.ticketother.demo.entity.TrainArrive;
-import com.ticketother.demo.entity.TrainSeat;
-import com.ticketother.demo.entity.TrainSeatMessage;
+import com.ticketother.demo.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import javax.annotation.security.PermitAll;
 import java.util.List;
 
 /**
@@ -153,6 +151,5 @@ public interface TrainFunctionDao {
      * @return
      */
     public boolean updateTrainArriveStatus(@Param("id") long id,@Param("status") int status);
-
 
 }

@@ -21,6 +21,16 @@
     <select id="getMessage" parameterType="java.lang.Long" resultMap="messageMap">
         select * from indent_message where id = #{id}
     </select>
+    <!--所有的订单-->
+    <select id="allIndents" resultMap="messageMap">
+        select * from  indent_message
+    </select>
+
+    <update id="updateSuccess">
+        update indent_message
+        set is_success = #{status}
+        where train_start_time  &lt;= #{trainStartTime}
+    </update>
 
     <!--修改车票状态-->
     <update id="uodateTicketStatus">

@@ -127,9 +127,25 @@ public class TicketOtherController {
      * @return
      */
     @PostMapping(value = "/updateTicketStatus" , consumes = {CONTENT_TYPE})
-    public boolean updateTicketStatus(@RequestBody long id){
-        System.out.println(id);
-        return ticketOtherFegin.updateTicket(id);
+    public boolean updateTicketStatus(@RequestBody long id) throws Exception {
+        IndentMessage indentMessage = this.getMessage(id);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date trainStart = null;
+        try {
+            trainStart = sdf.parse(indentMessage.getTrainStartTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date now = new Date();
+        //如果改签时间为火车行驶前30分钟系统不给予退票服务，需人工退票
+        long num = 30 * 60 * 1000;
+        if(now.getTime() - num > trainStart.getTime()){
+            System.out.println(id);
+            return ticketOtherFegin.updateTicket(id);
+        }else{
+            throw new Exception("改签时间离出发不到30分钟，请到人工服务台处理");
+
+        }
     }
 
     /**
@@ -138,7 +154,7 @@ public class TicketOtherController {
      * @return
      */
     @PostMapping(value = "/exitTicket" , consumes = {CONTENT_TYPE})
-    public boolean exitTicket(@RequestBody long id){
+    public boolean exitTicket(@RequestParam("id") long id) throws Exception {
         IndentMessage indentMessage = this.getMessage(id);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date trainStart = null;
@@ -154,7 +170,7 @@ public class TicketOtherController {
             System.out.println(id);
             return ticketOtherFegin.exitTicket(id);
         }else{
-            return false;
+            throw new Exception("退票时间离出发不到30分钟，请到人工服务台处理");
         }
 
     }
@@ -166,7 +182,7 @@ public class TicketOtherController {
      */
     @GetMapping(value = "/getMessage" , consumes = {CONTENT_TYPE})
     public IndentMessage getMessage(@RequestParam("id") long id){
-        System.out.println("传过来的id是" + id);
+//        System.out.println("传过来的id是" + id);
         return ticketOtherFegin.getMessage(id);
     }
 
@@ -197,7 +213,11 @@ public class TicketOtherController {
     @PostMapping(value = "/updateTrainSuccess",consumes = {CONTENT_TYPE})
     public boolean updateTrainTask(@RequestBody String data){
         JSONObject obj = JSON.parseObject(data);
-        return ticketOtherFegin.updateTrainTask(obj.getLong("trainId"), obj.getInteger("status"));
+        long trainId = obj.getLong("trainId");
+        Train train = ticketOtherFegin.selectTrainById(trainId);
+        int status = train.getTrainStatus();
+        int newStatus = status == 0 ? 1 : 0;
+        return ticketOtherFegin.updateTrainTask(trainId,newStatus);
     }
 
     /**

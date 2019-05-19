@@ -48,4 +48,18 @@ public interface IndentMessageDao {
      */
     public List<IndentMessage> allIndentMessage(@Param("startTime") String startTime,@Param("endtime") String endTime,@Param("status") int status,@Param("start") int start,@Param("end") int end);
 
+    /**
+     * 获取所有的订单
+     * @return
+     */
+    public List<IndentMessage> allIndents();
+
+    /**
+     * 修改车票状态
+     * @param status
+     * @param trainStartTime
+     * @return
+     */
+    public boolean updateSuccess(@Param("status") int status, @Param("trainStartTime") String trainStartTime );
+
 }

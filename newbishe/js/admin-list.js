@@ -126,30 +126,34 @@ $(function(){
       		 	window.location.href = "login.html"
 	        });
       	}else{
-      		 layer.confirm('确认要删除吗？',function(){
-      		$.ajax({    
-                url :"http://localhost:8089/deleteUser",                               
-                data : JSON.stringify( {
-						"id" : id,
-					}), 
-                type : 'post',    
-                dataType : 'json',  
-				contentType :"application/json;charset=UTF-8", 
-                success : function(result) {   
-					if(result){
-						layer.msg('已删除!',{icon:1,time:1000});
-		                location.replace(location.href)
-					}else{
-						layer.msg('已删除!',{icon:2,time:1000});
-		              location.replace(location.href)
-					}
-                },    
-                error : function(msg) {    
-                }    
-     		 });    
-      	
-         
-      });
+      		if(userMessage.userType == 0){
+      			 layer.confirm('确认要删除吗？',function(){
+		      		$.ajax({    
+		                url :"http://localhost:8089/deleteUser",                               
+		                data : JSON.stringify( {
+								"id" : id,
+							}), 
+		                type : 'post',    
+		                dataType : 'json',  
+						contentType :"application/json;charset=UTF-8", 
+		                success : function(result) {   
+							if(result){
+								layer.msg('已删除!',{icon:1,time:1000});
+				                location.replace(location.href)
+							}else{
+								layer.msg('已删除!',{icon:2,time:1000});
+				              location.replace(location.href)
+							}
+		                },    
+		                error : function(msg) {    
+		                }    
+		     		 });    
+		      	
+		         
+		      });
+      		}else{
+      			layer.msg('您的权限不够,不能进行删除!',{icon:2,time:2000});
+      		}
       		
     }
 		

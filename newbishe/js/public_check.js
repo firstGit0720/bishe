@@ -20,8 +20,7 @@ $(function(){
       });    
 	var aaa = "test";
 
-	//显示头像
-	$("#logo").attr("src","http://localhost:8089/otherWays/getiamge?username="+username)
+
 	
 	updateImage = function(){
 		//获取该行信息
@@ -30,16 +29,22 @@ $(function(){
   
   	$('#show').empty()
 	$("#show").append("菜单")
-	if(username ==null){
+	if(userMessage ==null || userMessage == undefined){
 		$('#show').empty()
 		$("#show").append("菜单")
+		$("#logo").attr("style","display:none");
 	}else{
-		$('#show').empty()
-		$("#show").append(username)
+		$('#show').empty();
+		$("#show").append(username);
+		$("#logo").attr("src","http://localhost:8089/otherWays/getiamge?username="+username)
 	}
 	$("#goBack").on("click",function (){
 		if(username == null){
 				layer.confirm('您好没有登录,请先登录!',function(){
+      		 	window.location.href = "login.html"
+	        });
+		}else if(userMessage == null || userMessage ==undefined){
+			layer.confirm('您登录的事件已过去,请重新登录!',function(){
       		 	window.location.href = "login.html"
 	        });
 		}else{
