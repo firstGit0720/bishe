@@ -62,4 +62,13 @@ public interface IndentMessageDao {
      */
     public boolean updateSuccess(@Param("status") int status, @Param("trainStartTime") String trainStartTime );
 
+    /**
+     * 修改车票出票状态
+     * @param status
+     * @param trainStartTime
+     * @return
+     */
+    public boolean updateTicketSuccess(@Param("status") int status, @Param("trainStartTime") String trainStartTime );
+
+
 }

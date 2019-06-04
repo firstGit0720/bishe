@@ -111,7 +111,7 @@ public class UserOtherController {
      */
     @PostMapping("/exitTicket")
     public boolean exitTicket(@RequestParam("id")long id){
-        return userOtherService.updateTicketStatus(id);
+        return userOtherService.exitTicket(id);
     }
 
     /**
@@ -152,7 +152,7 @@ public class UserOtherController {
         JSONObject getObj = new JSONObject();
         getObj.put("sEcho", sEcho);
         getObj.put("iTotalRecords", userHistroy.size());//实际的行数
-        getObj.put("iTotalDisplayRecords", userHistroy.size()); //显示的行数，和上面一致
+        getObj.put("iTotalDisplayRecords", iDisplayLength); //显示的行数，和上面一致
         getObj.put("aaData", userHistroy);
         return getObj.toString();
     }
@@ -181,7 +181,7 @@ public class UserOtherController {
                 iDisplayLength = obj.getInteger("value");
             }
         }
-        List<BackTicketDto> userHistroy = userOtherService.lists(startTime,endTime,iDisplayStart,iDisplayLength);
+        List<BackTicketDto> userHistroy = userOtherService.lists(startTime,endTime,iDisplayStart,100);
         JSONObject getObj = new JSONObject();
         getObj.put("sEcho", sEcho);
         getObj.put("iTotalRecords", userHistroy.size());//实际的行数

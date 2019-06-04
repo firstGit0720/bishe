@@ -51,6 +51,14 @@ $(function(){
                 async : false,  
                 success : function(result) {   
 					console.info(result) 
+					$("#adminNum").append(result.userNum)
+					$("#trainNum").append(result.trainNum)
+					$("#indents").append(result.indents)
+					$("#usertop").append(result.usertop)
+					$("#userCenter").append(result.userCenter)
+					$("#userBottom").append(result.userBottom)
+					$("#indentsOK").append(result.indentsOK)
+					$("#indentsNo").append(result.indentsNo)
                 },    
                 error : function(msg) {    
                 }    

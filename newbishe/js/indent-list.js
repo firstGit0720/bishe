@@ -10,15 +10,15 @@ $(function(){
 		getAllIndent(start,end)
 		
 	}
-	
-	
-	
 	function getAllIndent(startTimd,endtime){
 		//获取所有会员信息,并封装到datatable
-		$("#indentTable").dataTable({      
+		$("#indentTable").dataTable({     
                 "bProcessing": false,                   // 是否显示取数据时的那个等待提示    
-				searching: false,//搜索
-                "bServerSide": true,                    //这个用来指明是通过服务端来取数据    
+				"searching": false,//搜索
+                "bServerSide": true,                    //这个用来指明是通过服务端来取数据 
+				"bPaginate": true, //开关，是否显示分页器
+		     	"bInfo": true,
+			    "bSort": true,   
                 "sAjaxSource": "http://localhost:8089/ticketother/allIndent",      //这个是请求的地址    
                 "fnServerData": retrieveData,            // 获取数据的处理函数    
 			     "columns": [
@@ -45,23 +45,23 @@ $(function(){
 								}
 			                }
 			            ],
-					language: {
-		                    lengthMenu: '显示<select style="width:80px;height:30px">' + '<option value="1">1</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
-		                    paginate: {//分页的样式内容。
-		                        previous: "上一页",
-		                        next: "下一页",
-		                        first: "第一页",
-		                        last: "最后"
+					"language": {
+		                    "lengthMenu": '显示<select style="width:80px;height:30px">' + '<option value="5">5</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>'  + '</select>条记录',//左上角的分页大小显示。
+		                    "paginate": {//分页的样式内容。
+		                        "previous": "上一页",
+		                        "next": "下一页",
+		                        "first": "首页",
+		                        "last": "尾页"
 		                    },
 		
-		                    zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+		                    "zeroRecords": "没有内容",//table tbody内容为空时，tbody的内容。
 		                    //下面三者构成了总体的左下角的内容。
-		                    info: "总共_PAGES_ 页，显示第_START_ 条到第 _END_ 条 ",//左下角的信息显示，大写的词为关键字。
-		                    infoEmpty: "0条记录",//筛选为空时左下角的显示。
-		                    infoFiltered: ""//筛选之后的左下角筛选提示，
+		                    "info": "总共_PAGES_ 页，显示第_START_ 条到第 _END_ 条 ",//左下角的信息显示，大写的词为关键字。
+		                    "infoEmpty": "0条记录",//筛选为空时左下角的显示。
+		                    "infoFiltered": ""//筛选之后的左下角筛选提示，
 		                },
-		                paging: true,
-		                pagingType: "full_numbers",//分页样式的类型
+		                "paging": true,
+		               "pagingType":   "full_numbers"//分页样式的类型
 
             });    
         // 3个参数的名字可以随便命名,但必须是3个参数,少一个都不行    

@@ -105,7 +105,7 @@ public interface TicketOtherFegin {
      * @param id
      * @return
      */
-    @PostMapping("/exitTicket")
+    @PostMapping("/userother/exitTicket")
     public boolean exitTicket(@RequestParam("id")long id);
 
     /**
@@ -196,5 +196,13 @@ public interface TicketOtherFegin {
      */
     @PostMapping("/train/updateSuccess")
     public boolean updateSuccess(@RequestParam("status") int status, @RequestParam("startTime") String startTime);
+    /**
+     * 修改订单出票状态
+     * @param status
+     * @param startTime
+     * @return
+     */
+    @PostMapping("/train/updateSuccess")
+    public boolean updateTicketSuccess(@RequestParam("status") int status, @RequestParam("startTime") String startTime);
 
 }

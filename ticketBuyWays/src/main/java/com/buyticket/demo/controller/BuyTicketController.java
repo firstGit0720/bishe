@@ -58,7 +58,7 @@ public class BuyTicketController {
      * @return
      */
     @PostMapping("/buyTicket")
-    public boolean buyTicket(@RequestParam("buyTicketMessage") String buyTicketDao) throws UnsupportedEncodingException {
+    public String buyTicket(@RequestParam("buyTicketMessage") String buyTicketDao) throws UnsupportedEncodingException {
         System.out.println(buyTicketDao);
         BuyTicketDto buyTicketDto = JSONObject.parseObject(buyTicketDao,BuyTicketDto.class);
         return buyTivketService.buyTicket(buyTicketDto);

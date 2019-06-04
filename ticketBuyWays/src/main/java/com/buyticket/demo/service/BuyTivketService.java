@@ -31,7 +31,7 @@ public interface BuyTivketService {
      * @param ticket
      * @return
      */
-    public boolean buyTicket(BuyTicketDto ticket) throws UnsupportedEncodingException;
+    public String buyTicket(BuyTicketDto ticket) throws UnsupportedEncodingException;
 
     /**
      *更具火车车次获取中间站点

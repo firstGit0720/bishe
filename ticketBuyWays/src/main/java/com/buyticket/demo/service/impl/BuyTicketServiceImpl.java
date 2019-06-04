@@ -72,13 +72,13 @@ public class BuyTicketServiceImpl implements BuyTivketService {
      * @return
      */
     @Override
-    public List<TrainDto> allTrain(String from, String arrive, String date,Integer start, Integer end) throws UnsupportedEncodingException {
+    public List<TrainDto> allTrain(String from, String arrive, String date,Integer start, Integer end)  {
         //查询是否有通往该站点的火车
-        List<Train> trains = buyTicketDao.allTrain(from, arrive,start,end);
+        List<Train> trains = buyTicketDao.allTrain(from,arrive,start,end);
         //火车前端显示的数据传送对象(dto)
         List<TrainDto> trainDtos = new ArrayList<TrainDto>();
         if(trains.size() == 0){
-            return null;
+            return  new ArrayList<TrainDto>();
         }
         //先从订单表中查询已有的订单是多少
         //有的情况下，判断出发地是不是该火车的出发地，是，直接添加相应的信息，不是，出发时间需要计算
@@ -220,15 +220,15 @@ public class BuyTicketServiceImpl implements BuyTivketService {
      */
     @Override
     @Transactional
-    public boolean buyTicket(BuyTicketDto ticketDto){
+    public String buyTicket(BuyTicketDto ticketDto){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         //更具用户名查找用户id
+        String seatMessage = null;
         Long userId = otherWaysFegin.getUserId(ticketDto.getUserName());
         boolean buyCheck = false;
         //首先从退票改签的表中查询该火车是否有人退票会改签
         List<TrainSeatMessage> allList = ticketOtherFegin.allTrainSeatMessage(ticketDto.getTrainId(),ticketDto.getTrainFrom(),ticketDto.getTrainArrive(),
                 ticketDto.getDateStr(),0,getKey(ticketDto.getSeatType()));
-
         if (allList.size() > 0){
             //获取第一条
             TrainSeatMessage trainSeatMessage = allList.get(0);
@@ -249,6 +249,7 @@ public class BuyTicketServiceImpl implements BuyTivketService {
             if (buyCheck){
                 //将改票的信息改为已售出
                 ticketOtherFegin.updateStatus(trainSeatMessage.getId(),1);
+                seatMessage = trainSeatMessage.getBackChangeMessage();
             }
         }else{
             // 座位等级0：特等座，1：一等座，2：二等座，3：软卧一等卧，4：高级软卧，5：动卧，6：硬卧，7：软座，8：硬座，9：无座
@@ -272,9 +273,13 @@ public class BuyTicketServiceImpl implements BuyTivketService {
             indent.setIsStatus((short) 0);
             indent.setIsSuccess((short) 0);
             buyCheck = indentMessageDao.addIndentMessage(indent);
+            if (buyCheck){
+                seatMessage = indent.getSeatMessage();
+                System.out.print(seatMessage);
+            }
         }
 
-        return buyCheck;
+        return seatMessage;
     }
 
     /**
@@ -541,6 +546,12 @@ public class BuyTicketServiceImpl implements BuyTivketService {
 
     }
 
+    /**
+     * 计算座位号
+     * @param seatType
+     * @param ticketDto
+     * @return
+     */
     public int getSeat(int seatType,BuyTicketDto ticketDto){
         int num = 0;
         switch(seatType){

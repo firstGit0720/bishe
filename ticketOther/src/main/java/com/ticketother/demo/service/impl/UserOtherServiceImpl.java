@@ -96,7 +96,7 @@ public class UserOtherServiceImpl implements UserOtherService {
     }
 
     /**
-     *
+     * 未完成的订单
      * @param userId
      * @return
      */
@@ -151,7 +151,6 @@ public class UserOtherServiceImpl implements UserOtherService {
     @Override
     @Transactional
     public boolean updateTicketStatus(long id) {
-        boolean add = false;
         //首先根据id获取订单信息
         IndentMessage message = this.getMessage(id);
         //将相关信息放到退票的表中
@@ -167,7 +166,7 @@ public class UserOtherServiceImpl implements UserOtherService {
         if (check){
             userOtherDao.addTrainSeatMessage(trainSeatMessage);
         }
-        return add;
+        return check;
     }
 
     /**
@@ -188,11 +187,13 @@ public class UserOtherServiceImpl implements UserOtherService {
         trainSeatMessage.setTrainFrom(message.getIndentFrom());
         trainSeatMessage.setTrainTime(message.getTrainStartTime());
         //显示修改订单中车票的状态
-        this.updateStatis(id,3);
-        //将付款状态设置为已退款
-        indentMessageDao.uodatepPymentStatus(id,2);
-
-        return  userOtherDao.addTrainSeatMessage(trainSeatMessage);
+        boolean check = this.updateStatis(id,3);
+        if (check){
+            //将付款状态设置为已退款
+            indentMessageDao.uodatepPymentStatus(id,2);
+            userOtherDao.addTrainSeatMessage(trainSeatMessage);
+        }
+        return check;
     }
 
     /**

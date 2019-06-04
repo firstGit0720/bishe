@@ -39,6 +39,12 @@
       <xblock>
         <button class="layui-btn" onclick="x_admin_show('添加火车行程','./train-add.html')"><i class="layui-icon"></i>添加</button>
       </xblock>
+      <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so">
+          <input class="layui-input" type="index"   placeholder="火车车次" name="userpname" id="userpname">
+          <button class="layui-btn"  onclick="search()" ><i class="layui-icon">&#xe615;</i></button>
+        </form>
+      </div>
       <table class="layui-table" id="trainTable"> 
         <thead>
           <tr>

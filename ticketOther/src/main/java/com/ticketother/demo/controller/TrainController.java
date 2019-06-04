@@ -227,5 +227,15 @@ public class TrainController {
     public boolean updateSuccess(@RequestParam("status") int status, @Param("startTime") String startTime){
         return trainService.updateSuccess(status, startTime);
     }
+    /**
+     * 修改订单出票状态
+     * @param status
+     * @param startTime
+     * @return
+     */
+    @PostMapping("/train/updateSuccess")
+    public boolean updateTicketSuccess(@RequestParam("status") int status, @RequestParam("startTime") String startTime){
+        return trainService.updateTicketState(status, startTime);
+    }
 
 }

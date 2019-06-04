@@ -54,18 +54,14 @@
     <!--查用户的历史行程-->
     <select id="showHistroy" resultMap="showMap">
         select * from indent_message where user_id = #{userId} and is_success = #{status}   order by indent_time DESC
-        <if test=" end > 0">
             limit #{start} , #{end}
-        </if>
 
     </select>
 
     <!--查看未完成的行程-->
     <select id="showFuture" resultMap="showMap">
          select * from indent_message where user_id = #{userId} and is_success =  #{status}  order by indent_time DESC
-        <if test=" end > 0">
             limit #{start} , #{end}
-        </if>
 
     </select>
 
@@ -98,8 +94,6 @@
         <if test="endTime != null and endTime != ''">
             and train_time &lt;= #{endTime}
         </if>
-        <if test=" end > 0">
             limit #{start} , #{end}
-        </if>
     </select>
 </mapper>

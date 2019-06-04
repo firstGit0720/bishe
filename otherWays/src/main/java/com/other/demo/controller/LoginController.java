@@ -42,7 +42,11 @@ public class LoginController {
         String username = jsonObject.getString("username");
         String password = jsonObject.getString("password");
         UserDto userDto = userService.login(username,password);
-        return JSONObject.toJSONString(userDto);
+        if (userDto == null){
+            return null;
+        }else{
+            return JSONObject.toJSONString(userDto);
+        }
     }
 
     /**
@@ -83,9 +87,9 @@ public class LoginController {
      * @return
      */
     @PostMapping(value = "/clearUserMessage",consumes = {CONTENT_TYPE})
-    public boolean clearUserMessage(@RequestBody String username){
-        JSONObject jsonObject = JSONObject.parseObject(username);
-        return redisServiceFeign.clearUserMessage(jsonObject.getString("username"));
+    public boolean clearUserMessage(@RequestParam("username") String username){
+//        JSONObject jsonObject = JSONObject.parseObject(username);
+        return redisServiceFeign.clearUserMessage(username);
     }
 
     /**

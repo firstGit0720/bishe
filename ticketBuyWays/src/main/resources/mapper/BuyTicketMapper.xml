@@ -85,11 +85,9 @@
 
     <!--查火车的信息-->
     <select id="allTrain" resultMap="trainMap" >
-        select * from train  where  train_status = 0 and (train.train_from = #{from} or #{from} in (select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id)) and
-        (train.train_arrive = #{arrive} or #{arrive} in (select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id))
-        <if test=" end > 0">
-           limit #{start} , #{end}
-        </if>
+       select * from train  where  train_status = 0 and (train.train_from = #{arg0} or #{arg0} in (select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id)) and
+        (train.train_arrive = #{arg1} or #{arg1} in (select train_arrive.train_arrive from train_arrive where train_arrive.train_id = train.id))
+           limit #{arg2} , #{arg3}
     </select>
 
     <!--根据火车信息查询火车额的座位信息-->
@@ -119,7 +117,7 @@
         </if>
     </select>
     <select id="getGrade" resultType="java.lang.Integer" >
-        select train_arrive_grade from train_arrive where train_arrive =#{space} and train_id = #{trainId}
+        select train_arrive_grade from train_arrive where train_arrive =#{space}  and train_id = #{trainId}
     </select>
 
     <select id="selectArriveById" resultMap="trainArriveMap" parameterType="java.lang.Long">

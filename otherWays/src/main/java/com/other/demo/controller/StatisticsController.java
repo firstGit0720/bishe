@@ -2,14 +2,15 @@ package com.other.demo.controller;
 
 import com.other.demo.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class StatisticsController {
 
     @Autowired
@@ -25,8 +26,8 @@ public class StatisticsController {
         int userCenter = statisticsService.userTypeNum(1);
         int userBottom = statisticsService.userTypeNum(2);
         int indents = statisticsService.indentNum();
-        int indentsOK = statisticsService.indentTypeNumIsOk(0);
-        int indentsNo = statisticsService.indentTypeNumIsOk(1);
+        int indentsOK = statisticsService.indentTypeNumIsOk(1);
+        int indentsNo = statisticsService.indentTypeNumIsOk(0);
         map.put("trainNum",trainNum);
         map.put("userNum",userNum);
         map.put("usertop" , usertop);

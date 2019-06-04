@@ -33,7 +33,7 @@
             <a href="javascript:;"><span id="show">菜单</span></a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
               <dd><a onclick="showUserMessage()">个人信息</a></dd>
-              <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
+             <dd><a onclick="window.location.href='login.html'">切换帐号</a></dd>
               <dd><a onclick="lgout()">退出</a></dd>
             </dl>
           </li>
@@ -112,7 +112,7 @@
                   *  身份证号:
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="userCard" name="userCard" required="" lay-verify="required" maxlength="16" placeholder="身份证号"
+                  <input type="text" id="userCard" name="userCard" maxlength="16" placeholder="身份证号"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -121,7 +121,7 @@
                   *  电子邮箱:
               </label>
               <div class="layui-input-inline">
-                  <input type="email" id="userEmail" name="userEmail" required="" lay-verify="required" placeholder="电子邮箱"
+                  <input type="email" id="userEmail" name="userEmail"  placeholder="电子邮箱"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -130,7 +130,7 @@
                   *  居住地址:
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="userAddress" name="userAddress" required="" lay-verify="required" placeholder="居住地址"
+                  <input type="text" id="userAddress" name="userAddress"  placeholder="居住地址"
                   autocomplete="off" class="layui-input">
               </div>
           </div>

@@ -123,7 +123,7 @@
                 seat_second_num,
             </if>
             <if test="trainSeat.seatSecondPrice!=null and trainSeat.seatSecondPrice!=''">
-                seat_second_srice,
+                seat_second_price,
             </if>
             <if test="trainSeat.seatSecondCarriage!=null and trainSeat.seatSecondCarriage!=''">
                 seat_second_carriage,
@@ -390,9 +390,7 @@
     <!--获取所有的火车信息-->
     <select id="getAllTrain" resultMap="trainMap">
          select * from train
-        <if test="end > 0">
             limit #{start} , #{end}
-        </if>
     </select>
 
     <!--修改火车信息-->
@@ -793,7 +791,7 @@
                     seat_other_enery = #{trainSeat.seatOtherEnery},
                 </when>
                 <otherwise>
-                    seat_other_enery = bnull,
+                    seat_other_enery = null,
                 </otherwise>
             </choose>
            <choose>

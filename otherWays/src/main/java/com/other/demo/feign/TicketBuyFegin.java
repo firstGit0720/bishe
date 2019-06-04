@@ -36,7 +36,7 @@ public interface TicketBuyFegin {
      * @return
      */
     @PostMapping("/buyTicket")
-    public boolean buyTicket(@RequestParam("buyTicketMessage") String  buyTicketDao);
+    public String buyTicket(@RequestParam("buyTicketMessage") String  buyTicketDao);
 
     /**
      * 根据火车id查询所有的火车站点信息

@@ -43,9 +43,10 @@ public class TicketBuyController {
      * @return
      */
     @PostMapping(value = "/buyTicket", consumes = {CONTENT_TYPE})
-    public boolean buyTicket(@RequestBody String buyTicketDao){
-        System.out.println(buyTicketDao);
-        return ticketBuyFegin.buyTicket(buyTicketDao);
+    public String buyTicket(@RequestBody String buyTicketDao){
+        String message = ticketBuyFegin.buyTicket(buyTicketDao);
+        System.out.println(message);
+        return message;
     }
 
     /**

@@ -100,14 +100,15 @@ $(function(){
 			 		async:false,
 			 		dataType : 'json',   
 					contentType :"application/json; charset=UTF-8", 
-			 		data : {
+			 		data : JSON.stringify({
 			 			"id" : id
-			 		},
+			 		}),
 			 		success : function (resp){
 			 			if(resp){
-			 				layer.msg('退票成功！',{icon:1,time:2000});
+			 				layer.msg('退票成功!',{icon:1,time:2000});
 			 			}else{
-			 				layer.msg('退票失败,请到服务台进行退票！',{icon:2,time:2000});
+			 				
+			 				layer.msg("退票时间离出发不到30分钟，请到人工服务台处理!",{icon:2,time:2000});
 			 			}
 			 		},
 			 		error : function(err){

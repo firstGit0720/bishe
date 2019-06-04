@@ -28,6 +28,7 @@ $(function(){
 			 $.ajax({    
                 url :"http://localhost:8089/register",                               
                 data :JSON.stringify(data), 
+				async : false,
                 type : 'post',    
                 dataType : 'json',   
 				contentType :"application/json;charset=UTF-8", 
@@ -65,6 +66,7 @@ $(function(){
                 data :name, 
                 type : 'post',    
                 dataType : 'json',   
+				async :false,
 				contentType :"application/json;charset=UTF-8", 
                 success : function(result) {  
 					check=result;
@@ -72,10 +74,8 @@ $(function(){
 				error : function(msg) {    
 					layer.msg('发生了一些问题,请稍后重试!', {icon: 1});
                 }        
-                
             });  
 		return check;  
-		
 	}
 	
 	/*$("#goBack").on("click",function (){

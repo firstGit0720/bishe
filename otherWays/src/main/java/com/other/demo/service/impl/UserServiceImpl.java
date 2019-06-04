@@ -50,19 +50,20 @@ public class UserServiceImpl implements UserService {
         }
         //根据用户名查找用户id
         Long userId = userDao.getUserId(username);
-        //更具用户id查找用户的加密后的密码
-        String pwd = userDao.getPassword(userId);
-        User user = userDao.selectByUsername(username);
-        short userType = userTypeDao.selectUserType(userId);
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(user,userDto);
-        userDto.setUserType(userType);
-        //将信息添加到缓存
-        boolean addCheck = redisServiceFeign.addUserToCache(JSONObject.toJSONString(userDto));
-        if(this.checkpassword(password,pwd) && addCheck){
-            return userDto;
+        if(userId != null){
+            //更具用户id查找用户的加密后的密码
+            String pwd = userDao.getPassword(userId);
+            User user = userDao.selectByUsername(username);
+            short userType = userTypeDao.selectUserType(userId);
+            UserDto userDto = new UserDto();
+            BeanUtils.copyProperties(user,userDto);
+            userDto.setUserType(userType);
+            //将信息添加到缓存
+            boolean addCheck = redisServiceFeign.addUserToCache(JSONObject.toJSONString(userDto));
+            if(this.checkpassword(password,pwd) && addCheck){
+                return userDto;
+            }
         }
-
         return null;
     }
 

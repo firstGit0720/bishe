@@ -19,10 +19,6 @@ public class ImageUtil {
     private static  final  String IMAGE_URL = "G:\\bishe\\image\\";
     private static final  String suffix =".jpg";
     public boolean uploadImage(String base64Data,String username) throws Exception {
-        System.out.println("==上传图片==");
-        System.out.println("==接收到的数据=="+base64Data);
-
-
         String data = "";//实体部分数据
         if(base64Data==null||"".equals(base64Data)){
             throw new Exception("base64数据为空");

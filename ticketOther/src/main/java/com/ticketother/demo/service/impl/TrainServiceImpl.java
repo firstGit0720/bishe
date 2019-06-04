@@ -82,7 +82,6 @@ public class TrainServiceImpl implements TrainService {
         //添加火车信息
         addTrain = trainDao.addTicket(train);
         long trainId = trainDao.selectIdByCard(train.getTrainCard());
-        System.out.println(trainId);
         if (addTrain){
             //封装座位信息
             TrainSeat trainSeat = new TrainSeat();
@@ -172,7 +171,7 @@ public class TrainServiceImpl implements TrainService {
                 arrive.setTrainArriveWite(trainArriveWite.getInteger(i));
                 //计算行驶时长
 //                if(i == 0){
-                    arrive.setTrainAfter(getDatePoor(sdf.parse(trainArriveTime.get(i).toString()),sdf.parse(train.getTrainFromTime())));
+                arrive.setTrainAfter(getDatePoor(sdf.parse(trainArriveTime.get(i).toString()),sdf.parse(train.getTrainFromTime())));
 //                }else{
 //                    arrive.setTrainAfter(getDatePoor(sdf.parse(trainArriveTime.get(i).toString()),sdf.parse(trainArriveTime.get(i - 1).toString())));
 //                }
@@ -366,10 +365,11 @@ public class TrainServiceImpl implements TrainService {
      */
     @Override
     public boolean updateSpace(TrainArrive trainArrive) {
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         //获取火车信息
         Train train = userOtherDao.selectTrainById(trainArrive.getTrainId());
         try {
+
             trainArrive.setTrainAfter(getDatePoor(sdf.parse(trainArrive.getTrainArriveTime()),sdf.parse(train.getTrainFromTime())));
         } catch (ParseException e) {
             e.printStackTrace();
@@ -675,6 +675,11 @@ public class TrainServiceImpl implements TrainService {
     @Override
     public boolean updateSuccess(int status, String startTime) {
         return indentMessageDao.updateSuccess(status, startTime);
+    }
+
+    @Override
+    public boolean updateTicketState(int status, String startTime) {
+        return indentMessageDao.updateTicketSuccess(status, startTime);
     }
 
     /**

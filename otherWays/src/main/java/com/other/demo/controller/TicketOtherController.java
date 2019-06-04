@@ -129,50 +129,54 @@ public class TicketOtherController {
     @PostMapping(value = "/updateTicketStatus" , consumes = {CONTENT_TYPE})
     public boolean updateTicketStatus(@RequestBody long id) throws Exception {
         IndentMessage indentMessage = this.getMessage(id);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         Date trainStart = null;
+        String trainStartTime = indentMessage.getTrainStartTime();
         try {
-            trainStart = sdf.parse(indentMessage.getTrainStartTime());
+            trainStart = sdf.parse(trainStartTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         Date now = new Date();
         //如果改签时间为火车行驶前30分钟系统不给予退票服务，需人工退票
         long num = 30 * 60 * 1000;
-        if(now.getTime() - num > trainStart.getTime()){
+        if((now.getTime() - num) < trainStart.getTime()){
             System.out.println(id);
             return ticketOtherFegin.updateTicket(id);
         }else{
-            throw new Exception("改签时间离出发不到30分钟，请到人工服务台处理");
-
+//            throw new Exception("改签时间离出发不到30分钟，请到人工服务台处理");
+            return false;
         }
     }
 
     /**
      * 退票
-     * @param id
+     * @param data
      * @return
      */
     @PostMapping(value = "/exitTicket" , consumes = {CONTENT_TYPE})
-    public boolean exitTicket(@RequestParam("id") long id) throws Exception {
+    public boolean exitTicket(@RequestBody String data) throws Exception {
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        Long id = jsonObject.getLong("id");
         IndentMessage indentMessage = this.getMessage(id);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         Date trainStart = null;
+        String trainStartTime = indentMessage.getTrainStartTime();
         try {
-            trainStart = sdf.parse(indentMessage.getTrainStartTime());
+            trainStart = sdf.parse(trainStartTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         Date now = new Date();
         //如果改签时间为火车行驶前30分钟系统不给予退票服务，需人工退票
         long num = 30 * 60 * 1000;
-        if(now.getTime() - num > trainStart.getTime()){
-            System.out.println(id);
+        System.out.println(now.getTime() - num);
+        System.out.println(trainStart.getTime());
+        if((now.getTime() - num) < trainStart.getTime()){
             return ticketOtherFegin.exitTicket(id);
         }else{
-            throw new Exception("退票时间离出发不到30分钟，请到人工服务台处理");
+            return false;
         }
-
     }
 
     /**

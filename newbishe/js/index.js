@@ -185,19 +185,18 @@ $(function(){
                 url : "http://localhost:8089/ticketBuy/buyTicket",                             
                 data : JSON.stringify(obj),  
                 type : 'post',    
-                dataType : 'json',   
 				contentType :"application/json; charset=UTF-8", 
                 async : false,  
-                success : function(result) {    
-					if(result){
+                success : function(result) {  
+					if(result.length > 0){
 						$(".clsBtn").trigger('click')
-						layer.msg('购买成功！',{icon:1,time:1000});
-//						setTimeout(function() {window.location.href = "admin.html"}, 1000);
+						layer.msg('购买成功！您的座位信息是:'+ result,{icon:1,time:2000});
 					}else{
 						layer.msg('购买失败！',{icon:2,time:1000});
 					}             
                 },    
-                error : function(msg) {    
+                error : function(msg) {
+					layer.msg('出现了意料之外的错误,请稍后重试！',{icon:2,time:1000});    
                 }    
             });
 		

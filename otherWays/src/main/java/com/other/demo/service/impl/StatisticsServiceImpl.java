@@ -36,6 +36,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public int indentTypeNumIsOk(int type) {
-        return indentTypeNumIsOk(type);
+        return statisticsDao.indentTypeNum(type);
     }
 }

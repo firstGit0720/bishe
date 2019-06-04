@@ -125,13 +125,19 @@ public interface TrainService {
     public List<IndentMessage> allIndents();
 
     /**
-     * 修改第状态
+     * 修改车票完成状态
      * @param status
      * @param startTime
      * @return
      */
     public boolean updateSuccess(int status , String startTime);
 
-
+    /**
+     * 修改车票出票状态
+     * @param status
+     * @param startTime
+     * @return
+     */
+    public boolean  updateTicketState(int status , String startTime);
 
 }

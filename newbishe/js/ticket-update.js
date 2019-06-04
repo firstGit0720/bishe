@@ -8,7 +8,7 @@ $(function(){
 		}
 		var username =sessionStorage.getItem("uesrMessage");
 	  	var userMessage;
-	  	var strfrom,strarrive,datestr,trainCard;
+	  	var strfrom,strarrive,datestr,trainCard,newtime;
 		var obj = {
 			"username" :username,
 			
@@ -51,7 +51,7 @@ $(function(){
 		
 		function getTable(from,arrive,time){
 		  $("#mytable").dataTable({  
-				 "pagingType": "simple_numbers",//设置分页控件的模式      
+				 "pagingType": "full_numbers",//设置分页控件的模式      
                 "bProcessing": false,                   // 是否显示取数据时的那个等待提示  
  				 "bLengthChange": true,//屏蔽tables的一页展示多少条记录的下拉列表    
 					searching: false,//搜索
@@ -134,7 +134,7 @@ $(function(){
 	buyTicket = function(id){
 		$("#mytable").find("tr").each(function(){
 			trainCard = $(this).children('td:eq(0)').text()
-	        datestr += " " +  $(this).children('td:eq(2)').text()
+	        newtime = " " +  $(this).children('td:eq(2)').text()
 	    });
 		
 			ticketBuyId = id;
@@ -242,20 +242,16 @@ $(function(){
 	buyTicketMessage = function(seatType,price){
 		exitMessage();
 		update(seatType,price);
-		
-		
-		layer.msg('改签成功！',{icon:1,time:1000});
-		setTimeout(function () {
-	      x_admin_close();
+		//成功后,进行购买功能
+		buy(seatType,price);
+		layer.confirm('改签成功！',function(){
+			 x_admin_close();
 			x_admin_father_reload();
-	      }, 1000);
-		
-		
-	
+		})
 	}
 	
 	function update(seatType,price){
-				//先修改订单状态
+		//先修改订单状态
 		$.ajax({
 	 		type:"post",
 	 		url:"http://localhost:8089/ticketother/updateTicketStatus",
@@ -264,8 +260,7 @@ $(function(){
 			contentType :"application/json; charset=UTF-8", 
 	 		data : trainId,
 	 		success : function (resp){
-	 			//成功后,进行购买功能
-	 			buy(seatType,price);
+	 			
 	 		},
 	 		error : function(err){
 	 			
@@ -279,9 +274,8 @@ $(function(){
 		obj.trainArrive = strarrive;
 		obj.seatType = seatType; 
 		obj.seatPrice = price;
-		obj.datestr = datestr;
+		obj.datestr = datestr + newtime;
 		console.info(JSON.stringify(obj))
-
 		$.ajax({    
                 url : "http://localhost:8089/ticketBuy/buyTicket",                             
                 data : JSON.stringify(obj),  
@@ -300,6 +294,7 @@ $(function(){
 //		window.history.go(-1);
 //		getTable(strfrom,strarrive,datestr);
 		$(".clsBtn").trigger('click')
+//		window.close();
 	}
 	
 })

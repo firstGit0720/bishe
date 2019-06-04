@@ -67,18 +67,24 @@ $(function(){
 											"password" : password
 										}), 
 	                type : 'post',    
+									async : false,
 	                dataType : 'json',   
 									contentType :"application/json;charset=UTF-8", 
-	                success : function(result) { 
-										userMessage = result;
-										/*将信息设置到session中,座位权限的认证*/
-										sessionStorage.setItem("uesrMessage",result.userName)
-										$('#show').empty()
-										$("#show").append(result.userName)
-										layer.msg('登陆成功！',{icon:1,time:1000});
-										setTimeout(function() {window.history.go(-1);}, 1000);
-										
-										console.info(JSON.stringify(sessionStorage.getItem("uesrMessage")))
+	                success : function(result) {
+										if(result != null) {
+												userMessage = result;
+												/*将信息设置到session中,座位权限的认证*/
+												sessionStorage.setItem("uesrMessage",result.userName)
+												$('#show').empty()
+												$("#show").append(result.userName)
+												layer.msg('登陆成功！',{icon:1,time:1000});
+		//										setTimeout(function() {window.history.go(-1);}, 1000);
+												setTimeout(function() {self.location=document.referrer;}, 1000);
+												console.info(JSON.stringify(sessionStorage.getItem("uesrMessage")))
+										}else{
+												layer.msg('用户名不存在,请先注册！',{icon:1,time:1000});
+										}
+								
 											
 	                },    
 	                error : function(msg) {    

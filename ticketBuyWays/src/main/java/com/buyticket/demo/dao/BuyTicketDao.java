@@ -21,7 +21,7 @@ public interface BuyTicketDao {
      * @param arrive 目的地
      * @return 所有相关的车票信息
      */
-    public List<Train> allTrain(@Param("from") String from, @Param("arrive") String arrive, @Param("start") Integer start, @Param("end") Integer end);
+    public List<Train> allTrain( String from,String arrive,Integer start, Integer end);
 
     /**
      * 买票

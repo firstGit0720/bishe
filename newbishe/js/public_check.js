@@ -44,7 +44,7 @@ $(function(){
       		 	window.location.href = "login.html"
 	        });
 		}else if(userMessage == null || userMessage ==undefined){
-			layer.confirm('您登录的事件已过去,请重新登录!',function(){
+			layer.confirm('您登录的时间已过期,请重新登录!',function(){
       		 	window.location.href = "login.html"
 	        });
 		}else{
@@ -70,8 +70,10 @@ $(function(){
 	lgout = function(){
 		//清空session
 		sessionStorage.clear()
+		layer.msg('退出成功,即将调至主页！',{icon:1,time:1000});
+//		setTimeout(function() {window.location.href = "index.html";}, 1300);
 		//清空缓存
-		$.ajax({    
+		/*$.ajax({    
                 url :"http://localhost:8089/otherWays/clearUserMessage",                               
                 data : username, 
                 type : 'post',    
@@ -79,12 +81,15 @@ $(function(){
 				async : false, 
 				contentType :"application/json;charset=UTF-8", 
                 success : function(result) {   
-					layer.msg('退出成功,即将调至主页！',{icon:1,time:1000});
-					setTimeout(function() {window.location.href = "index.html";}, 1000);
+					if(result){
+						layer.msg('退出成功,即将调至主页！',{icon:1,time:1000});
+						setTimeout(function() {window.location.href = "index.html";}, 1300);
+					}
+					
                 },    
                 error : function(msg) {    
                 }    
-      });    
+      });    */
   
 		
 	
